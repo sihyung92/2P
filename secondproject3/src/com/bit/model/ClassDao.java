@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ClassDao {
 
@@ -30,11 +31,75 @@ public class ClassDao {
 		}
 	}
 	
-	public int getLectureOne(int classNum){
-		ClassDto bean=new ClassDto();
-		String sql="select classNumfrom class";
+	public ArrayList<ClassDto> getList(){
+		ArrayList<ClassDto> list=new ArrayList<ClassDto>();
+		String sql="select num,name,startdate,enddate,classroom from lecture order by num";
 		
-		return 0;
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				ClassDto bean=new ClassDto();
+				bean.setNum(rs.getInt("num"));
+				bean.setName(rs.getString("name"));
+				bean.setStartdate(rs.getDate("startdate"));
+				bean.setEnddate(rs.getDate("enddate"));
+				bean.setClassroom(rs.getString("classroom"));
+				list.add(bean);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+	
+	public ClassDto getLectureOne(int num){
+		
+		ClassDto bean=new ClassDto();
+		
+		String sql="select name,startdate,enddate,content from lecture where num=?";
+		
+		try {
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()){
+				bean.setName(rs.getString("name"));
+				bean.setName(rs.getString("startdate"));
+				bean.setName(rs.getString("enddate"));
+				bean.setName(rs.getString("content"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return bean;
 	}
 	
 	

@@ -4,44 +4,42 @@ import java.sql.Date;
 
 public class ClassDto {
 	
-	private int codeNum;
-	private int classNum;
-	private String teacherName;
-	private Date nalja;
-	private int stuNum;
+	private int num ;
+	private String name;
+	private Date startdate;
+	private Date enddate;
+	private String classroom; 
 	private String content;
-	private int roomNum;
-	
-	
-	public int getCodeNum() {
-		return codeNum;
+	private String attach;
+	public int getNum() {
+		return num;
 	}
-	public void setCodeNum(int codeNum) {
-		this.codeNum = codeNum;
+	public void setNum(int num) {
+		this.num = num;
 	}
-	public int getClassNum() {
-		return classNum;
+	public String getName() {
+		return name;
 	}
-	public void setClassNum(int classNum) {
-		this.classNum = classNum;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getTeacherName() {
-		return teacherName;
+	public Date getStartdate() {
+		return startdate;
 	}
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
+	public void setStartdate(Date startdate) {
+		this.startdate = startdate;
 	}
-	public Date getNalja() {
-		return nalja;
+	public Date getEnddate() {
+		return enddate;
 	}
-	public void setNalja(Date nalja) {
-		this.nalja = nalja;
+	public void setEnddate(Date enddate) {
+		this.enddate = enddate;
 	}
-	public int getStuNum() {
-		return stuNum;
+	public String getClassroom() {
+		return classroom;
 	}
-	public void setStuNum(int stuNum) {
-		this.stuNum = stuNum;
+	public void setClassroom(String classroom) {
+		this.classroom = classroom;
 	}
 	public String getContent() {
 		return content;
@@ -49,12 +47,12 @@ public class ClassDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getRoomNum() {
-		return roomNum;
+	public String getAttach() {
+		return attach;
 	}
-	public void setRoomNum(int roomNum) {
-		this.roomNum = roomNum;
+	public void setAttach(String attach) {
+		this.attach = attach;
 	}
+
 	
-	
-}
+}	
