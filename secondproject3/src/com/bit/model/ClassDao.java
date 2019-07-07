@@ -5,102 +5,81 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import com.bit.util.Connector;
 
 public class ClassDao {
 
-	private String driver="oracle.jdbc.driver.OracleDriver";
-	private String url="jdbc:orcle:thin:@localhost:1521:xe";
-	private String user="hr";
-	private String password="hr";
-	
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public ClassDao(){
-		try {
-			Class.forName(driver);
-			conn=DriverManager.getConnection(url,user,password);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public ArrayList<ClassDto> getList(){
 		ArrayList<ClassDto> list=new ArrayList<ClassDto>();
-		String sql="select num,name,startdate,enddate,classroom from lecture order by num";
-		
+		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,classroom,content,attach,teacherName from lecture order by num";
 		try {
+			conn = Connector.getConnection();
 			pstmt=conn.prepareStatement(sql);
 			rs=pstmt.executeQuery();
-			
 			while(rs.next()){
-				
 				ClassDto bean=new ClassDto();
 				bean.setNum(rs.getInt("num"));
 				bean.setName(rs.getString("name"));
-				bean.setStartdate(rs.getDate("startdate"));
-				bean.setEnddate(rs.getDate("enddate"));
+				bean.setStartdate(rs.getString("startdate"));
+				bean.setEnddate(rs.getString("enddate"));
 				bean.setClassroom(rs.getString("classroom"));
+				bean.setContent(rs.getString("content"));
+				bean.setAttach(rs.getString("attach"));
+				bean.setTeacherName(rs.getString("teacherName"));
 				list.add(bean);
 			}
-			
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			try {
-				if(rs!=null)rs.close();
-				if(pstmt!=null)pstmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
 		}
-		
 		return list;
 	}
 	
-	public ClassDto getLectureOne(int num){
-		
-		ClassDto bean=new ClassDto();
-		
-		String sql="select name,startdate,enddate,content from lecture where num=?";
-		
+	public ArrayList<ClassDto> getIntroList(){
+		ArrayList<ClassDto> list=new ArrayList<ClassDto>();
+		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName from lecture where startdate>add_months(sysdate,-1) order by startdate";
+		//1달 전 강의 데이터 까지만 가져옴. 시간순정렬.
 		try {
-			
+			conn = Connector.getConnection();
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
-			
 			while(rs.next()){
+				ClassDto bean=new ClassDto();
+				bean.setNum(rs.getInt("num"));
 				bean.setName(rs.getString("name"));
-				bean.setName(rs.getString("startdate"));
-				bean.setName(rs.getString("enddate"));
-				bean.setName(rs.getString("content"));
-				
+				bean.setStartdate(rs.getString("startdate"));
+				bean.setEnddate(rs.getString("enddate"));
+				String totalDate = rs.getString("startdate")+"~"+rs.getString("enddate");
+				bean.setTotalDate(totalDate);
+				bean.setTeacherName(rs.getString("teacherName"));
+				boolean isRecruiting = false;
+				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
+					isRecruiting = true;
+				};
+				//날짜를 비교하여 시작날짜가 현재날짜보다 뒤라면 모집중(isRecruiting = true), 아니라면 마감(isRecruiting = false)
+				bean.setRecruitng(isRecruiting);
+				list.add(bean);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			try {
-				if(rs!=null)rs.close();
-				if(pstmt!=null)pstmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
 		}
-		
-		return bean;
+		return list;
 	}
-	
-	
 }
