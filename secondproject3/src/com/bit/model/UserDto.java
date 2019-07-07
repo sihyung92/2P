@@ -1,7 +1,7 @@
 package com.bit.model;
 
 public class UserDto {
-	private int num;
+	private int userNum;
 	private int kind;
 	private String id;
 	private String pw;
@@ -13,11 +13,11 @@ public class UserDto {
 	private String address;
 	private String major;
 	
-	public int getNum() {
-		return num;
+	public int getUserNum() {
+		return userNum;
 	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setUserNum(int num) {
+		this.userNum = num;
 	}
 	public int getKind() {
 		return kind;

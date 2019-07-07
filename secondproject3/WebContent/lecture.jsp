@@ -119,8 +119,8 @@ section>table>tbody>tr>td {
 	padding-top:40px;
 	padding-bottom:40px;
 	width: 424px;
+	height: 150px;
 	display: inline-block;
-	
 }
 
 section>table+div {
@@ -156,7 +156,42 @@ section div>p {
 #footer2 table {
 	margin: 0 auto;
 }
+
+.title{
+	margin-left : 20px;
+	margin-right : 20px;
+	font-weight: 800;
+	font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+
+#soon{
+	text-align : center;
+	font-size : 20pt;
+	font-weight: bold;
+	line-height: 140px;
+}
+.red{
+	color:rgb(230,80,80);
+	font-weight:800;
+}
+.blue{
+	color:rgb(80,80,250);
+	font-weight:800;
+}
+#slimbar{
+	display : block;
+	background-color : rgb(180,180,180);
+	margin: 10px auto;
+	height:2px;
+	width: 400px;
+}
 </style>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$()
+	});
+</script>
 </head>
 <body>
 	<center>
@@ -204,19 +239,21 @@ section div>p {
 					for (int i = 0; i < list.size(); i++) {
 								ClassDto bean = list.get(i);
 					%>
-					<td>강의명 : <%=bean.getName()%></br> 강사명 : <%=bean.getTeacherName()%></br>
-						수강기간 : <%=bean.getTotalDate()%></br> 강의일정 : <%=bean.getNum()%></br>
-						모집여부 : <%if(bean.isRecruitng()){
-							out.print("모집중");
+					<td><span class="title">강의명</span><%=bean.getName()%></br><span class="title"> 강사명</span><%=bean.getTeacherName()%></br>
+						<span class="title">수강기간</span><%=bean.getTotalDate()%></br><span class="title">강의일정</span>월 - 금 (09:30 ~ 18:00)</br>
+						<span class="title">모집여부</span><%if(bean.isRecruitng()){
+							out.print("<span class=\"blue\">모집중</span></br>");
 						}else{
-							out.print("마감");
+							out.print("<span class=\"red\">마감</span></br>");
 						}%>
+						<div id="slimbar"></div>
+						<span class="title">강의과정</span><%=bean.getContent()%>
 					</td>
 					<%
 						}
 					if(list.size()%2==1){
 						%>
-						<td></br></br>개설 예정</br></br></br></td>
+						<td id="soon"><span>개강 예정</span></td>
 						<%
 					}
 					%>

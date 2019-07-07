@@ -50,7 +50,7 @@ public class ClassDao {
 	
 	public ArrayList<ClassDto> getIntroList(){
 		ArrayList<ClassDto> list=new ArrayList<ClassDto>();
-		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName from lecture where startdate>add_months(sysdate,-1) order by startdate";
+		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName,content from lecture where startdate>add_months(sysdate,-1) order by startdate";
 		//1달 전 강의 데이터 까지만 가져옴. 시간순정렬.
 		try {
 			conn = Connector.getConnection();
@@ -65,6 +65,7 @@ public class ClassDao {
 				String totalDate = rs.getString("startdate")+"~"+rs.getString("enddate");
 				bean.setTotalDate(totalDate);
 				bean.setTeacherName(rs.getString("teacherName"));
+				bean.setContent(rs.getString("content"));
 				boolean isRecruiting = false;
 				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
 					isRecruiting = true;
