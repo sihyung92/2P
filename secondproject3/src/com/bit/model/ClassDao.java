@@ -50,8 +50,8 @@ public class ClassDao {
 	
 	public ArrayList<ClassDto> getIntroList(){
 		ArrayList<ClassDto> list=new ArrayList<ClassDto>();
-		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName,content from lecture where startdate>add_months(sysdate,-1) order by startdate";
-		//1달 전 강의 데이터 까지만 가져옴. 시간순정렬.
+		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName,content from lecture where startdate>=sysdate order by startdate";
+		//오늘 이후 데이터만 가져옴 시간순정렬.
 		try {
 			conn = Connector.getConnection();
 			pstmt=conn.prepareStatement(sql);
@@ -66,11 +66,12 @@ public class ClassDao {
 				bean.setTotalDate(totalDate);
 				bean.setTeacherName(rs.getString("teacherName"));
 				bean.setContent(rs.getString("content"));
-				boolean isRecruiting = false;
-				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
-					isRecruiting = true;
-				};
+				boolean isRecruiting = true;
+//				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
+//					isRecruiting = true;
+//				};
 				//날짜를 비교하여 시작날짜가 현재날짜보다 뒤라면 모집중(isRecruiting = true), 아니라면 마감(isRecruiting = false)
+				//구현해야할 기능 : 회원테이블에서 kind가 학생이면서 해당강의를 듣는사람의 숫자가 <30이면 isRe~=true(모집중)아니면 false(마감)
 				bean.setRecruitng(isRecruiting);
 				list.add(bean);
 			}
