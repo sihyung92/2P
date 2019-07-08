@@ -1,3 +1,6 @@
+
+/* Drop Tables */
+
 DROP TABLE attendance CASCADE CONSTRAINTS;
 DROP TABLE attendanceKind CASCADE CONSTRAINTS;
 DROP TABLE bbsKind CASCADE CONSTRAINTS;
@@ -5,13 +8,59 @@ DROP TABLE career CASCADE CONSTRAINTS;
 DROP TABLE userCert CASCADE CONSTRAINTS;
 DROP TABLE certification CASCADE CONSTRAINTS;
 DROP TABLE reply CASCADE CONSTRAINTS;
-DROP TABLE lms_bbs CASCADE CONSTRAINTS;
+DROP TABLE lmsBbs CASCADE CONSTRAINTS;
 DROP TABLE score CASCADE CONSTRAINTS;
 DROP TABLE schedule CASCADE CONSTRAINTS;
 DROP TABLE userData CASCADE CONSTRAINTS;
 DROP TABLE lecture CASCADE CONSTRAINTS;
 DROP TABLE userKind CASCADE CONSTRAINTS;
 
+
+
+/* Drop Sequences */
+
+DROP SEQUENCE attendanceKind_seq;
+DROP SEQUENCE attendance_seq;
+DROP SEQUENCE bbsKind_seq;
+DROP SEQUENCE career_seq;
+DROP SEQUENCE certification_seq;
+DROP SEQUENCE lecture_seq;
+DROP SEQUENCE lmsBbs_0_seq;
+DROP SEQUENCE lmsBbs_1_seq;
+DROP SEQUENCE lmsBbs_2_seq;
+DROP SEQUENCE lmsBbs_3_seq;
+DROP SEQUENCE lmsBbs_4_seq;
+DROP SEQUENCE reply_seq;
+DROP SEQUENCE schedule_seq;
+DROP SEQUENCE score_seq;
+DROP SEQUENCE userData_0_seq;
+DROP SEQUENCE userData_1_seq;
+DROP SEQUENCE userData_2_seq;
+DROP SEQUENCE userKind_seq;
+
+
+
+
+/* Create Sequences */
+
+CREATE SEQUENCE attendanceKind_seq;
+CREATE SEQUENCE attendance_seq;
+CREATE SEQUENCE bbsKind_seq;
+CREATE SEQUENCE career_seq;
+CREATE SEQUENCE certification_seq;
+CREATE SEQUENCE lecture_seq;
+CREATE SEQUENCE lmsBbs_0_seq;
+CREATE SEQUENCE lmsBbs_1_seq;
+CREATE SEQUENCE lmsBbs_2_seq;
+CREATE SEQUENCE lmsBbs_3_seq;
+CREATE SEQUENCE lmsBbs_4_seq;
+CREATE SEQUENCE reply_seq;
+CREATE SEQUENCE schedule_seq;
+CREATE SEQUENCE score_seq;
+CREATE SEQUENCE userData_0_seq;
+CREATE SEQUENCE userData_1_seq;
+CREATE SEQUENCE userData_2_seq;
+CREATE SEQUENCE userKind_seq;
 
 
 
@@ -21,19 +70,19 @@ CREATE TABLE attendance
 (
 	num number NOT NULL,
 	day date NOT NULL,
-	-- 0Á¤»óÃâ¼®
-	-- 1°á¼®
-	-- 2Áö°¢
-	-- 3Á¶Åğ
+	-- 0ì •ìƒì¶œì„
+	-- 1ê²°ì„
+	-- 2ì§€ê°
+	-- 3ì¡°í‡´
 	-- 
 	type number NOT NULL,
 	lecNum number NOT NULL,
 	startTime date,
 	endTime date,
 	userNum number NOT NULL,
-	-- 00 ÇĞ»ı
-	-- 01 °­»ç
-	-- 02 °ü¸®ÀÚ
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
 	kind number NOT NULL,
 	PRIMARY KEY (num)
 );
@@ -41,10 +90,10 @@ CREATE TABLE attendance
 
 CREATE TABLE attendanceKind
 (
-	-- 0 Á¤»óÃâ¼®
-	-- 1 °á¼®
-	-- 2 Áö°¢
-	-- 3 Á¶Åğ
+	-- 0 ì •ìƒì¶œì„
+	-- 1 ê²°ì„
+	-- 2 ì§€ê°
+	-- 3 ì¡°í‡´
 	codeNum number NOT NULL,
 	num number,
 	PRIMARY KEY (codeNum)
@@ -53,15 +102,15 @@ CREATE TABLE attendanceKind
 
 CREATE TABLE bbsKind
 (
-	-- 00 °øÁö»çÇ×
-	-- 01 ¼ö¾÷ÀÚ·á
-	-- 02 °úÁ¦
-	-- 03 Áú¹®_ÁúÀÇ
+	-- 00 ê³µì§€ì‚¬í•­
+	-- 01 ìˆ˜ì—…ìë£Œ
+	-- 02 ê³¼ì œ
+	-- 03 ì§ˆë¬¸_ì§ˆì˜
 	codeNum number NOT NULL,
-	-- 00 °øÁö»çÇ×
-	-- 01 ¼ö¾÷ÀÚ·á
-	-- 02 °úÁ¦
-	-- 03 Áú¹®_ÁúÀÇ
+	-- 00 ê³µì§€ì‚¬í•­
+	-- 01 ìˆ˜ì—…ìë£Œ
+	-- 02 ê³¼ì œ
+	-- 03 ì§ˆë¬¸_ì§ˆì˜
 	kind varchar2(50),
 	PRIMARY KEY (codeNum)
 );
@@ -74,9 +123,9 @@ CREATE TABLE career
 	enddate date,
 	company varchar2(100),
 	userNum number NOT NULL,
-	-- 00 ÇĞ»ı
-	-- 01 °­»ç
-	-- 02 °ü¸®ÀÚ
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
 	kind number NOT NULL,
 	PRIMARY KEY (num)
 );
@@ -85,7 +134,7 @@ CREATE TABLE career
 CREATE TABLE certification
 (
 	codeNum number NOT NULL,
-	kind varchar2(50),
+	kind varchar2(80),
 	PRIMARY KEY (codeNum)
 );
 
@@ -99,17 +148,18 @@ CREATE TABLE lecture
 	classroom varchar2(21),
 	content varchar2(2000),
 	attach varchar2(1000),
+	teacherName varchar2(30),
 	PRIMARY KEY (num)
 );
 
 
-CREATE TABLE lms_bbs
+CREATE TABLE lmsBbs
 (
 	listNum number NOT NULL,
-	-- 00 °øÁö»çÇ×
-	-- 01 ¼ö¾÷ÀÚ·á
-	-- 02 °úÁ¦
-	-- 03 Áú¹®_ÁúÀÇ
+	-- 00 ê³µì§€ì‚¬í•­
+	-- 01 ìˆ˜ì—…ìë£Œ
+	-- 02 ê³¼ì œ
+	-- 03 ì§ˆë¬¸_ì§ˆì˜
 	bbsNum number NOT NULL,
 	num number NOT NULL,
 	title varchar2(100),
@@ -129,10 +179,10 @@ CREATE TABLE reply
 	nalja date,
 	id varchar2(50),
 	listNum number NOT NULL,
-	-- 00 °øÁö»çÇ×
-	-- 01 ¼ö¾÷ÀÚ·á
-	-- 02 °úÁ¦
-	-- 03 Áú¹®_ÁúÀÇ
+	-- 00 ê³µì§€ì‚¬í•­
+	-- 01 ìˆ˜ì—…ìë£Œ
+	-- 02 ê³¼ì œ
+	-- 03 ì§ˆë¬¸_ì§ˆì˜
 	bbsNum number NOT NULL,
 	lecNum number NOT NULL,
 	PRIMARY KEY (num)
@@ -148,9 +198,9 @@ CREATE TABLE schedule
 	title varchar2(100),
 	content varchar2(2000),
 	userNum number NOT NULL,
-	-- 00 ÇĞ»ı
-	-- 01 °­»ç
-	-- 02 °ü¸®ÀÚ
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
 	kind number NOT NULL,
 	PRIMARY KEY (num)
 );
@@ -161,9 +211,9 @@ CREATE TABLE score
 	scoreNum number NOT NULL,
 	lecNum number NOT NULL,
 	userNum number NOT NULL,
-	-- 00 ÇĞ»ı
-	-- 01 °­»ç
-	-- 02 °ü¸®ÀÚ
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
 	kind number NOT NULL,
 	firstTest varchar2(10),
 	secondTest varchar2(10),
@@ -176,9 +226,9 @@ CREATE TABLE userCert
 (
 	codeNum number NOT NULL,
 	userNum number NOT NULL,
-	-- 00 ÇĞ»ı
-	-- 01 °­»ç
-	-- 02 °ü¸®ÀÚ
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
 	kind number NOT NULL
 );
 
@@ -186,13 +236,13 @@ CREATE TABLE userCert
 CREATE TABLE userData
 (
 	userNum number NOT NULL,
-	-- 00 ÇĞ»ı
-	-- 01 °­»ç
-	-- 02 °ü¸®ÀÚ
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
 	kind number NOT NULL,
 	lecNum number,
 	id varchar2(50) NOT NULL,
-	pw number NOT NULL,
+	pw varchar2(50) NOT NULL,
 	name varchar2(30) NOT NULL,
 	birth date,
 	phone number,
@@ -205,13 +255,13 @@ CREATE TABLE userData
 
 CREATE TABLE userKind
 (
-	-- 00 ÇĞ»ı
-	-- 01 °­»ç
-	-- 02 °ü¸®ÀÚ
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
 	codeNum number NOT NULL,
-	-- 00 ÇĞ»ı
-	-- 01 °­»ç
-	-- 02 °ü¸®ÀÚ
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
 	kind varchar2(50),
 	PRIMARY KEY (codeNum)
 );
@@ -222,69 +272,125 @@ CREATE TABLE userKind
 
 ALTER TABLE userCert
 	ADD FOREIGN KEY (codeNum)
-	REFERENCES certification (codeNum);
+	REFERENCES certification (codeNum)
+;
 
 
 ALTER TABLE attendance
 	ADD FOREIGN KEY (lecNum)
-	REFERENCES lecture (num);
+	REFERENCES lecture (num)
+;
 
 
-ALTER TABLE lms_bbs
+ALTER TABLE lmsBbs
 	ADD FOREIGN KEY (num)
-	REFERENCES lecture (num);
+	REFERENCES lecture (num)
+;
 
 
 ALTER TABLE score
 	ADD FOREIGN KEY (lecNum)
-	REFERENCES lecture (num);
+	REFERENCES lecture (num)
+;
 
 
 ALTER TABLE userData
 	ADD FOREIGN KEY (lecNum)
-	REFERENCES lecture (num);
+	REFERENCES lecture (num)
+;
 
 
 ALTER TABLE reply
 	ADD FOREIGN KEY (listNum, bbsNum, lecNum)
-	REFERENCES lms_bbs (listNum, bbsNum, num);
+	REFERENCES lmsBbs (listNum, bbsNum, num)
+;
 
 
 ALTER TABLE attendance
 	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind);
+	REFERENCES userData (userNum, kind)
+;
 
 
 ALTER TABLE career
 	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind);
+	REFERENCES userData (userNum, kind)
+;
 
 
 ALTER TABLE schedule
 	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind);
+	REFERENCES userData (userNum, kind)
+;
 
 
 ALTER TABLE score
 	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind);
+	REFERENCES userData (userNum, kind)
+;
 
 
 ALTER TABLE userCert
 	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind);
+	REFERENCES userData (userNum, kind)
+;
 
---dummy
-insert into lecture(num,name,startdate,enddate,classroom,content) values(1,'ÀÀ¿ë SW¿£Áö´Ï¾î¸µ ¾ç¼º°úÁ¤','2019-03-01','2019-08-31','301È£','content');
-insert into lecture(num,name,startdate,enddate,classroom,content) values(2,'UI/UX¿£Áö´Ï¾î¸µ ¾ç¼º°úÁ¤','2019-04-01','2019-09-30','302È£','content');
-insert into lecture(num,name,startdate,enddate,classroom,content) values(3,'ÀÚ¹Ù±â¹İ À¥&¾Û °³¹ßÀÚ ¾ç¼º°úÁ¤','2019-04-01','2019-09-30','303È£','content');
-insert into lecture(num,name,startdate,enddate,classroom,content) values(4,'UI/UX¿£Áö´Ï¾î¸µ ¾ç¼º°úÁ¤','2019-05-01','2019-10-31','304È£','content');
-insert into lecture(num,name,startdate,enddate,classroom,content) values(5,'ÀÀ¿ë SW¿£Áö´Ï¾î¸µ ¾ç¼º°úÁ¤','2019-05-01','2019-10-31','305È£','content');
-insert into lecture(num,name,startdate,enddate,classroom,content) values(6,'ÀÚ¹Ù±â¹İ À¥&¾Û °³¹ßÀÚ ¾ç¼º°úÁ¤','2019-06-01','2019-11-30','306È£','content');
+insert into userKind values (00,'í•™ìƒ');
+insert into userKind values (01,'ê°•ì‚¬');
+insert into userKind values (02,'ê´€ë¦¬ì');
+
+
+insert into LECTURE values (lecture_seq.nextval, 'ì‘ìš© SW ì—”ì§€ë‹ˆì–´ë§ ì–‘ì„±ê³¼ì •','2019-07-01','2019-09-30',
+							'301í˜¸', 'ì»´í“¨í„° í”„ë¡œê·¸ë˜ë° ê¸°ìˆ ','ì‘ìš©_SW_ì—”ì§€ë‹ˆì–´ë§_ì–‘ì„±ê³¼ì •_ì»¤ë¦¬í˜ëŸ¼.doc','ê¹€ì˜ì¡°');
+insert into LECTURE values (lecture_seq.nextval, 'ìë°” ê¸°ë°˜ ì›¹ì•± ê°œë°œì ì–‘ì„±ê³¼ì •','2019-08-01','2019-10-31',
+							'302í˜¸', 'JAVAì— ëŒ€í•´ ê¸°ì´ˆë¶€í„° í•™ìŠµ','ìë°”_ê¸°ë°˜_ì›¹ì•±_ê°œë°œì_ì–‘ì„±ê³¼ì •_ì»¤ë¦¬í˜ëŸ¼.doc','ê¹€ì˜ì¡°');	
+insert into LECTURE values (lecture_seq.nextval, 'ìŠ¤ë§ˆíŠ¸ ì›¹ì•± ì½˜í…ì¸  ì œì‘ ê³¼ì •','2019-09-01','2019-11-30',
+							'303í˜¸', 'ìŠ¤ë§ˆíŠ¸ê¸°ê¸°ì— ì í•©í•œ ë¬¸í™”ì½˜í…ì¸  ì œì‘','ìŠ¤ë§ˆíŠ¸_ì›¹ì•±_ì½˜í…ì¸ _ì œì‘_ê³¼ì •_ì»¤ë¦¬í˜ëŸ¼.doc','ê¹€ì˜ì¡°');
+							
+/*í•™ìƒ*/
+	--userNum number NOT NULL,
+	-- 00 í•™ìƒ
+	-- 01 ê°•ì‚¬
+	-- 02 ê´€ë¦¬ì
+	--kind number NOT NULL,
+	--lecNum number,
+	--id varchar2(50) NOT NULL,
+	--pw varchar2(50) NOT NULL,
+	--name varchar2(30) NOT NULL,
+	--birth date,
+	--phone number,
+	--email varchar2(100),
+	--address varchar2(100),
+	--major varchar2(50),
+	--PRIMARY KEY (userNum, kind)
+insert into userData values (userData_0_seq.nextval, 0, 1, 'stu01','stu01','í•™ìƒ01','1999-09-19',01012345678,'stu01@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','íšŒê³„');
+insert into userData values (userData_0_seq.nextval, 0, 2, 'stu02','stu02','í•™ìƒ02','1998-08-18',01023456789,'stu02@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ì˜ë¬¸');
+insert into userData values (userData_0_seq.nextval, 0, 2, 'stu03','stu03','í•™ìƒ03','1997-07-17',01034567891,'stu03@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ìˆœìˆ˜ë¯¸ìˆ ');
+insert into userData values (userData_0_seq.nextval, 0, 3, 'stu04','stu04','í•™ìƒ04','1996-06-16',01045678912,'stu04@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ì»´í“¨í„°');
+insert into userData values (userData_0_seq.nextval, 0, 3, 'stu05','stu05','í•™ìƒ05','1995-05-15',01056789123,'stu05@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ê²½ì˜');
+insert into userData values (userData_0_seq.nextval, 0, 3, 'stu06','stu06','í•™ìƒ06','1994-04-14',01067891234,'stu06@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ê¸°ê³„ì„¤ê³„');
+
+/*ê°•ì‚¬*/
+insert into userData values (userData_1_seq.nextval, 1, 1, 'tea01','tea01','ê°•ì‚¬01','1985-05-15',01012345678,'tea01@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ê±´ì¶•');
+insert into userData values (userData_1_seq.nextval, 1, 2, 'tea02','tea02','ê°•ì‚¬02','1985-06-16',01023456789,'tea02@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ë””ì§€í„¸ê¸°ê³„');
+insert into userData values (userData_1_seq.nextval, 1, 3, 'tea03','tea03','ê°•ì‚¬03','1985-07-17',01023456788,'tea03@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ì—­ì‚¬êµìœ¡');
+
+
+/*ê´€ë¦¬ì*/
+insert into userData values (userData_2_seq.nextval, 2, '', 'adm01','adm01','ê´€ë¦¬ì01','1975-05-15',01012345678,'adm01@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','');
+insert into userData values (userData_2_seq.nextval, 2, '', 'adm02','adm02','ê´€ë¦¬ì02','1965-05-15',01011111111,'adm02@bit.com','ê²½ê¸°ë„','');
+
+
+insert into certification values (certification_seq.nextval,'ì •ë³´ì²˜ë¦¬ê¸°ì‚¬');
+insert into certification values (certification_seq.nextval,'ì •ë³´ê´€ë¦¬ê¸°ëŠ¥ì‚¬');
+insert into certification values (certification_seq.nextval,'ë©€í‹°ë¯¸ë””ì–´ì½˜í…ì¸ ì œì‘ì „ë¬¸ê°€');
+
+
+insert into userCert values(1,1,1);
+insert into userCert values(1,2,1);
+insert into userCert values(1,3,1);
+
+insert into userCert values(2,2,1);
+insert into userCert values(3,3,1);
 commit;
-
-
-
-
-
 
