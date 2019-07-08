@@ -1,4 +1,3 @@
-
 /* Drop Tables */
 
 DROP TABLE attendance CASCADE CONSTRAINTS;
@@ -70,19 +69,19 @@ CREATE TABLE attendance
 (
 	num number NOT NULL,
 	day date NOT NULL,
-	-- 0ì •ìƒì¶œì„
-	-- 1ê²°ì„
-	-- 2ì§€ê°
-	-- 3ì¡°í‡´
+	-- 0Á¤»óÃâ¼®
+	-- 1°á¼®
+	-- 2Áö°¢
+	-- 3Á¶Åğ
 	-- 
 	type number NOT NULL,
 	lecNum number NOT NULL,
 	startTime date,
 	endTime date,
 	userNum number NOT NULL,
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	kind number NOT NULL,
 	PRIMARY KEY (num)
 );
@@ -90,10 +89,10 @@ CREATE TABLE attendance
 
 CREATE TABLE attendanceKind
 (
-	-- 0 ì •ìƒì¶œì„
-	-- 1 ê²°ì„
-	-- 2 ì§€ê°
-	-- 3 ì¡°í‡´
+	-- 0 Á¤»óÃâ¼®
+	-- 1 °á¼®
+	-- 2 Áö°¢
+	-- 3 Á¶Åğ
 	codeNum number NOT NULL,
 	num number,
 	PRIMARY KEY (codeNum)
@@ -102,15 +101,15 @@ CREATE TABLE attendanceKind
 
 CREATE TABLE bbsKind
 (
-	-- 00 ê³µì§€ì‚¬í•­
-	-- 01 ìˆ˜ì—…ìë£Œ
-	-- 02 ê³¼ì œ
-	-- 03 ì§ˆë¬¸_ì§ˆì˜
+	-- 00 °øÁö»çÇ×
+	-- 01 ¼ö¾÷ÀÚ·á
+	-- 02 °úÁ¦
+	-- 03 Áú¹®_ÁúÀÇ
 	codeNum number NOT NULL,
-	-- 00 ê³µì§€ì‚¬í•­
-	-- 01 ìˆ˜ì—…ìë£Œ
-	-- 02 ê³¼ì œ
-	-- 03 ì§ˆë¬¸_ì§ˆì˜
+	-- 00 °øÁö»çÇ×
+	-- 01 ¼ö¾÷ÀÚ·á
+	-- 02 °úÁ¦
+	-- 03 Áú¹®_ÁúÀÇ
 	kind varchar2(50),
 	PRIMARY KEY (codeNum)
 );
@@ -123,9 +122,9 @@ CREATE TABLE career
 	enddate date,
 	company varchar2(100),
 	userNum number NOT NULL,
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	kind number NOT NULL,
 	PRIMARY KEY (num)
 );
@@ -156,10 +155,10 @@ CREATE TABLE lecture
 CREATE TABLE lmsBbs
 (
 	listNum number NOT NULL,
-	-- 00 ê³µì§€ì‚¬í•­
-	-- 01 ìˆ˜ì—…ìë£Œ
-	-- 02 ê³¼ì œ
-	-- 03 ì§ˆë¬¸_ì§ˆì˜
+	-- 00 °øÁö»çÇ×
+	-- 01 ¼ö¾÷ÀÚ·á
+	-- 02 °úÁ¦
+	-- 03 Áú¹®_ÁúÀÇ
 	bbsNum number NOT NULL,
 	num number NOT NULL,
 	title varchar2(100),
@@ -179,10 +178,10 @@ CREATE TABLE reply
 	nalja date,
 	id varchar2(50),
 	listNum number NOT NULL,
-	-- 00 ê³µì§€ì‚¬í•­
-	-- 01 ìˆ˜ì—…ìë£Œ
-	-- 02 ê³¼ì œ
-	-- 03 ì§ˆë¬¸_ì§ˆì˜
+	-- 00 °øÁö»çÇ×
+	-- 01 ¼ö¾÷ÀÚ·á
+	-- 02 °úÁ¦
+	-- 03 Áú¹®_ÁúÀÇ
 	bbsNum number NOT NULL,
 	lecNum number NOT NULL,
 	PRIMARY KEY (num)
@@ -198,9 +197,9 @@ CREATE TABLE schedule
 	title varchar2(100),
 	content varchar2(2000),
 	userNum number NOT NULL,
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	kind number NOT NULL,
 	PRIMARY KEY (num)
 );
@@ -211,9 +210,9 @@ CREATE TABLE score
 	scoreNum number NOT NULL,
 	lecNum number NOT NULL,
 	userNum number NOT NULL,
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	kind number NOT NULL,
 	firstTest varchar2(10),
 	secondTest varchar2(10),
@@ -226,9 +225,9 @@ CREATE TABLE userCert
 (
 	codeNum number NOT NULL,
 	userNum number NOT NULL,
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	kind number NOT NULL
 );
 
@@ -236,9 +235,9 @@ CREATE TABLE userCert
 CREATE TABLE userData
 (
 	userNum number NOT NULL,
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	kind number NOT NULL,
 	lecNum number,
 	id varchar2(50) NOT NULL,
@@ -255,13 +254,13 @@ CREATE TABLE userData
 
 CREATE TABLE userKind
 (
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	codeNum number NOT NULL,
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	kind varchar2(50),
 	PRIMARY KEY (codeNum)
 );
@@ -335,23 +334,23 @@ ALTER TABLE userCert
 	REFERENCES userData (userNum, kind)
 ;
 
-insert into userKind values (0,'í•™ìƒ');
-insert into userKind values (1,'ê°•ì‚¬');
-insert into userKind values (2,'ê´€ë¦¬ì');
+insert into userKind values (0,'ÇĞ»ı');
+insert into userKind values (1,'°­»ç');
+insert into userKind values (2,'°ü¸®ÀÚ');
 
 
-insert into LECTURE values (lecture_seq.nextval, 'ì‘ìš© SW ì—”ì§€ë‹ˆì–´ë§ ì–‘ì„±ê³¼ì •','2019-07-01','2019-09-30',
-							'301í˜¸', 'ì»´í“¨í„° í”„ë¡œê·¸ë˜ë° ê¸°ìˆ ','ì‘ìš©_SW_ì—”ì§€ë‹ˆì–´ë§_ì–‘ì„±ê³¼ì •_ì»¤ë¦¬í˜ëŸ¼.doc','ê¹€ì˜ì¡°');
-insert into LECTURE values (lecture_seq.nextval, 'ìë°” ê¸°ë°˜ ì›¹ì•± ê°œë°œì ì–‘ì„±ê³¼ì •','2019-08-01','2019-10-31',
-							'302í˜¸', 'JAVAì— ëŒ€í•´ ê¸°ì´ˆë¶€í„° í•™ìŠµ','ìë°”_ê¸°ë°˜_ì›¹ì•±_ê°œë°œì_ì–‘ì„±ê³¼ì •_ì»¤ë¦¬í˜ëŸ¼.doc','ê¹€ì˜ì¡°');	
-insert into LECTURE values (lecture_seq.nextval, 'ìŠ¤ë§ˆíŠ¸ ì›¹ì•± ì½˜í…ì¸  ì œì‘ ê³¼ì •','2019-09-01','2019-11-30',
-							'303í˜¸', 'ìŠ¤ë§ˆíŠ¸ê¸°ê¸°ì— ì í•©í•œ ë¬¸í™”ì½˜í…ì¸  ì œì‘','ìŠ¤ë§ˆíŠ¸_ì›¹ì•±_ì½˜í…ì¸ _ì œì‘_ê³¼ì •_ì»¤ë¦¬í˜ëŸ¼.doc','ê¹€ì˜ì¡°');
+insert into LECTURE values (lecture_seq.nextval, 'ÀÀ¿ë SW ¿£Áö´Ï¾î¸µ ¾ç¼º°úÁ¤','2019-07-01','2019-09-30',
+							'301È£', 'ÄÄÇ»ÅÍ ÇÁ·Î±×·¡¹Ö ±â¼ú','ÀÀ¿ë_SW_¿£Áö´Ï¾î¸µ_¾ç¼º°úÁ¤_Ä¿¸®Å§·³.doc','±è¿µÁ¶');
+insert into LECTURE values (lecture_seq.nextval, 'ÀÚ¹Ù ±â¹İ À¥¾Û °³¹ßÀÚ ¾ç¼º°úÁ¤','2019-08-01','2019-10-31',
+							'302È£', 'JAVA¿¡ ´ëÇØ ±âÃÊºÎÅÍ ÇĞ½À','ÀÚ¹Ù_±â¹İ_À¥¾Û_°³¹ßÀÚ_¾ç¼º°úÁ¤_Ä¿¸®Å§·³.doc','±è¿µÁ¶');	
+insert into LECTURE values (lecture_seq.nextval, '½º¸¶Æ® À¥¾Û ÄÜÅÙÃ÷ Á¦ÀÛ °úÁ¤','2019-09-01','2019-11-30',
+							'303È£', '½º¸¶Æ®±â±â¿¡ ÀûÇÕÇÑ ¹®È­ÄÜÅÙÃ÷ Á¦ÀÛ','½º¸¶Æ®_À¥¾Û_ÄÜÅÙÃ÷_Á¦ÀÛ_°úÁ¤_Ä¿¸®Å§·³.doc','±è¿µÁ¶');
 							
-/*í•™ìƒ*/
+/*ÇĞ»ı*/
 	--userNum number NOT NULL,
-	-- 00 í•™ìƒ
-	-- 01 ê°•ì‚¬
-	-- 02 ê´€ë¦¬ì
+	-- 00 ÇĞ»ı
+	-- 01 °­»ç
+	-- 02 °ü¸®ÀÚ
 	--kind number NOT NULL,
 	--lecNum number,
 	--id varchar2(50) NOT NULL,
@@ -363,27 +362,27 @@ insert into LECTURE values (lecture_seq.nextval, 'ìŠ¤ë§ˆíŠ¸ ì›¹ì•± ì½˜í…ì¸  ì œ
 	--address varchar2(100),
 	--major varchar2(50),
 	--PRIMARY KEY (userNum, kind)
-insert into userData values (userData_0_seq.nextval, 0, 1, 'stu01','stu01','í•™ìƒ01','1999-09-19',01012345678,'stu01@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','íšŒê³„');
-insert into userData values (userData_0_seq.nextval, 0, 2, 'stu02','stu02','í•™ìƒ02','1998-08-18',01023456789,'stu02@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ì˜ë¬¸');
-insert into userData values (userData_0_seq.nextval, 0, 2, 'stu03','stu03','í•™ìƒ03','1997-07-17',01034567891,'stu03@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ìˆœìˆ˜ë¯¸ìˆ ');
-insert into userData values (userData_0_seq.nextval, 0, 3, 'stu04','stu04','í•™ìƒ04','1996-06-16',01045678912,'stu04@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ì»´í“¨í„°');
-insert into userData values (userData_0_seq.nextval, 0, 3, 'stu05','stu05','í•™ìƒ05','1995-05-15',01056789123,'stu05@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ê²½ì˜');
-insert into userData values (userData_0_seq.nextval, 0, 3, 'stu06','stu06','í•™ìƒ06','1994-04-14',01067891234,'stu06@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ê¸°ê³„ì„¤ê³„');
+insert into userData values (userData_0_seq.nextval, 0, 1, 'stu01','stu01','ÇĞ»ı01','1999-09-19',01012345678,'stu01@bit.com','°æ±âµµ ¾È¾ç½Ã','È¸°è');
+insert into userData values (userData_0_seq.nextval, 0, 2, 'stu02','stu02','ÇĞ»ı02','1998-08-18',01023456789,'stu02@bit.com','°æ±âµµ ¾È¾ç½Ã','¿µ¹®');
+insert into userData values (userData_0_seq.nextval, 0, 2, 'stu03','stu03','ÇĞ»ı03','1997-07-17',01034567891,'stu03@bit.com','°æ±âµµ ¾È¾ç½Ã','¼ø¼ö¹Ì¼ú');
+insert into userData values (userData_0_seq.nextval, 0, 3, 'stu04','stu04','ÇĞ»ı04','1996-06-16',01045678912,'stu04@bit.com','°æ±âµµ ¾È¾ç½Ã','ÄÄÇ»ÅÍ');
+insert into userData values (userData_0_seq.nextval, 0, 3, 'stu05','stu05','ÇĞ»ı05','1995-05-15',01056789123,'stu05@bit.com','°æ±âµµ ¾È¾ç½Ã','°æ¿µ');
+insert into userData values (userData_0_seq.nextval, 0, 3, 'stu06','stu06','ÇĞ»ı06','1994-04-14',01067891234,'stu06@bit.com','°æ±âµµ ¾È¾ç½Ã','±â°è¼³°è');
 
-/*ê°•ì‚¬*/
-insert into userData values (userData_1_seq.nextval, 1, 1, 'tea01','tea01','ê°•ì‚¬01','1985-05-15',01012345678,'tea01@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ê±´ì¶•');
-insert into userData values (userData_1_seq.nextval, 1, 2, 'tea02','tea02','ê°•ì‚¬02','1985-06-16',01023456789,'tea02@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ë””ì§€í„¸ê¸°ê³„');
-insert into userData values (userData_1_seq.nextval, 1, 3, 'tea03','tea03','ê°•ì‚¬03','1985-07-17',01023456788,'tea03@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','ì—­ì‚¬êµìœ¡');
-
-
-/*ê´€ë¦¬ì*/
-insert into userData values (userData_2_seq.nextval, 2, '', 'adm01','adm01','ê´€ë¦¬ì01','1975-05-15',01012345678,'adm01@bit.com','ê²½ê¸°ë„ ì•ˆì–‘ì‹œ','');
-insert into userData values (userData_2_seq.nextval, 2, '', 'adm02','adm02','ê´€ë¦¬ì02','1965-05-15',01011111111,'adm02@bit.com','ê²½ê¸°ë„','');
+/*°­»ç*/
+insert into userData values (userData_1_seq.nextval, 1, 1, 'tea01','tea01','°­»ç01','1985-05-15',01012345678,'tea01@bit.com','°æ±âµµ ¾È¾ç½Ã','°ÇÃà');
+insert into userData values (userData_1_seq.nextval, 1, 2, 'tea02','tea02','°­»ç02','1985-06-16',01023456789,'tea02@bit.com','°æ±âµµ ¾È¾ç½Ã','µğÁöÅĞ±â°è');
+insert into userData values (userData_1_seq.nextval, 1, 3, 'tea03','tea03','°­»ç03','1985-07-17',01023456788,'tea03@bit.com','°æ±âµµ ¾È¾ç½Ã','¿ª»ç±³À°');
 
 
-insert into certification values (certification_seq.nextval,'ì •ë³´ì²˜ë¦¬ê¸°ì‚¬');
-insert into certification values (certification_seq.nextval,'ì •ë³´ê´€ë¦¬ê¸°ëŠ¥ì‚¬');
-insert into certification values (certification_seq.nextval,'ë©€í‹°ë¯¸ë””ì–´ì½˜í…ì¸ ì œì‘ì „ë¬¸ê°€');
+/*°ü¸®ÀÚ*/
+insert into userData values (userData_2_seq.nextval, 2, '', 'adm01','adm01','°ü¸®ÀÚ01','1975-05-15',01012345678,'adm01@bit.com','°æ±âµµ ¾È¾ç½Ã','');
+insert into userData values (userData_2_seq.nextval, 2, '', 'adm02','adm02','°ü¸®ÀÚ02','1965-05-15',01011111111,'adm02@bit.com','°æ±âµµ','');
+
+
+insert into certification values (certification_seq.nextval,'Á¤º¸Ã³¸®±â»ç');
+insert into certification values (certification_seq.nextval,'Á¤º¸°ü¸®±â´É»ç');
+insert into certification values (certification_seq.nextval,'¸ÖÆ¼¹Ìµğ¾îÄÜÅÙÃ÷Á¦ÀÛÀü¹®°¡');
 
 
 insert into userCert values(1,1,1);
@@ -392,5 +391,121 @@ insert into userCert values(1,3,1);
 
 insert into userCert values(2,2,1);
 insert into userCert values(3,3,1);
+
+insert into bbsKind values (00,'°øÁö»çÇ×');
+insert into bbsKind values (01,'¼ö¾÷ÀÚ·á');
+insert into bbsKind values (02,'°úÁ¦');
+insert into bbsKind values (03,'Áú¹®');
+
+
+/*°­ÀÇ³Ñ¹ö 1 sw¿£Áö´Ï¾î¸µ °­ÀÇ½Ç °Ô½ÃÆÇ*/
+/*°øÁö»çÇ×*/
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,1,'notice','welcome',
+		'adm01','2019-07-01',11,'curriculum.doc');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,1,'notice1','welcome1',
+		'adm01','2019-07-02',22,'');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,1,'notice2','welcome2',
+		'adm01','2019-07-03',33,'information.doc');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,1,'notice3','welcome3',
+		'adm02','2019-07-04',44,'');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,1,'notice4','welcome4',
+		'adm02','2019-07-05',55,'');
+
+/*¼ö¾÷ÀÚ·á*/
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,1,'data','for class',
+		'tea01','2019-07-01',11,'1.ppt');
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,1,'data2','for class2',
+		'tea01','2019-07-03',22,'2.ppt');
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,1,'data3','for class3',
+		'tea01','2019-07-07',33,'3.ppt');
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,1,'data4','for class4',
+		'tea01','2019-07-09',44,'4.ppt');
+
+/*°úÁ¦*/
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,1,'assigment','hello, world!',
+		'tea01','2019-07-01',11,'');
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,1,'assigment2','data type',
+		'tea01','2019-07-03',22,'');
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,1,'assigment3','loop',
+		'tea01','2019-07-07',33,'resources.txt');
+
+/*Áú¹®*/
+insert into lmsBbs values (lmsBbs_3_seq.nextval,03,1,'q1','help',
+		'stu01','2019-07-01',11,'TT.java');
+insert into lmsBbs values (lmsBbs_3_seq.nextval,03,1,'qu2','help me',
+		'stu01','2019-07-03',22,'ex03.java');
+
+/*°­ÀÇ³Ñ¹ö 2 ÀÚ¹Ù ±â¹İ °­ÀÇ½Ç °Ô½ÃÆÇ*/
+/*°øÁö»çÇ×*/
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,2,'notice','welcome to class2',
+		'adm01','2019-07-01',11,'curriculum.doc');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,2,'notice1','welcome1',
+		'adm01','2019-07-02',22,'');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,2,'notice2','welcome2',
+		'adm01','2019-07-03',33,'information.doc');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,2,'notice3','welcome3',
+		'adm02','2019-07-04',44,'');
+
+/*¼ö¾÷ÀÚ·á*/
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,2,'data','for class',
+		'tea02','2019-07-01',11,'1.ppt');
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,2,'data2','for class2',
+		'tea02','2019-07-03',22,'2.ppt');
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,2,'data3','for class3',
+		'tea02','2019-07-07',33,'3.ppt');
+
+/*°úÁ¦*/
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,2,'assigment','hello, world!',
+		'tea02','2019-07-01',11,'');
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,2,'assigment2','data type',
+		'tea02','2019-07-03',22,'');
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,2,'assigment3','loop',
+		'tea02','2019-07-07',33,'resources.txt');
+
+/*Áú¹®*/
+insert into lmsBbs values (lmsBbs_3_seq.nextval,03,2,'q1 class2','help',
+		'stu02','2019-07-01',11,'TT.java');
+insert into lmsBbs values (lmsBbs_3_seq.nextval,03,2,'qu2','help me',
+		'stu02','2019-07-03',22,'ex03.java');
+insert into lmsBbs values (lmsBbs_3_seq.nextval,03,2,'qu3','hellllp me',
+		'stu03','2019-07-05',23,'ex05.java');
+
+
+/*°­ÀÇ³Ñ¹ö 3 ½º¸¶Æ® À¥¾Û °Ô½ÃÆÇ*/
+/*°øÁö»çÇ×*/
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,3,'notice','welcome to class3',
+		'adm01','2019-07-01',11,'curriculum.doc');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,3,'notice1','welcome1',
+		'adm01','2019-07-02',22,'');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,3,'notice2','welcome2',
+		'adm01','2019-07-03',33,'information.doc');
+insert into lmsBbs values (lmsBbs_0_seq.nextval,00,3,'notice3','welcome3',
+		'adm02','2019-07-04',44,'');
+
+/*¼ö¾÷ÀÚ·á*/
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,3,'data','for class',
+		'tea03','2019-07-01',11,'1.ppt');
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,3,'data2','for class3',
+		'tea03','2019-07-03',22,'2.ppt');
+insert into lmsBbs values (lmsBbs_1_seq.nextval,01,3,'data3','for class3',
+		'tea03','2019-07-07',33,'3.ppt');
+
+/*°úÁ¦*/
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,3,'assigment','hello, world!',
+		'tea03','2019-07-01',11,'');
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,3,'assigment2','data type',
+		'tea03','2019-07-03',22,'');
+insert into lmsBbs values (lmsBbs_2_seq.nextval,02,3,'assigment3','loop',
+		'tea03','2019-07-07',33,'resources.txt');
+
+/*Áú¹®*/
+insert into lmsBbs values (lmsBbs_3_seq.nextval,03,3,'q1 class3','help',
+		'stu03','2019-07-01',11,'TT.java');
+insert into lmsBbs values (lmsBbs_3_seq.nextval,03,3,'qu2','help me',
+		'stu04','2019-07-03',22,'ex03.java');
+insert into lmsBbs values (lmsBbs_3_seq.nextval,03,3,'qu3','hellllp me',
+		'stu05','2019-07-05',23,'ex05.java');
+		
+		
 commit;
 
