@@ -1,0 +1,227 @@
+  #content {
+                margin: 10px auto;
+                width: 700px;
+                margin: 0px auto;
+                position: relative;
+                top: 120px;
+            }
+
+            #content>div {
+                margin: 10px auto 0px 40px;
+            }
+
+            #labelback {
+                margin: 0px;
+                display: block;
+                width: 150px;
+                height: 1080px;
+                /*height 학생일때 430px 강사일때 1080px*/
+                float: left;
+                background-color: rgba(00, 00, 00, 0.1);
+                position: relative;
+                top: 10px;
+                z-index: 1;
+            }
+
+            #content #basicinfo {
+                position: relative;
+                z-index: 1;
+                width: 800px;
+                left: -150px;
+                top: 20px;
+            }
+
+            #content #teacherinfo {
+                position: relative;
+                width: 800px;
+                left: -150px;
+                top: 80px;
+            }
+
+            #content>div>div>div {
+                height: 40px;
+                margin: 0px;
+            }
+
+            #content input {
+                height: 25px;
+                margin: 5px auto 0px 10px;
+            }
+
+            #content select {
+                height: 30px;
+                margin: 0px auto 0px 10px;
+            }
+
+            #teacherinfo #div1 {
+                position: relative;
+
+            }
+
+            #teacherinfo #div2 {
+                position: relative;
+                top: 310px;
+                left: 0px;
+                width: 780px;
+            }
+
+           #teacherinfo textarea {
+                width: 350px;
+                height: 100px;
+                margin: 0px auto 0px 10px;
+                resize: none;
+                overflow-y: scroll;
+
+            }
+
+            #teacherinfo .addfile input {
+                width: 280px;
+            }
+
+            #teacherinfo .areala {
+                position: relative;
+                top: -80px;
+            }
+
+            #teacherinfo .plusla {
+                position: relative;
+                top: -20px;
+            }
+
+            #teacherinfo input[type="submit"] {
+                position: relative;
+                width: 100px;
+                height: 30px;
+                left: 260px;
+                top: -80px;
+            }
+
+            #teacherinfo form {
+                width: 600px;
+                position: relative;
+                left: 150px;
+                top: -80px;
+            }
+
+            #content form label {
+                width: 80px;
+                height: 25px;
+            }
+
+            #content form input {
+                width: 175px;
+            }
+
+            #content h1+p {
+                font-size: 13px;
+                margin: 0px auto 70px 10px;
+            }
+
+            label {
+                display: inline-block;
+                width: 120px;
+                height: 50px;
+                margin: 0px 10px;
+            }
+
+            #brth select+label {
+                width: 20px;
+            }
+
+            /*이메일*/
+            #emaildiv select {
+                margin: 0px;
+                width: 100px;
+            }
+
+            #emaildiv label {
+                width: 12px;
+                margin: 0px;
+            }
+
+            #emaildiv label:nth-child(1) {
+                width: 120px;
+                margin: 0px 10px;
+            }
+
+            #emaildiv #email1 {
+                width: 100px;
+                margin: 0px 0px 0px 10px;
+            }
+
+            #emaildiv #email2 {
+                width: 120px;
+                margin: 0px;
+            }
+
+            /*주소*/
+            #addr {
+                width: 700px;
+                margin: 10px 0px;
+            }
+
+            #addr label {
+                height: 22px;
+            }
+
+            #addr input {
+                display: inline-block;
+                width: 350px;
+                margin: 2px 2px 0px 10px;
+            }
+
+            #addr #addr3 {
+                width: 100px;
+            }
+
+            #addr #addrbtn {
+                width: 70px;
+            }
+
+            /*span check*/
+            #content span {
+                color: royalblue;
+                font-size: 14px;
+                font-weight: bold;
+                display: none;
+            }
+
+            /*전체버튼*/
+            button,
+            input[type="submit"] {
+                background-color: white;
+                border: 1px solid black;
+                height: 28px;
+                width: 50px;
+                position: relative;
+                top: 2px;
+            }
+
+            /*수정버튼*/
+            #editbtn {
+                width: 150px;
+                height: 30px;
+                background-color: darkblue;
+                border: 1px solid black;
+                color: white;
+                font-weight: bold;
+                margin: 670px auto 100px 50px;
+                /*            학생일때  margin: 110px auto 100px 50px;
+              강사일때  margin: 670px auto 100px 50px;*/
+                border-radius: 4px;
+            }
+
+            /*h3 회원기본정보 앞에 작은 파란네모*/
+            #point {
+                margin: 5px;
+                display: block;
+                border: 1px solid darkblue;
+                width: 5px;
+                height: 16px;
+                background-color: darkblue;
+                float: left;
+            }
+
+            #footer {
+                top: 150px;
+            }
