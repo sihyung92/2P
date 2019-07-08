@@ -46,17 +46,17 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
 
-/*             //로그인버튼 클릭
-            $("#loginbtn").click(function() {
-                $("#nologin").css("display", "none");
-                $("#loginstu").css("display", "block");
-            });
-
             //로그아웃버튼 클릭
             $("#logoutbtn").click(function() {
-                $("#nologin").css("display", "block");
-                $("#loginstu").css("display", "none");
-                $("#logintea").css("display", "none");
+               location.href="<%=request.getContextPath()%>/LMS/logout.bit";
+            });
+           	
+            //로그인버튼 클릭시 
+/*             $("#loginbtn").click(function(){
+            	if(requset.getAttribute("loginWrong")!=null){
+            		out.println(request.getAttribute("loginWrong"));
+            		
+            	}		
             });
              */
           });
@@ -64,6 +64,12 @@
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
+<%
+     		if (request.getAttribute("loginWrong") != null) {
+    			out.println(request.getAttribute("loginWrong"));
+    			request.removeAttribute("loginWrong");
+    		}
+%>
   <!--    헤더     -->
     <div id="header">
         <div>
@@ -80,14 +86,16 @@
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>환영합니다
+                <p><%if(session.getAttribute("isLogin")!=null) {
+                	out.println(session.getAttribute("id")+" 님");
+                }else{%>환영합니다<%}%>
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
-                    <li><a href="#">로그아웃</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
             </div>
         </div>
@@ -139,8 +147,10 @@
         <!--    로그인     -->
         <div id="logincontent">
         <!-- ***************로그인 전 상황*********** -->
-        <%if(session.getAttribute("kind")==null){ %>
-<form action="<%=request.getContextPath()%>/lms/intro.bit" method="post">
+        <%
+        System.out.println("userKind = "+session.getAttribute("userKind"));
+if(session.getAttribute("userKind")==null){%> 
+		<form action="<%=request.getContextPath()%>/LMS/intro.bit" method="post">
             <div id="nologin">
                 <div>
                     <label for="id">ID</label>
@@ -151,9 +161,10 @@
                 <input type="submit" id="loginbtn" value="로그인"/>
                 <button id="idpwckbtn">아이디/비밀번호 찾기</button>
             </div>
-</form>
+		</form>
+
         <!-- ****************학생 로그인 상황************* -->
-<%}else if (session.getAttribute("kind").equals("0")){ %>
+<%}else if ((Integer)session.getAttribute("userKind")==0){ %>
             <div id="loginstu">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
@@ -163,7 +174,7 @@
                 </div>
             </div>
         <!-- ***************강사 로그인 상황************ -->
-<%}else if(session.getAttribute("kind").equals("1")){%>
+<%}else if((Integer)session.getAttribute("userKind")==1){%>
             <div id="logintea">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
@@ -173,7 +184,7 @@
                 </div>
             </div>
         <!-- **************관리자 로그인 상황************** -->
-<%}else if(session.getAttribute("kind").equals("2")){%>
+<%}else if((Integer)session.getAttribute("userKind")==2){%>
             <div id="loginadm">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <button>회원관리</button>

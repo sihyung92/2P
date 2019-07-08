@@ -1,7 +1,6 @@
 package com.bit.model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +22,9 @@ public class UserDao {
 			pstmt.setString(2, pw);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
+				bean = new UserDto();
 				bean.setUserNum(rs.getInt("userNum"));
-				bean.setKind(rs.getInt("kind"));
+				bean.setUserKind(rs.getInt("userKind"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -35,19 +35,21 @@ public class UserDao {
 		}
 		return bean;
 	}
+
 	public UserDto getList() {
 		return bean;
 	}
+
 	public UserDto detail(String id) {
 		String sql = "SELECT * FROM userData WHERE id=?";
-		conn=Connector.getConnection();
+		conn = Connector.getConnection();
 		try {
-			pstmt=conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
 				bean.setUserNum(rs.getInt("userNum"));
-				bean.setKind(rs.getInt("kind"));
+				bean.setUserKind(rs.getInt("userKind"));
 				bean.setAddress(rs.getString("address"));
 				bean.setBirth(rs.getDate("birth"));
 				bean.setEmail(rs.getString("email"));
@@ -67,10 +69,11 @@ public class UserDao {
 		}
 		return bean;
 	}
-	
-	public void edit(String pw, String address, String birth, String email, String major, int phone) {
-		String sql ="UPDATE userData SET pw=?, address=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=?";
-		conn=Connector.getConnection();
+
+	public void edit(String pw, String address, String birth, String email,
+			String major, int phone) {
+		String sql = "UPDATE userData SET pw=?, address=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=?";
+		conn = Connector.getConnection();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, pw);
@@ -78,7 +81,7 @@ public class UserDao {
 			pstmt.setString(3, birth);
 			pstmt.setString(4, email);
 			pstmt.setString(5, major);
-			pstmt.setInt(6,phone);
+			pstmt.setInt(6, phone);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -86,5 +89,5 @@ public class UserDao {
 			Connector.close(conn);
 		}
 	}
-	
+
 }

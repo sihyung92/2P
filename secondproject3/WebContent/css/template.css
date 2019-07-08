@@ -84,7 +84,11 @@
             top: -35px;
             left: -100px;
         }
-
+		#header #top p{
+		 font-size: 15px;
+		 font-weight: bold;
+		}
+		
         #header #topicon {
             position: relative;
             top: 5px;
