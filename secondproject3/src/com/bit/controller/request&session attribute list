@@ -1,0 +1,8 @@
+session attribute 목록
+LogoutController => (로그인 이후 담겨있음)
+			session.setAttribute("isLogin", true);
+			session.setAttribute("id", bean.getId());
+			session.setAttribute("pw", bean.getPw());
+			session.setAttribute("userNum", bean.getUserNum());
+			session.setAttribute("kind", bean.getKind());
+			
