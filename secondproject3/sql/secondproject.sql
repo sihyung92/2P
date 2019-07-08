@@ -335,9 +335,9 @@ ALTER TABLE userCert
 	REFERENCES userData (userNum, kind)
 ;
 
-insert into userKind values (00,'학생');
-insert into userKind values (01,'강사');
-insert into userKind values (02,'관리자');
+insert into userKind values (0,'학생');
+insert into userKind values (1,'강사');
+insert into userKind values (2,'관리자');
 
 
 insert into LECTURE values (lecture_seq.nextval, '응용 SW 엔지니어링 양성과정','2019-07-01','2019-09-30',
