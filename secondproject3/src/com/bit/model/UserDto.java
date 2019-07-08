@@ -1,5 +1,7 @@
 package com.bit.model;
 
+import java.sql.Date;
+
 public class UserDto {
 	private int userNum;
 	private int kind;
@@ -7,7 +9,7 @@ public class UserDto {
 	private String pw;
 	private int lecNum;
 	private String name;
-	private String birth;
+	private Date birth;
 	private int phone;
 	private String email;
 	private String address;
@@ -49,10 +51,10 @@ public class UserDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getBirth() {
+	public Date getBirth() {
 		return birth;
 	}
-	public void setBirth(String birth) {
+	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
 	public int getPhone() {

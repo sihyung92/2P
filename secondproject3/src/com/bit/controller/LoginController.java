@@ -13,13 +13,13 @@ import javax.servlet.http.HttpSession;
 import com.bit.model.UserDao;
 import com.bit.model.UserDto;
 
-@WebServlet("/lms/intro.bit")
+@WebServlet("/LMS/intro.bit")
 public class LoginController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("LoginController / method : get");
-		RequestDispatcher rd = req.getRequestDispatcher("/lms/intro.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/LMS/intro.jsp");
 		//받는 곳에서 request.getAttribute("loginWrong")!=null 이면 out.println(request.getAttribute(loginWrong))시켜야함
 		//session.getAttribute("kind")에 따라 jquery로 제어
 		rd.forward(req, resp);

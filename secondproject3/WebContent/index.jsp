@@ -151,7 +151,7 @@ table.table01 {
 					<li><a href="#">학원소개</a></li>
 					<li><a href="#">오시는길</a></li>
 					<li><a href="<%=request.getContextPath()%>/lecture.bit">강좌소개</a></li>
-					<li><a href="#">학습관리시스템</a></li>
+					<li><a href="<%=request.getContextPath()%>/LMS/intro.bit">학습관리시스템</a></li>
 				</ul>
 			</nav>
 		</div>
