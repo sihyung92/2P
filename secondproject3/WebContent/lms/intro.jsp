@@ -48,7 +48,7 @@
 
             //로그아웃버튼 클릭
             $("#logoutbtn").click(function() {
-               location.href="<%=request.getContextPath()%>/LMS/logout.bit";
+               location.href="<%=request.getContextPath()%>/lms/logout.bit";
             });
            	
             //로그인버튼 클릭시 
@@ -149,7 +149,7 @@
         <%
         System.out.println("userKind = "+session.getAttribute("userKind"));
 if(session.getAttribute("userKind")==null){%> 
-		<form action="<%=request.getContextPath()%>/LMS/intro.bit" method="post">
+		<form action="<%=request.getContextPath()%>/lms/intro.bit" method="post">
             <div id="nologin">
                 <div>
                     <label for="id">ID</label>

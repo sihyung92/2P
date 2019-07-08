@@ -82,7 +82,7 @@ CREATE TABLE attendance
 	-- 00 학생
 	-- 01 강사
 	-- 02 관리자
-	kind number NOT NULL,
+	userKind number NOT NULL,
 	PRIMARY KEY (num)
 );
 
@@ -125,7 +125,7 @@ CREATE TABLE career
 	-- 00 학생
 	-- 01 강사
 	-- 02 관리자
-	kind number NOT NULL,
+	userKind number NOT NULL,
 	PRIMARY KEY (num)
 );
 
@@ -200,7 +200,7 @@ CREATE TABLE schedule
 	-- 00 학생
 	-- 01 강사
 	-- 02 관리자
-	kind number NOT NULL,
+	userKind number NOT NULL,
 	PRIMARY KEY (num)
 );
 
@@ -213,7 +213,7 @@ CREATE TABLE score
 	-- 00 학생
 	-- 01 강사
 	-- 02 관리자
-	kind number NOT NULL,
+	userKind number NOT NULL,
 	firstTest varchar2(10),
 	secondTest varchar2(10),
 	thirdTest varchar2(10),
@@ -228,7 +228,7 @@ CREATE TABLE userCert
 	-- 00 학생
 	-- 01 강사
 	-- 02 관리자
-	kind number NOT NULL
+	userKind number NOT NULL
 );
 
 
@@ -238,7 +238,7 @@ CREATE TABLE userData
 	-- 00 학생
 	-- 01 강사
 	-- 02 관리자
-	kind number NOT NULL,
+	userKind number NOT NULL,
 	lecNum number,
 	id varchar2(50) NOT NULL,
 	pw varchar2(50) NOT NULL,
@@ -261,7 +261,7 @@ CREATE TABLE userKind
 	-- 00 학생
 	-- 01 강사
 	-- 02 관리자
-	kind varchar2(50),
+	userKind varchar2(50),
 	PRIMARY KEY (codeNum)
 );
 
@@ -306,32 +306,32 @@ ALTER TABLE reply
 
 
 ALTER TABLE attendance
-	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind)
+	ADD FOREIGN KEY (userNum, userKind)
+	REFERENCES userData (userNum, userKind)
 ;
 
 
 ALTER TABLE career
-	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind)
+	ADD FOREIGN KEY (userNum, userKind)
+	REFERENCES userData (userNum, userKind)
 ;
 
 
 ALTER TABLE schedule
-	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind)
+	ADD FOREIGN KEY (userNum, userKind)
+	REFERENCES userData (userNum, userKind)
 ;
 
 
 ALTER TABLE score
-	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind)
+	ADD FOREIGN KEY (userNum, userKind)
+	REFERENCES userData (userNum, userKind)
 ;
 
 
 ALTER TABLE userCert
-	ADD FOREIGN KEY (userNum, kind)
-	REFERENCES userData (userNum, kind)
+	ADD FOREIGN KEY (userNum, userKind)
+	REFERENCES userData (userNum, userKind)
 ;
 
 insert into userKind values (0,'학생');
