@@ -67,7 +67,6 @@
 <%
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
-    			request.removeAttribute("loginWrong");
     		}
 %>
   <!--    헤더     -->

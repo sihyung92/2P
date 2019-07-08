@@ -35,6 +35,7 @@ public class LoginController extends HttpServlet {
 		String pw = req.getParameter("pw");
 		UserDto bean = dao.login(id, pw);
 		HttpSession session = req.getSession();
+		//새로고침 문제 수정해야함
 		if (bean == null) {
 			System.out.println("bean : " + bean);
 			req.setAttribute("loginWrong",
