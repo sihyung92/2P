@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.bit.util.Connector;
 
@@ -35,9 +36,27 @@ public class UserDao {
 		}
 		return bean;
 	}
+<<<<<<< HEAD
 
 	public UserDto getList() {
 		return bean;
+=======
+	public ArrayList<UserDto> getList() {
+		ArrayList<UserDto> list = new ArrayList<UserDto>();
+		String sql = "";
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				bean = new UserDto();
+				list.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+>>>>>>> refs/remotes/origin/user_infomation_edit_backend
 	}
 
 	public UserDto detail(String id) {
@@ -69,11 +88,19 @@ public class UserDao {
 		}
 		return bean;
 	}
+<<<<<<< HEAD
 
 	public void edit(String pw, String address, String birth, String email,
 			String major, int phone) {
 		String sql = "UPDATE userData SET pw=?, address=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=?";
 		conn = Connector.getConnection();
+=======
+	
+	public int edit(String id, String pw, String address, String birth, String email, String major, int phone) {
+		String sql ="UPDATE userData SET pw=?, address=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=? where id="+id;
+		conn=Connector.getConnection();
+		int result = 0;
+>>>>>>> refs/remotes/origin/user_infomation_edit_backend
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, pw);
@@ -81,13 +108,22 @@ public class UserDao {
 			pstmt.setString(3, birth);
 			pstmt.setString(4, email);
 			pstmt.setString(5, major);
+<<<<<<< HEAD
 			pstmt.setInt(6, phone);
+=======
+			pstmt.setInt(6,phone);
+			result = pstmt.executeUpdate();
+>>>>>>> refs/remotes/origin/user_infomation_edit_backend
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			Connector.close(pstmt);
 			Connector.close(conn);
 		}
+		return result;
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/user_infomation_edit_backend
 }
