@@ -1,3 +1,4 @@
+<%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
 
-            //로그인버튼 클릭
+/*             //로그인버튼 클릭
             $("#loginbtn").click(function() {
                 $("#nologin").css("display", "none");
                 $("#loginstu").css("display", "block");
@@ -57,7 +58,8 @@
                 $("#loginstu").css("display", "none");
                 $("#logintea").css("display", "none");
             });
-        });
+             */
+          });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -137,21 +139,23 @@
         <!--    로그인     -->
         <div id="logincontent">
         <!-- ***************로그인 전 상황*********** -->
+        <%if(session.getAttribute("kind")==null){ %>
 <form action="<%=request.getContextPath()%>/lms/intro.bit" method="post">
             <div id="nologin">
                 <div>
                     <label for="id">ID</label>
                     <input type="text" name="id" id="id" />
                     <label for="pw">PW</label>
-                    <input type="text" name="pw" id="pw" />
+                    <input type="password" name="pw" id="pw" />
                 </div>
                 <input type="submit" id="loginbtn" value="로그인"/>
                 <button id="idpwckbtn">아이디/비밀번호 찾기</button>
             </div>
 </form>
         <!-- ****************학생 로그인 상황************* -->
+<%}else if (session.getAttribute("kind").equals("0")){ %>
             <div id="loginstu">
-                <p>학생1 님이 로그인하셨습니다.</p>
+                <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
                     <button>내 강의실</button>
                     <button>출석관리</button>
@@ -159,8 +163,9 @@
                 </div>
             </div>
         <!-- ***************강사 로그인 상황************ -->
+<%}else if(session.getAttribute("kind").equals("1")){%>
             <div id="logintea">
-                <p>강사1 님이 로그인하셨습니다.</p>
+                <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
                     <button>내 강의실</button>
                     <button>과 제</button>
@@ -168,13 +173,15 @@
                 </div>
             </div>
         <!-- **************관리자 로그인 상황************** -->
+<%}else if(session.getAttribute("kind").equals("2")){%>
             <div id="loginadm">
-                <p>관리자1 님이 로그인하셨습니다.</p>
+                <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <button>회원관리</button>
                 <button>강의관리</button>
                 <button>출결관리</button>
                 <button>일정관리</button>
             </div>
+<%} %>
         </div>
         <!--    개설예정강좌     -->
         <div id="notic2">

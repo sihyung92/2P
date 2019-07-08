@@ -303,7 +303,7 @@
         #loginstu,
         #logintea,
         #loginadm {
-            display: none;
+            /* display: none; */
         }
 
         #logincontent #loginstu,
