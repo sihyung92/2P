@@ -6,11 +6,27 @@ public class ClassDto {
 	
 	private int num ;
 	private String name;
-	private Date startdate;
-	private Date enddate;
+	private String startdate;
+	private String enddate;
 	private String classroom; 
 	private String content;
 	private String attach;
+	private String totalDate;
+	private String teacherName;
+	private boolean isRecruitng;
+	
+	public String getTotalDate() {
+		return totalDate;
+	}
+	public void setTotalDate(String totalDate) {
+		this.totalDate = totalDate;
+	}
+	public boolean isRecruitng() {
+		return isRecruitng;
+	}
+	public void setRecruitng(boolean isRecruitng) {
+		this.isRecruitng = isRecruitng;
+	}
 	public int getNum() {
 		return num;
 	}
@@ -23,16 +39,16 @@ public class ClassDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getStartdate() {
+	public String getStartdate() {
 		return startdate;
 	}
-	public void setStartdate(Date startdate) {
+	public void setStartdate(String startdate) {
 		this.startdate = startdate;
 	}
-	public Date getEnddate() {
+	public String getEnddate() {
 		return enddate;
 	}
-	public void setEnddate(Date enddate) {
+	public void setEnddate(String enddate) {
 		this.enddate = enddate;
 	}
 	public String getClassroom() {
@@ -52,6 +68,12 @@ public class ClassDto {
 	}
 	public void setAttach(String attach) {
 		this.attach = attach;
+	}
+	public String getTeacherName() {
+		return teacherName;
+	}
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
 	}
 
 	

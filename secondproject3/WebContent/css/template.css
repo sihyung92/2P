@@ -1,0 +1,422 @@
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /*헤더, 상단메뉴*/
+        #header {
+            background-color: white;
+            width: 100%;
+            position: fixed;
+            height: 80px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+
+        #header>div {
+            width: 1200px;
+            height: 80px;
+            margin: 0px auto;
+        }
+
+        @media screen and (max-width:1100px) {
+            #header>div {
+                width: 1100px;
+            }
+        }
+
+        @media screen and (max-width:1000px) {
+            #header>div {
+                width: 1000px;
+            }
+        }
+
+        @media screen and (max-width:900px) {
+            #header>div {
+                width: 900px;
+            }
+        }
+
+        @media screen and (max-width:800px) {
+            #header>div {
+                width: 800px;
+            }
+        }
+
+        @media screen and (max-width:700px) {
+            #header>div {
+                width: 700px;
+            }
+        }
+
+        @media screen and (max-width:600px) {
+            #header>div {
+                width: 600px;
+            }
+        }
+
+        #header #logo {
+            display: block;
+            position: relative;
+            top: -5px;
+            left: -50px;
+            width: 284px;
+            height: 75px;
+        }
+
+        #header div>p {
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        #header div>p>img {
+            width: 25px;
+            margin: 0px 30px auto 5px;
+            display: inline-block;
+        }
+
+        /*상단메뉴*/
+        #header #top {
+            display: block;
+            width: 150px;
+            float: right;
+            position: relative;
+            top: -35px;
+            left: -100px;
+        }
+		#header #top p{
+		 font-size: 15px;
+		 font-weight: bold;
+		}
+		
+        #header #topicon {
+            position: relative;
+            top: 5px;
+        }
+
+        #header #topmenu {
+            display: none;
+            list-style: none;
+            position: relative;
+            width: 120px;
+            z-index: 2;
+        }
+
+       #header #topmenu li {
+            height: 40px;
+            width: 150px;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        #header #topmenu li>a {
+            display: block;
+            text-decoration: none;
+            height: 40px;
+            color: black;
+            font-weight: bold;
+            background-color: white;
+        }
+
+       #header #topmenu li>a:hover {
+            background-color: darkblue;
+            color: white;
+
+        }
+
+        /*왼쪽메뉴*/
+        #header #menuleft {
+            display: inline-block;
+            width: 160px;
+            float: left;
+            position: relative;
+            top: 14px;
+            left: 90px;
+            z-index: 2;
+        }
+
+       #header #lefticon {
+            display: block;
+            width: 70px;
+        }
+
+       #header #menuleft ul {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+            width: 160px;
+            display: inline-block;
+            display: none;
+        }
+
+       #header #menuleft ul>li {
+            height: 60px;
+            line-height: 60px;
+        }
+
+        #header #menuleft ul>li>a {
+            text-decoration: none;
+            display: block;
+            width: 160px;
+            text-align: center;
+            color: black;
+            font-weight: bold;
+            font-size: 18px;
+            background-color: white;
+        }
+
+       #header #menuleft ul>li>a:hover {
+            display: block;
+            width: 160px;
+            color: white;
+            font-weight: bold;
+            background-color: darkblue;
+        }
+
+
+        /*content 사이즈는 1000!!!!*/
+        #content {
+            width: 1000px;
+            margin: 0px auto;
+        }
+
+        /*이미지슬라이더*/
+        #bxslider {
+            clear: both;
+            display: inline-block;
+            width: 800px;
+            margin: 30px auto;
+            position: relative;
+            left: 90px;
+            top: 80px;
+            z-index: 1;
+        }
+
+        /*공지사항*/
+        #notic {
+            clear: both;
+            position: relative;
+            top: 50px;
+            left: 80px;
+            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.1);
+            width: 520px;
+            height: 280px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        #notic h3 {
+            margin: 25px auto 0px 10px;
+            display: inline-block;
+        }
+
+        #notic a {
+            text-decoration: none;
+            color: black;
+            float: right;
+            margin: 30px 15px 10px auto;
+            font-size: 14px;
+        }
+
+        #notic table {
+            width: 97%;
+            height: 210px;
+            margin: 0px auto;
+            border: 1px solid black;
+            background-color: white;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        #notic table>tr {}
+
+        #notic table>tr>td {}
+
+        #td2 {
+            width: 80px;
+        }
+
+        #td3 {
+            width: 100px;
+        }
+
+        /*로그인*/
+        #logincontent {
+            float: right;
+            display: inline-block;
+            position: relative;
+            top: 10px;
+            left: -10px;
+            width: 260px;
+            height: 110px;
+            margin: 30px 100px;
+        }
+
+        #logincontent #nologin {
+            width: 260px;
+        }
+
+        #logincontent #nologin>div {
+            float: left;
+            padding: 10px 0px;
+            width: 190px;
+            height: 50px;
+            display: inline-block;
+        }
+
+        #logincontent #nologin>div>label {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        #logincontent #nologin>div>input {
+            width: 150px;
+            height: 20px;
+            border-radius: 3px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+        }
+
+        #logincontent #nologin #loginbtn {
+            margin: 13px 2px 2px 2px;
+            padding: 0px;
+            background-color: darkblue;
+            border: 0px;
+            border-radius: 3px;
+            display: inline-block;
+            width: 58px;
+            height: 55px;
+            color: white;
+        }
+
+        #logincontent #nologin #idpwckbtn {
+            margin: 3px 0px;
+            padding: 0px;
+            background-color: darkblue;
+            border: 0px;
+            border-radius: 3px;
+            display: block;
+            width: 250px;
+            height: 25px;
+            color: white;
+        }
+
+        /*로그인성공시*/
+        #loginstu,
+        #logintea,
+        #loginadm {
+            /* display: none; */
+        }
+
+        #logincontent #loginstu,
+        #logintea,
+        #loginadm {
+            height: 80px;
+            width: 260px;
+        }
+
+        #logincontent p {
+            font-size: 14px;
+            width: 210px;
+            margin: 20px auto;
+        }
+
+        #logincontent #loginstu div,
+        #logintea div {
+            margin: 20px auto;
+        }
+
+        #logincontent #loginstu button,
+        #logintea button {
+            display: inline-block;
+            padding: 0px;
+            background-color: darkblue;
+            border: 0px;
+            border-radius: 3px;
+            width: 60px;
+            height: 30px;
+            color: white;
+            margin: 0px 10px;
+
+        }
+
+        #logincontent #loginadm button {
+            display: inline-block;
+            padding: 0px;
+            background-color: darkblue;
+            border: 0px;
+            border-radius: 3px;
+            width: 60px;
+            height: 30px;
+            color: white;
+        }
+
+        /*개설예정강좌*/
+        #notic2 {
+            float: right;
+            position: relative;
+            top: -140px;
+            left: -120px;
+            display: inline-block;
+            width: 260px;
+            height: 180px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+
+        }
+
+        #notic2 h5 {
+            margin: 10px 30px;
+        }
+
+        #notic2 div {
+            display: inline-block;
+            width: 240px;
+            height: 130px;
+            margin: 0px 10px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        #notic2 table {
+            width: 210px;
+            margin: 10px auto;
+            font-size: 14px;
+        }
+
+        #mozip {
+            width: 140px;
+        }
+
+        /*SNS*/
+        #sns {
+            float: right;
+            position: relative;
+            top: 50px;
+            left: 150px;
+            display: inline-block;
+            width: 150px;
+        }
+
+        #sns img {
+            width: 30px;
+        }
+
+        /*풋터*/
+        #footer {
+            clear: both;
+            width: 100%;
+            position: relative;
+            top: -80px;
+            border-top: 2px solid rgba(0, 0, 0, 0.6);
+            font-size: 14px;
+        }
+
+        #footer table {
+            clear: both;
+            width: 1174px;
+            align-content: center;
+            margin: 20px auto;
+        }
