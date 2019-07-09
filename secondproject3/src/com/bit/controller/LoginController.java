@@ -35,8 +35,7 @@ public class LoginController extends HttpServlet {
 		String pw = req.getParameter("pw");
 		UserDto bean = dao.login(id, pw);
 		HttpSession session = req.getSession();
-		//���ΰ�ħ ���� �����ؾ���
-		if (bean == null) {
+				if (bean == null) {
 			System.out.println("bean : " + bean);
 			req.setAttribute("loginWrong",
 					"<script type=\"text/javascript\">alert('ID 혹은 PW를 입력해주세요');</script>");

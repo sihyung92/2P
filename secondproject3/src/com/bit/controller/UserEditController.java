@@ -1,10 +1,8 @@
 package com.bit.controller;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +15,16 @@ import com.bit.model.UserDao;
 @WebServlet("/lms/useredit.bit")
 public class UserEditController extends HttpServlet{
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		RequestDispatcher rd = req.getRequestDispatcher("/lms/userEdit.jsp");
+		rd.forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		RequestDispatcher rd = req.getRequestDispatcher("");
 		HttpSession session = req.getSession();
 		int kind = (int)session.getAttribute("userKind");
 		RequestDispatcher rd = req.getRequestDispatcher("userEdit.jsp");
