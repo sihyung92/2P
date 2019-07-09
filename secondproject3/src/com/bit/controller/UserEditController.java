@@ -14,27 +14,31 @@ import javax.servlet.http.HttpSession;
 
 import com.bit.model.UserDao;
 
-@WebServlet("/lms/userEdit.bit")
+@WebServlet("/lms/useredit.bit")
 public class UserEditController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("");
-		rd.forward(req,resp);
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("");
 		HttpSession session = req.getSession();
-		String id = (String)session.getAttribute("id");
-		String pw = (String)session.getAttribute("pw");
+		int kind = (int)session.getAttribute("userKind");
+		RequestDispatcher rd = req.getRequestDispatcher("userEdit.jsp");
+		UserDao dao = new UserDao();
+		String id = req.getParameter("id");
+		String pw = req.getParameter("pw");
+		String name = req.getParameter("name");
 		String address = req.getParameter("address");
 		String birth = req.getParameter("birth");
-		String email = req.getParameter("email1")+"@"+req.getParameter("email2");
+		String email = req.getParameter("email");
 		String major = req.getParameter("major");
+		int userKind = Integer.parseInt(req.getParameter("kind"));
 		int phone = Integer.parseInt(req.getParameter("phone"));
-		UserDao dao = new UserDao();
-		dao.edit(id, pw, address, birth, email, major, phone);
+		if(req.getParameter("id")!=null) {
+			rd = req.getRequestDispatcher("/lms/intro.jsp");
+			if(kind!=3) {
+				dao.edit(id, pw, name, address, birth, email, major, phone);
+			}else {
+				dao.register(id, pw, name, address, birth, email, major, phone,userKind);
+			}
+		}
 		rd.forward(req,resp);
 	}
 }

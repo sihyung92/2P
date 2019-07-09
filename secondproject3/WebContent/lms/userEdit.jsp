@@ -13,6 +13,7 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
 <script type="text/javascript">
+	var kindUser = <%=session.getAttribute("kind")%>;
 	var big;
 	$(document).ready(function() {
 		//위쪽 메뉴아이콘 마우스오버
@@ -51,11 +52,43 @@
 			emailselect();
 		});
 
-		$("#editbtn").click(function() {
+		$("#idbtn").click(function() {
 			id_chk();
 		});
+		
+		if(kindUser==2){
+			$('#kindOfPage1').text('회원등록');
+			$('#kindOfPage2').text('비트캠프 안양지점 회원등록페이지 입니다.');
+		}else{
+			$('#id').val('<%=session.getAttribute("id")%>').attr("readonly","readonly");
+			$('#idbtn').hide();
+		}
+		submit();
 	});
-
+	function submit(){
+		$("#editbtn").click(function(){
+			var id = $("#id").val();
+			var pw = $("#pw").val();
+			var name = $("#name").val();
+			var tel = $("#tel").val();
+			var kind = $("#ctg").val();
+			var birth = $("#bitrhdate").val();
+			var email = $("#email1").val()+"@"+$("#email2").val();
+			var addr = $("#fulladdr").val();
+			var major = $("#major").val();
+			var cert = $("#cert").val();
+			$.ajax({
+				url:"useredit.bit?id="+id+"\&pw="+pw+"\&name="+name+"\&tel="+tel+"\&kind="+kind+"\&birth="+birth+"\&email="+email+"\&addr="+addr+"\&major="+major+"\&cert="+cert,
+				method:"GET",
+				success:function(){
+					alert("성공");
+				},
+				error:function(){
+					alert("실패");
+				}
+			});
+		});
+	}
 	function emailselect() {
 		var emailval = $("#emailselbox").val();
 		$("#email2").val(emailval).attr("readonly","readonly");
@@ -63,7 +96,7 @@
 
 	function ctgselect() {
 		var ctgval = $("#ctg").val();
-		if (ctgval != "강사") {
+		if (ctgval != "2") {
 			$("#teacherinfo").css("display", "none");
 			$("#labelback").css("height", "430px");
 			$("#editbtn").css("margin", "110px auto 100px 50px");
@@ -75,6 +108,19 @@
 	};
 
 	function id_chk() {
+/* 		$.ajax({
+			  url: "http://localhost:8080/secondproject3/lms/useridcheck.bit?id="+$("id").val(),
+			  method: "GET",
+			  dataType: "json",
+			  success:function(data){
+					$("#idspan").css("display", "block").html("아");
+			  },
+			  error: function(request,status,error){
+				  var msg = "ERROR : " + request.status + " /// "
+				  msg+="내용 : " + request.responseText + " /// " + error;
+				  console.log(msg);
+			  }
+			}); */
 		var id = $("#id").val();
 		console.log(id);
 		if (id == "" && id == null) {
@@ -82,12 +128,13 @@
 		} else {
 			$("#idspan").css("display", "none");
 		}
-	}
+	};
 	
 	function goPopup() {
 		var pop = window.open("<%=request.getContextPath()%>/popup/jusoPopup.jsp", "pop",
 				"width=570,height=420, scrollbars=yes, resizable=yes");
-	}
+	};
+	
 	function jusoCallBack(roadFullAddr, roadAddrPart1, addrDetail,
 			roadAddrPart2, engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,
 			detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn,
@@ -97,7 +144,7 @@
 		//document.form.roadAddrPart2.value = roadAddrPart2; 지번
 		document.form.addr2.value = addrDetail; //상세주소
 		document.form.zipNo.value = zipNo; //우편번호
-	}
+	};
 </script>
 <title>비트캠프 학습관리시스템</title>
 </head>
@@ -136,8 +183,8 @@
 	</div>
 	<!-- *****content start***** -->
 	<div id="content">
-		<h1>회원등록</h1>
-		<p>비트캠프 안양지점 회원등록페이지 입니다.</p>
+		<h1 id="kindOfPage1">개인정보수정</h1>
+		<p id="kindOfPage2">비트캠프 안양지점 개인정보 수정페이지 입니다.</p>
 		<div>
 			<label id="point"> </label>
 			<h3>회원 기본 정보</h3>
@@ -146,9 +193,9 @@
 				<div>
 					<label for="ctg">분류</label> <select name="ctg" id="ctg">
 						<option value="">분류</option>
-						<option value="학생">학생</option>
-						<option value="강사">강사</option>
-						<option value="직원">직원</option>
+						<option value="1">학생</option>
+						<option value="2">강사</option>
+						<option value="3">직원</option>
 					</select>
 				</div>
 				<div>
@@ -173,24 +220,9 @@
 					<label for="tel">연락처</label> <input type="text" name="tel" id="tel" />
 					<span id="telspan">필수입력</span>
 				</div>
-				<div id="brth">
-					<label for="year">생년월일</label> <select name="year">
-						<option value="">년도</option>
-						<option value="2019">2019</option>
-						<option value="2018">2018</option>
-						<option value="2017">2017</option>
-					</select> <label for="year">년</label> <select name="month">
-						<option value="">월</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select> <label for="month">월</label> <select name="day">
-						<option value="">일</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select> <label for="day">일</label>
-
+				<div id="birth">
+					<label for="birthdate">생년월일</label> <input type="date" name="birth"
+						id="birthdate"></input>
 				</div>
 				<div id="emaildiv">
 					<label for="email1">이메일</label> <input type="text" name="email1"
@@ -204,12 +236,14 @@
 				</div>
 				<div id="addr">
 					<form name="form" id="form" method="post">
-						<input type="hidden" id="fullAddr" name="fullAddr" /><br>
-						<input id="addrbtn" type="button" onClick="goPopup();" value="주소검색" />
-						도로명주소 <input type="text" id="addr1" readonly="readonly"/><br>
-						고객입력 상세주소<input type="text" id="addr2" readonly="readonly"/><br>
+						<input type="hidden" id="fullAddr" name="fullAddr" /> <label
+							for="addr1">도로명주소</label><input type="text" id="addr1"
+							readonly="readonly" /><input id="addrbtn" type="button"
+							onClick="goPopup();" value="주소검색" /><br> <label for="addr2">상세주소</label><input
+							type="text" id="addr2" readonly="readonly" /><br>
 						<!-- 참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>-->
-						우편번호<input type="text" id="zipNo" readonly="readonly"/>
+						<label for="zipNo">우편번호</label><input type="text" id="zipNo"
+							readonly="readonly" />
 					</form>
 				</div>
 			</div>
@@ -217,24 +251,24 @@
 			<div id="teacherinfo">
 				<div id="div1">
 					<div>
-						<label for="">전공</label> <input type="text" name="major" />
+						<label for="">전공</label> <input type="text" name="major" id="major" />
 					</div>
 					<div>
-						<label for="" class="areala">자격사항</label>
-						<textarea></textarea>
+						<label for="" class="areala" >자격사항</label>
+						<textarea name="certArea" id="cert" readonly="readonly"></textarea>
 					</div>
 					<div>
 						<label for="" class="plusla">추가</label>
 						<form id="form1">
 							<div>
-								<label for="">자격증명</label> <input type="text" />
+								<label for="">자격증명</label><input type="text" />
 								<button>검색</button>
 							</div>
 							<div>
-								<label for="">발급처</label> <input type="text" />
+								<label for="">발급처</label><input type="text" />
 							</div>
 							<div>
-								<label for="">취득일</label> <input type="text" />
+								<label for="">취득일</label><input type="text" />
 							</div>
 							<div class="addfile">
 								<input type="text" />
@@ -272,7 +306,7 @@
 				</div>
 			</div>
 		</div>
-		<button id="editbtn">수정</button>
+		<button id="editbtn">등록</button>
 	</div>
 	<!-- *****content end***** -->
 	<!--    바닥글     -->

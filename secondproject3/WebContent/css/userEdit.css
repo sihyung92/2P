@@ -164,18 +164,19 @@
                 height: 22px;
             }
 
-            #addr input {
+            #addr input{
                 display: inline-block;
                 width: 350px;
-                margin: 2px 2px 0px 10px;
+                margin: 2px 2px 0px 55px;
             }
 
-            #addr #addr3 {
+            #addr #zipNo {
                 width: 100px;
             }
 
             #addr #addrbtn {
                 width: 70px;
+                margin : 0;
             }
 
             /*span check*/
