@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
+	<style type="text/css">
+		* {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		body {
+			background-color: white;
+			margin: 0px;
+			padding: 0px;
+		}
+
+		/* 상단 부분 */
+		#div1 {
+			background-color: white;
+			height: 80px;
+			border-bottom: 1.5px solid lightgray;
+		}
+
+		/* 로고 */
+		#div1>img {
+			margin: 13px;
+			display: inline-block;
+			float: left;
+		}
+
+		/* 환영합니다 */
+		#div1>p {
+			float: right;
+			margin: 30px 0px auto auto;
+			display: inline-block;
+			font-size: 14px;
+		}
+
+		/* 로그인/로그아웃 이미지? */
+		#div1>p>a>img {
+			width: 25px;
+			margin: 0px 30px auto 5px;
+			float: right;
+			display: inline-block;
+		}
+
+		/* 강의정보 테이블 */
+		.table1 {
+			width: 700px;
+			height: 500px;
+			float: center;
+			background-color: #d3d3d3;
+			margin: 50px auto;
+			border-spacing: 0px;
+		}
+
+		/* 테이블 첫번째 행(강의정보) */
+		.title {
+			font-size: 18pt;
+			font-weight: bold;
+			height: 70px;
+			background-color: white;
+		}
+
+		/* 테이블 가로 간격 */
+		.tr1 {
+			height: 50px;
+		}
+
+		/* 테이블 세로 간격 */
+		.td1 {
+			width: 70px;
+		}
+
+		/* 테이블 두번째 열(강의명, 강사명..)*/
+		.td2 {
+			font-weight: bold;
+			height: 40px;
+		}
+
+		/* 강의실 바로가기 */
+		.classroom {
+			float: right;
+			height: 50px;
+		}
+
+		/* 라인 */
+		.line {
+			border-top: 1px solid gray;
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+		
+		/*풋터*/
+        #footer {
+            width: 980px;
+            margin: 60px auto;
+        }
+
+        #footer img {
+            float: left;
+            margin: 30px 10px;
+        }
+
+        #footer div {
+            width: 980px;
+        }
+	</style>
+</head>
+
+<body color="#f0f0f0">
+	<header>
+		<div id="div1">
+			<img alt="logo" src="imgs/logo3.jpg">
+			<p>환영합니다
+				<a href="#"><img alt="topmenuicon" src="imgs/topmenu.PNG" /></a></p>
+		</div>
+		<table class="table1">
+			<tr class="title">
+				<td colspan="7">강의정보</td>
+			</tr>
+			<tr class="tr1">
+				<td colspan="5"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td class="td2">강의명</td>
+				<td>응용 sw 엔지니어링 과정</td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td class="td2">강사명</td>
+				<td>김영조</td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td class="td2">수강기간</td>
+				<td>2019.03.27 ~ 2019.09.25</td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td class="td2">강의일정</td>
+				<td>월~금 (9:30~18:10) / 점심시간 (13:30~14:10)</td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td class="td2">모집현황</td>
+				<td>30/30　<b><font color="red">마감</font></b></td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td class="td2">강의실</td>
+				<td>301호</td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td></td>
+				<td colspan="2" class="classroom"><img alt="class" src="imgs/class.png"></td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td colspan="2" class="line"><b>강의과정</b></td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td colspan="2" style="padding-bottom: 10px;">
+					컴퓨터 프로그래밍 기술을 익혀 애플리케이션의 화면 및 기능을 구현하고 테스트할 수 있는 능력을 배양하며 개발 완료된 애플리케이션을 고객에게 전달하기 위한 형태로 패키징 할 수 있도록 한다. 또한, 애플리케이션 구현에 필요한 데이터 베이스를 구축할 수 있도록 SQL 활용방법을 익혀 DB테이블을 모델링 및 구현할 수 있도록하고 DB를 활용한 어플리케이션을 구현할 수 있는 능력을 배양한다.
+				</td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td class="line"><b>커리큘럼</b></td>
+				<td class="line"><a href="#">2019_응용_SW_엔지니어링_커리큘럼.xls</a></td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td colspan="2" class="line"><b>학생목록</b></td>
+				<td class="td1"></td>
+			</tr>
+			<tr>
+				<td class="td1"></td>
+				<td colspan="2" style="padding-bottom: 10px">강민수 권순성 김경민 김경은 박수연 박철용 선현주 송해 신지영 이승은 이주희 조수진 최지은</td>
+				<td class="td1"></td>
+			</tr>
+			<tr class="tr1">
+				<td colspan="4"></td>
+				<td></td>
+			</tr>
+		</table>
+	</header>
+	<div id="footer">
+        <img alt="footerlogo" src="imgs/logo3.jpg" />
+        <div>비트캠프 서울시 서초구 강남대로 459 (서초동, 백암빌딩)｜ 사업자등록번호 : 214-85-24928<br />
+            (주)비트컴퓨터 서초본원 대표이사 : 조현정 / 문의 : 02-3486-9600 / 팩스 : 02-6007-1245<br />
+            통신판매업 신고번호 : 제 서초-00098호 / 개인정보보호관리책임자 : 최종진<br />
+            Copyright &copy; 비트캠프 All rights reserved.</div>
+    </div>
+</body></html>
