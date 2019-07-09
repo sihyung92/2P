@@ -77,7 +77,7 @@
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
                 <ul>
                     <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/questlist.bit">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
                     <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>

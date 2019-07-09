@@ -4,22 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
-    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <style type="text/css">
-        #content {
-            background-color:white;
-            width:1000px
-        }
-
-        #content table {
+    	#topmargin{
+    		height:100px;
+    	}
+        .bbs{
             width: 800px;
-            height:500px;
-            margin: 0px auto;
+            height:490px;
             background-color: white;
             border-top:1px solid black;
             border-bottom:1px solid black;
             z-index:1;
-           
         }
        	.bbs th{
        		border-bottom: 1px solid #ccc;
@@ -40,7 +38,7 @@
             display: inline-block;
             margin: 0px 0px 10px 450px;
         }
-        tr>td{
+        .bbs tr>td{
         	text-align:center;
         }
         .bbs{
@@ -48,12 +46,13 @@
         	width:100%
         	z-index:3;
         }
-        h1{
-        	position:relative;
-        	top:30px;
+        #bbs2{
+        	margin:0px auto; 
+        	width:800px;
+        		
         }
-        th:nth-child(3){
-        	width:50%;
+        .bbs th:nth-child(3){
+        	width:40%;
         }
         input[name="serch"]{
         	text-align:right;
@@ -63,13 +62,33 @@
         }
         #btn{
        	 text-align:right;
+       	 
+        }
+        button{
+        	background-color:lightblue;
+        	font-size:10
         }
         select{
         	text-align:left;
         }
+        .section{
+        	claer:both;
+        	height:800px;
+        	margin:0px auto;
+        }
+        #bbs2>tr>td{
+        	background:pink;
+        }
+        select{
+        	text-align:center;
+        }
+        #bbs2 tr>td{
+        	text-align:left;
+        }
+        #bbs2 tr>td+td{
+        	text-align:right;
+        }
     </style>
-    <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="js/jquery.bxslider.js"></script>
     <script type="text/javascript">
         var big;
         $(document).ready(function() {
@@ -109,7 +128,7 @@
             });
             
             	$('button').click(function(){
-            		window.location.href='Bbsadd.jsp';
+            		window.location.href='bbsQuAdd.jsp';
             	});
             
         });
@@ -117,48 +136,63 @@
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
-    <!--    헤더     -->
+
+<!-- 질문게시판 학생 -->
+
+
+     <!--    헤더     -->
     <div id="header">
         <div>
-            <img alt="logo" src="imgs/logo.jpg" />
-            <p>환영합니다
-                <img alt="topmenuicon" src="imgs/topmenu.PNG" id="topicon" /></p>
-            <ul id="topmenu">
-                <li><a href="#">내 강의실</a></li>
-                <li><a href="#">내 정보</a></li>
-                <li><a href="#">메인</a></li>
-                <li><a href="#">로그아웃</a></li>
-            </ul>
-        </div>
-    </div>
-    <!--    왼쪽 메뉴     -->
-    <div id="leftsize">
-        <div id="menuleft">
-            <img alt="menulefticon" src="imgs/leftmenu.PNG" id="lefticon" />
-            <ul>
-                <li><a href="#">내 강의실</a></li>
-                <li><a href="#">질문게시판</a></li>
-                <li><a href="#">과제게시판</a></li>
-                <li><a href="#">수업자료실</a></li>
-                <li><a href="#">스케줄</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- *****content start*****    -->
-    <div id="content">
-        <h1>질문 게시판</h1>
-        <div>
-            <div>
-        <select>
-        	<option value="">전체보기</option>
-        </select>
-                <input type="text" id="search" name="search" />
-                <button>검색</button>
+            <!--    왼쪽 메뉴     -->
+            <div id="menuleft">
+                <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+                <ul>
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="#">스케줄</a></li>
+                </ul>
+            </div>
+            <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
+            <div id="top">
+                <p>학생1
+                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
+                <!--   상단메뉴   -->
+                <ul id="topmenu">
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="#">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
             </div>
         </div>
+    </div>
+
+    <!-- *****content start*****    -->
+   <section class="section">
+    <div id="content">
+    <div id="topmargin">
+    
+    </div>
+	        <h1>질문 게시판</h1><br/>
+	        <table id="bbs2">
+		       		<tr>
+		       			<td>
+					        <select>
+					        	<option value="">전체보기</option>
+					        </select>
+				        </td>
+				     
+				   
+				        <td>
+				                <input type="text" id="search" name="search" />
+				                <button>검색</button>
+				        </td>
+		            </tr>
+	        </table>
         <table class="bbs">
             <tr>
-            	<th><input type="checkbox" name="chk"></th>
                 <th >NO.</th>
                 <th>제목</th>
                 <th>상태</th>
@@ -167,7 +201,6 @@
                 <th>조회수</th>
             </tr>
             <tr>
-            	<td><input type="checkbox" name="chk"></td>
                 <td>10</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -176,7 +209,6 @@
                 <td>0</td>
             </tr>
             <tr>
-            <td><input type="checkbox" name="chk"></td>
                 <td>9</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -185,7 +217,6 @@
                 <td>0</td>
             </tr>
              <tr>
-             <td><input type="checkbox" name="chk"></td>
                 <td>8</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -194,7 +225,6 @@
                 <td>0</td>
             </tr>
              <tr>
-             <td><input type="checkbox" name="chk"></td>
                 <td>7</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -203,7 +233,6 @@
                 <td>0</td>
             </tr>
              <tr>
-             <td><input type="checkbox" name="chk"></td>
                 <td>6</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -212,7 +241,6 @@
                 <td>0</td>
             </tr>
              <tr>
-             <td><input type="checkbox" name="chk"></td>
                 <td>5</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -221,7 +249,6 @@
                 <td>0</td>
             </tr>
              <tr>
-             <td><input type="checkbox" name="chk"></td>
                 <td>4</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -230,7 +257,6 @@
                 <td>0</td>
             </tr>
             <tr>
-            <td><input type="checkbox" name="chk"></td>
                 <td>3</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -239,7 +265,6 @@
                 <td>0</td>
             </tr>
              <tr>
-             <td><input type="checkbox" name="chk"></td>
                 <td>2</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -248,7 +273,6 @@
                 <td>0</td>
             </tr>
             <tr>
-            <td><input type="checkbox" name="chk"></td>
                 <td>1</td>
                 <td>sub</td>
                 <td>미답변</td>
@@ -266,16 +290,17 @@
 	            <a href="#">다음</a>
 	        </div>
 	        <div id="btn">
-	            <button type="button">삭제</button>
+	            <button type="button">등록하기</button>
 	        </div>
     </div>
+	</section>
     <!-- *****content end***** -->
     <!--    바닥글     -->
     <div id="footer">
         <table>
             <tr>
                 <td height="126" align="right">
-                    <img src="/imgs/logo.jpg" width="284" height="75" />
+                    <img src="<%=request.getContextPath()%>/imgs/logo.jpg" width="284" height="75" />
                 </td>
                 <td>
                     비트캠프 서울시 서초구 강남대로 459 (서초동, 백암빌딩)｜ 사업자등록번호 : 214-85-24928<br />
