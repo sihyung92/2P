@@ -20,9 +20,9 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("LoginController / method : get");
 		RequestDispatcher rd = req.getRequestDispatcher("/lms/intro.jsp");
-		// ¹Ş´Â °÷¿¡¼­ request.getAttribute("loginWrong")!=null ÀÌ¸é
-		// out.println(request.getAttribute(loginWrong))½ÃÄÑ¾ßÇÔ
-		// session.getAttribute("kind")¿¡ µû¶ó jquery·Î Á¦¾î
+		// ï¿½Ş´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ request.getAttribute("loginWrong")!=null ï¿½Ì¸ï¿½
+		// out.println(request.getAttribute(loginWrong))ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½
+		// session.getAttribute("kind")ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ jqueryï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		rd.forward(req, resp);
 	}
 
@@ -35,19 +35,19 @@ public class LoginController extends HttpServlet {
 		String pw = req.getParameter("pw");
 		UserDto bean = dao.login(id, pw);
 		HttpSession session = req.getSession();
-		//»õ·Î°íÄ§ ¹®Á¦ ¼öÁ¤ÇØ¾ßÇÔ
+		//ï¿½ï¿½ï¿½Î°ï¿½Ä§ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
 		if (bean == null) {
 			System.out.println("bean : " + bean);
 			req.setAttribute("loginWrong",
-					"<script type=\"text/javascript\">alert('¾ÆÀÌµğ È¤Àº ºñ¹Ğ¹øÈ£¸¦ ´Ù½Ã È®ÀÎÇØÁÖ¼¼¿ä');</script>");
-			// ¹Ş´Â °÷¿¡¼­ request.getAttribute(loginWrong)!=null ÀÌ¸é
-			// out.println(request.getAttribute(loginWrong))½ÃÄÑ¾ßÇÔ
+					"<script type=\"text/javascript\">alert('ID í˜¹ì€ PWë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”');</script>");
+			// ï¿½Ş´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ request.getAttribute(loginWrong)!=null ï¿½Ì¸ï¿½
+			// out.println(request.getAttribute(loginWrong))ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½
 		} else {
 			session.setAttribute("isLogin", true);
 			session.setAttribute("id", id);
 			session.setAttribute("pw", pw);
 			session.setAttribute("userNum", bean.getUserNum());
-			session.setAttribute("userKind", bean.getUserKind());// 0ÇĞ»ı 1°­»ç 2°ü¸®ÀÚ
+			session.setAttribute("userKind", bean.getUserKind());// 0ï¿½Ğ»ï¿½ 1ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		}
 		doGet(req, resp);
 	}
