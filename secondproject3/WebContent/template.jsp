@@ -63,7 +63,7 @@
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
-                    <li><a href="#">로그아웃</a></li>
+                    <li><a href="/logout.bit">로그아웃</a></li>
                 </ul>
             </div>
         </div>
