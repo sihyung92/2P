@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
 		String pw = req.getParameter("pw");
 		UserDto bean = dao.login(id, pw);
 		HttpSession session = req.getSession();
-		//���ΰ�ħ ���� �����ؾ���
+		// ���ΰ�ħ ���� �����ؾ���
 		if (bean == null) {
 			System.out.println("bean : " + bean);
 			req.setAttribute("loginWrong",
@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("id", id);
 			session.setAttribute("pw", pw);
 			session.setAttribute("userNum", bean.getUserNum());
-			session.setAttribute("userKind", bean.getUserKind());// 0�л� 1���� 2������
+			session.setAttribute("userKind", bean.getUserKind());// 0학생 1강사 2관리자
 		}
 		doGet(req, resp);
 	}

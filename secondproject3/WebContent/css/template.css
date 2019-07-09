@@ -14,6 +14,7 @@
         }
 
         #header>div {
+            background-color: white;
             width: 1200px;
             height: 80px;
             margin: 0px auto;
