@@ -12,8 +12,6 @@
 	src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e70cedba721c289053d7c8f83b46ab9"></script>
 <script type="text/javascript">
 	var big;
 	$(document).ready(function() {
@@ -60,8 +58,7 @@
 
 	function emailselect() {
 		var emailval = $("#emailselbox").val();
-		$("#email2").val(emailval);
-
+		$("#email2").val(emailval).attr("readonly","readonly");
 	};
 
 	function ctgselect() {
@@ -84,8 +81,22 @@
 			$("#idspan").css("display", "block");
 		} else {
 			$("#idspan").css("display", "none");
-
 		}
+	}
+	
+	function goPopup() {
+		var pop = window.open("<%=request.getContextPath()%>/popup/jusoPopup.jsp", "pop",
+				"width=570,height=420, scrollbars=yes, resizable=yes");
+	}
+	function jusoCallBack(roadFullAddr, roadAddrPart1, addrDetail,
+			roadAddrPart2, engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,
+			detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn,
+			buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo) {
+		document.form.fullAddr.value = roadFullAddr; //전체 도로명주소
+		document.form.addr1.value = roadAddrPart1; //도로명
+		//document.form.roadAddrPart2.value = roadAddrPart2; 지번
+		document.form.addr2.value = addrDetail; //상세주소
+		document.form.zipNo.value = zipNo; //우편번호
 	}
 </script>
 <title>비트캠프 학습관리시스템</title>
@@ -192,31 +203,14 @@
 					</select>
 				</div>
 				<div id="addr">
-					<script>
-						var container = document.getElementById('map');
-						var options = {
-							center : new kakao.maps.LatLng(33.450701,
-									126.570667),
-							level : 3
-						};
-
-						var map = new kakao.maps.Map(container, options);
-						var container = document.getElementById('map');
-						var options = {
-							center : new kakao.maps.LatLng(33.450701,
-									126.570667),
-							level : 3
-						};
-
-						var map = new kakao.maps.Map(container, options);
-					</script>
-					<!--                         <label for="adrr1">자택주소</label>
-                        <input type="text" name="addr1" id="addr1" />
-                        <label for="adrr2"></label>
-                        <input type="text" name="addr2" id="addr2" />
-                        <label for="adrr3"></label>
-                        <input type="text" name="addr3" id="addr3" />
-                        <button id="addrbtn">주소검색</button> -->
+					<form name="form" id="form" method="post">
+						<input type="hidden" id="fullAddr" name="fullAddr" /><br>
+						<input id="addrbtn" type="button" onClick="goPopup();" value="주소검색" />
+						도로명주소 <input type="text" id="addr1" readonly="readonly"/><br>
+						고객입력 상세주소<input type="text" id="addr2" readonly="readonly"/><br>
+						<!-- 참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>-->
+						우편번호<input type="text" id="zipNo" readonly="readonly"/>
+					</form>
 				</div>
 			</div>
 			<!-- *********************************강사 정보 hidden part*********************************** -->
