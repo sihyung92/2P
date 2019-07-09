@@ -16,7 +16,6 @@ public class BbsdeleteController extends HttpServlet{
 			throws ServletException, IOException {
 		int num=Integer.parseInt(req.getParameter("num"));
 		int bbsnum=Integer.parseInt(req.getParameter("bbsnum"));
-		
 		BbsDao dao=new BbsDao();
 		dao.delete(num,bbsnum);
 		resp.sendRedirect("BbsquestuList.jsp");

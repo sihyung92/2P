@@ -152,18 +152,15 @@ section div>p {
 	padding: 10px 0px;
 	text-decoration: none;
 }
-
 #footer2 table {
 	margin: 0 auto;
 }
-
 .title{
 	margin-left : 20px;
 	margin-right : 20px;
 	font-weight: 800;
 	font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
-
 #soon{
 	text-align : center;
 	font-size : 20pt;
