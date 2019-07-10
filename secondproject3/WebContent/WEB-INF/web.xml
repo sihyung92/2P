@@ -9,12 +9,13 @@
 	</welcome-file-list>
 	<servlet-mapping>
 		<servlet-name>bbsqlist</servlet-name>
-		<url-pattern>/lms/questlist.bit</url-pattern>
+		<url-pattern>/lms/bbsQuStuList.bit</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>bbsqlist</servlet-name>
 		<servlet-class>com.bit.controller.BbsListController</servlet-class>
 	</servlet>
+	
 	
 	
 	<servlet-mapping>
