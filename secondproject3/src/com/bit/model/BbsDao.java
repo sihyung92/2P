@@ -18,7 +18,7 @@ public class BbsDao {
 	
 	public ArrayList<BbsDto> getList(){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs where num=1 and bbsNum=02";
+		String sql="select * from lmsBbs where num=1 and bbsNum=03";
 		
 		try {
 			Class.forName(driver);

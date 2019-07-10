@@ -214,7 +214,8 @@
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
             </tr>
-            <%} %>
+            <%	
+            } %>
        </table>
 	        <div id="ca">
 	            <a href="#">이전</a>
@@ -225,7 +226,7 @@
 	            <a href="#">다음</a>
 	        </div>
 	        <div id="btn">
-	            <button type="button">등록하기</button>
+	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
 	        </div>
     </div>
 	</section>
