@@ -41,4 +41,10 @@ public class lectureDao {
 		}
 		return bean;
 	}
+
+	public int lectureUpdate() {
+		int result = 0;
+		String sql = "update lecture set sub=?,nalja=to_date(?,'yyyy-mm-dd'),pay=? where num=?";
+		return result;
+	}
 }
