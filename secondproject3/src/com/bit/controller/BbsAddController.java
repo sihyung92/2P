@@ -22,6 +22,6 @@ public class BbsAddController extends HttpServlet {
 		String id=param2.trim();
 		BbsDao dao=new BbsDao();
 		dao.insert(title, id);
-		resp.sendRedirect("BbsqueststuList.jsp");
+		resp.sendRedirect("BbsquestList.jsp");
 	}
 }

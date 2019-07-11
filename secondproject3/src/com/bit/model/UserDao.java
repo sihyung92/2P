@@ -15,7 +15,7 @@ public class UserDao {
 	UserDto bean;
 
 	public UserDto login(String id, String pw) {
-		String sql = "SELECT userNum,userKind FROM userData WHERE id=? AND pw=?";
+		String sql = "SELECT userNum,userKind,lecNum FROM userData WHERE id=? AND pw=?";
 		conn = Connector.getConnection();
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -26,6 +26,7 @@ public class UserDao {
 				bean = new UserDto();
 				bean.setUserNum(rs.getInt("userNum"));
 				bean.setUserKind(rs.getInt("userKind"));
+				bean.setLecNum(rs.getInt("lecNum"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -84,24 +85,48 @@ public class UserDao {
 		return bean;
 	}
 
-	public int edit(String id, String pw, String address, String birth, String email, String major, int phone) {
-		String sql ="UPDATE userData SET pw=?, address=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=? where id="+id;
+	public int edit(String id, String pw, String name,String address, String birth, String email, String major, int phone) {
+		String sql ="UPDATE userData SET pw=?, address=?, name=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=? where id="+id;
 		conn=Connector.getConnection();
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, pw);
 			pstmt.setString(2, address);
-			pstmt.setString(3, birth);
-			pstmt.setString(4, email);
-			pstmt.setString(5, major);
-			pstmt.setInt(6,phone);
+			pstmt.setString(3, name);
+			pstmt.setString(4, birth);
+			pstmt.setString(5, email);
+			pstmt.setString(6, major);
+			pstmt.setInt(7,phone);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			Connector.close(pstmt);
 			Connector.close(conn);
+		}
+		return result;
+	}
+
+	public int register(String id, String pw, String name,String address, String birth, String email, String major, int phone, int userKind) {
+		String sql = "INSERT INTO userData VALUES ()";
+		int result=0;
+		return result;
+	}
+	
+	public int loginCheck(String id) {
+		String sql = "SELECT * FROM userData WHERE id=?";
+		int result = 0;
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return ++result; 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return result;
 	}

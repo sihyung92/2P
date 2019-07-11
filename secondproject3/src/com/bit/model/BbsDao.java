@@ -18,7 +18,7 @@ public class BbsDao {
 	
 	public ArrayList<BbsDto> getList(){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lms_bbs";
+		String sql="select * from lmsBbs";
 		
 		try {
 			Class.forName(driver);
@@ -63,7 +63,7 @@ public class BbsDao {
 	
 	public BbsDto detail(int num,int bbsNum){
 		BbsDto bean=new BbsDto();
-		String sql="select * from lms_bbs where num=? and bbsNum=?";
+		String sql="select * from lmsBbs where num=? and bbsNum=?";
 		try {
 			Class.forName(driver);
 			conn=DriverManager.getConnection(url, user, password);
@@ -100,7 +100,7 @@ public class BbsDao {
 	
 	public int delete(int num,int bbsNum){
 		int result=0;
-		String sql="delete from lms_bbs where num=? and bbsNum=?";
+		String sql="delete from lmsBbs where num=? and bbsNum=?";
 		try {
 			conn=DriverManager.getConnection(url, user, password);
 			pstmt=conn.prepareStatement(sql);
@@ -124,14 +124,14 @@ public class BbsDao {
 	
 	
 	public void insert(String title, String id){
-		String sql="insert into lms_bbs(num,title,status,id,nalja,views) values(lmsBbs_2_seq.nextval,?,'¹ÌÈ®ÀÎ',?,sysdate,0)";
+		String sql="insert into lmsBbs(num,title,status,id,nalja,views) values(lmsBbs_2_seq.nextval,?,'ë¯¸í•´ê²°',?,sysdate,0)";
 		
 		try {
-			conn=DriverManager.getConnection(url, user, password);
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, title);
-			pstmt.setString(2, id);
-			int result=pstmt.executeUpdate();
+				conn=DriverManager.getConnection(url, user, password);
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, title);
+				pstmt.setString(2, id);
+				int result=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,27 +147,32 @@ public class BbsDao {
 		
 	}
 	
-	public int delete(int num){
-		   int result=0;
-		   String sql="delete from lmsBbs where num=?";
-		   try {
-			Class.forName(driver);
-			conn=DriverManager.getConnection(url,user,password);
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			result=pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
+		public int update(String sub, String content, int bbsNum, int num){
+			int result=0;
+			String sql="update lmsBbs set sub=?,content=? where num=? and bbsNum=?";
 			try {
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
+				Class.forName(driver);
+				conn=DriverManager.getConnection(url,user,password);
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, sub);
+				pstmt.setString(2, content);
+				pstmt.setInt(3, bbsNum);
+				pstmt.setInt(4, num);
+				result=pstmt.executeUpdate();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally{
+				try {
+					if(pstmt!=null)pstmt.close();
+					if(conn!=null)conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			return result;
 		}
-		   return result;
-	   }
+		
 }
+

@@ -35,8 +35,7 @@ public class LoginController extends HttpServlet {
 		String pw = req.getParameter("pw");
 		UserDto bean = dao.login(id, pw);
 		HttpSession session = req.getSession();
-		// ���ΰ�ħ ���� �����ؾ���
-		if (bean == null) {
+				if (bean == null) {
 			System.out.println("bean : " + bean);
 			req.setAttribute("loginWrong",
 					"<script type=\"text/javascript\">alert('ID 혹은 PW를 입력해주세요');</script>");
@@ -47,7 +46,10 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("id", id);
 			session.setAttribute("pw", pw);
 			session.setAttribute("userNum", bean.getUserNum());
-			session.setAttribute("userKind", bean.getUserKind());// 0학생 1강사 2관리자
+			session.setAttribute("userKind", bean.getUserKind());// 0�л� 1���� 2������
+			if(bean.getUserKind()!=2) {
+				session.setAttribute("lecNum",bean.getUserKind());
+			}
 		}
 		doGet(req, resp);
 	}
