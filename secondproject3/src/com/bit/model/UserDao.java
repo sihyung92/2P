@@ -85,8 +85,15 @@ public class UserDao {
 		return bean;
 	}
 
-	public int edit(String id, String pw, String name,String address, String birth, String email, String major, int phone) {
-		String sql ="UPDATE userData SET pw=?, address=?, name=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=? where id="+id;
+	public int edit(String id, String pw, String name,String address, String birth, String email, String major, int phone,String lecNum) {
+		String sql ="UPDATE userData SET pw=?, address=?, name=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=?, lecNum=? where id='"+id+"'";
+		boolean isAdmin=false;
+		int lecture = 1;
+		if(lecNum=="") {
+			isAdmin = true;
+		}else {
+			lecture = Integer.parseInt(lecNum);
+		}
 		conn=Connector.getConnection();
 		int result = 0;
 		try {
@@ -98,6 +105,11 @@ public class UserDao {
 			pstmt.setString(5, email);
 			pstmt.setString(6, major);
 			pstmt.setInt(7,phone);
+			if(isAdmin) {
+				pstmt.setString(8,null);
+			}else {
+				pstmt.setInt(8,lecture);
+			}
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -108,27 +120,37 @@ public class UserDao {
 		return result;
 	}
 
-	public int register(String id, String pw, int userKind,int userNum,String name,String address, String birth, String email, String major, int phone, int lecNum) {
-		String sql = "MERGE INTO userData u USING dual ON (u.userNum=? AND u.userKind=?)\nWHEN MATCHED THEN\n";
-		sql+="UPDATE SET u.pw='"+pw+"',u.name='"+name+"',u.birth='"+birth+"',u.phone="+phone+",u.email='"+email+"',u.address='"+address+"',u.major='"+major+"'\n";
-		sql+="WHEN NOT MATCHED THEN\n";
-		sql+="INSERT VALUES (userData_"+userKind+"_seq.nextval,"+userKind+","+lecNum+",'"+id+"','"+pw+"','"+name+"','"+birth+"',"+phone+",'"+email+"','"+address+"','"+major+"')";
+	public int register(String id, String pw, int userKind,int userNum,String name,String address, String birth, String email, String major, int phone, String lecNum) {
+		boolean isAdmin=false;
+		int lecture = 1;
+		if(lecNum=="") {
+			isAdmin = true;
+		}else {
+			lecture = Integer.parseInt(lecNum);
+		}
+		String sql="INSERT INTO userData VALUES (userData_"+userKind+"_seq.nextval,"+userKind+",?,'"+id+"','"+pw+"','"+name+"','"+birth+"',";
+		sql+=phone+",'"+email+"','"+address+"','"+major+"')";
 		System.out.println(sql);
-		//(userData_0_seq.nextval,0,1,'id','pw','name','1992-06-01','01027032283','email','address','major');
 		int result=0;
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, userNum);
-			pstmt.setInt(2, userKind);
+			if(isAdmin) {
+				pstmt.setString(1, null);
+			}else {
+				pstmt.setInt(1, lecture);
+			}
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			Connector.close(pstmt);
+			Connector.close(conn);
 		}
 		return result;
 	}
 	
-	public int loginCheck(String id) {
+	public int idCheck(String id) {
 		String sql = "SELECT * FROM userData WHERE id=?";
 		int result = 0;
 		conn=Connector.getConnection();
@@ -141,6 +163,10 @@ public class UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
 		}
 		return result;
 	}

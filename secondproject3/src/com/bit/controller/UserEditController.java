@@ -23,8 +23,11 @@ public class UserEditController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		session.setAttribute("userNum", 1);
 		int userNum = (Integer) session.getAttribute("userNum");
+		boolean isAdmin=false;
+		if(((String)session.getAttribute("userKind")).equals("2")) {
+			isAdmin=true;
+		}
 		UserDao dao = new UserDao();
 		String id = req.getParameter("id");
 		String pw = req.getParameter("pw");
@@ -35,11 +38,15 @@ public class UserEditController extends HttpServlet {
 		String major = req.getParameter("major");
 		int userKind = Integer.parseInt(req.getParameter("userKind"));
 		int phone = Integer.parseInt(req.getParameter("phone"));
-		int lecNum = -1;
-		if (req.getParameter("lecNum") != "") {
-			Integer.parseInt(req.getParameter("lecNum"));
+		String lecNum = "";
+		if (req.getParameter("lecNum")!= "") {
+			lecNum = (String)req.getParameter("lecNum");
 		}
-		int result = dao.register(id, pw, userKind, userNum, name, address, birth, email, major, phone, lecNum);
+		int result =0;
+		if(isAdmin) {
+			result = dao.register(id, pw, userKind, userNum, name, address, birth, email, major, phone, lecNum);
+		}else {
+			result = dao.edit(id, pw, name, address, birth, email, major, phone,lecNum);}
 		System.out.println("레지스터 성공 : 1 실패 : 0 = "+result);
 	}
 }

@@ -50,15 +50,10 @@
             $("#logoutbtn").click(function() {
                location.href="<%=request.getContextPath()%>/lms/logout.bit";
             });
-           	
-            //로그인버튼 클릭시 
-/*             $("#loginbtn").click(function(){
-            	if(requset.getAttribute("loginWrong")!=null){
-            		out.println(request.getAttribute("loginWrong"));
-            		
-            	}		
-            });
-             */
+            
+           	$(".user").click(function(){
+           		location.href="<%=request.getContextPath()%>/lms/useredit.bit";
+           	});
           });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -68,6 +63,15 @@
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
     		}
+
+			if(session.getAttribute("isLogin")!=null&&((String)session.getAttribute("id")).equals((String)session.getAttribute("pw"))&&Integer.parseInt((String)session.getAttribute("userKind"))!=2){
+%>
+	<script type="text/javascript">
+		alert("최초 접속시 개인정보 수정이 필요합니다. 개인정보 수정 페이지로 이동합니다.");
+		location.href="<%=request.getContextPath()%>/lms/useredit.bit";
+	</script>
+<%
+			}
 %>
   <!--    헤더     -->
     <div id="header">
@@ -147,7 +151,6 @@
         <div id="logincontent">
         <!-- ***************로그인 전 상황*********** -->
         <%
-        System.out.println("userKind = "+session.getAttribute("userKind"));
 if(session.getAttribute("userKind")==null){%> 
 		<form action="<%=request.getContextPath()%>/lms/intro.bit" method="post">
             <div id="nologin">
@@ -163,7 +166,7 @@ if(session.getAttribute("userKind")==null){%>
 		</form>
 
         <!-- ****************학생 로그인 상황************* -->
-<%}else if ((Integer)session.getAttribute("userKind")==0){ %>
+<%}else if (((String)session.getAttribute("userKind")).equals("0")){ %>
             <div id="loginstu">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
@@ -173,7 +176,7 @@ if(session.getAttribute("userKind")==null){%>
                 </div>
             </div>
         <!-- ***************강사 로그인 상황************ -->
-<%}else if((Integer)session.getAttribute("userKind")==1){%>
+<%}else if(((String)session.getAttribute("userKind")).equals("1")){%>
             <div id="logintea">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
@@ -183,13 +186,13 @@ if(session.getAttribute("userKind")==null){%>
                 </div>
             </div>
         <!-- **************관리자 로그인 상황************** -->
-<%}else if((Integer)session.getAttribute("userKind")==2){%>
+<%}else if(((String)session.getAttribute("userKind")).equals("2")){%>
             <div id="loginadm">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
-                <button>회원관리</button>
-                <button>강의관리</button>
-                <button>출결관리</button>
-                <button>일정관리</button>
+                <button class="user">회원관리</button>
+                <button class="lecture">강의관리</button>
+                <button class="attendance">출결관리</button>
+                <button class="scheduler">일정관리</button>
             </div>
 <%} %>
         </div>

@@ -13,7 +13,6 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
 <script type="text/javascript">
-	<%session.setAttribute("id", "stu01"); session.setAttribute("userKind", "2");%>
 	var userKind = <%=session.getAttribute("userKind")%>;
 	var big;
 	$(document).ready(function() {
@@ -110,13 +109,16 @@
 				method:"POST",
 				data:{'id':id,'pw':pw,'name':name,'phone':phone,'userKind':kind,'birth':birth,'email':email,'addr':addr,'major':major,'cert':cert,'lecNum':lecNum},
 				success:function(){
-					alert("성공!");
+					alert("등록 성공!");
+					<%session.removeAttribute("pw");%>
+					window.location.href = "<%=request.getContextPath()%>/lms/intro.bit";
 				},
 				error:function(){
-					alert("실패!");
+					alert("등록 실패! 다시 시도해주세요.");
+					window.location.href = "<%=request.getContextPath()%>/lms/intro.bit";
 				}
 			});
-		});
+		});	
 	}
 	function emailselect() {
 		var emailval = $("#emailselbox").val();
@@ -139,29 +141,32 @@
 			$("#labelback").css("height", "780px");
 			$("#editbtn").css("margin", "370px auto 100px 50px");
 		}
+			$('#lecture').removeAttr('disabled');
+		if(ctgval=="2"){
+			$('#lecture').attr('disabled','disabled');
+		}
 	};
-	
 	function id_chk() {
-/* 		$.ajax({
-			  url: "http://localhost:8080/secondproject3/lms/useridcheck.bit?id="+$("id").val(),
+		var isAlready=0;
+		$.ajax({
+			  url: '../data/idcheck.jsp?id='+$("#id").val(),
 			  method: "GET",
-			  dataType: "json",
+			  dataType: "text",
 			  success:function(data){
-					$("#idspan").css("display", "block").html("아");
+				  isAlready=$.trim(data);
+				  console.log(isAlready);
+				if (isAlready==1) {
+					$('#idspan').show();
+				} else {
+					$('#idspan').hide();
+				}
 			  },
 			  error: function(request,status,error){
 				  var msg = "ERROR : " + request.status + " /// "
 				  msg+="내용 : " + request.responseText + " /// " + error;
 				  console.log(msg);
 			  }
-			}); */
-		var id = $("#id").val();
-		console.log(id);
-		if (id == "" && id == null) {
-			$("#idspan").css("display", "block");
-		} else {
-			$("#idspan").css("display", "none");
-		}
+			});
 	};
 	
 	function goPopup() {
@@ -235,7 +240,7 @@
 				<div>
 					<label for="id">아이디</label> <input type="text" name="id" id="id" />
 					<button id="idbtn">중복</button>
-					<span id="idspan">필수입력</span>
+					<span id="idspan">중복아이디입니다.</span>
 				</div>
 				<div>
 					<label for="pw">비밀번호</label> <input type="password" name="pw"
