@@ -3,16 +3,16 @@ package com.bit.model;
 import java.sql.Date;
 
 public class BbsDto{
-	private int listNum; //00 공지, 01수업자료, 02과제,03질문
-	private int bbsNum;	 //강의번호
-	private int num;	//게시판번호
-	private String title;	//제목
-	private String content; //내용
-	private String id;	//학생
-	private Date nalja;	//등록일
-	private int views;	//조회수
-	private String attach;	//첨부
-	private String status;	//답변여부
+	private int listNum; 
+	private int bbsNum;	
+	private int num;	
+	private String title;	
+	private String content; 
+	private String id;	
+	private Date nalja;	
+	private int views;	
+	private String attach;	
+	private String status;	
 	
 	
 	public int getBbsNum() {

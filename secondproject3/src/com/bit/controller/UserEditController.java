@@ -13,39 +13,40 @@ import javax.servlet.http.HttpSession;
 import com.bit.model.UserDao;
 
 @WebServlet("/lms/useredit.bit")
-public class UserEditController extends HttpServlet{
+public class UserEditController extends HttpServlet {
 	@Override
-protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher rd = req.getRequestDispatcher("/lms/userEdit.jsp");
 		rd.forward(req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("");
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		int kind = (int)session.getAttribute("userKind");
-		RequestDispatcher rd = req.getRequestDispatcher("userEdit.jsp");
+		int userNum = (Integer) session.getAttribute("userNum");
+		boolean isAdmin=false;
+		if(((String)session.getAttribute("userKind")).equals("2")) {
+			isAdmin=true;
+		}
 		UserDao dao = new UserDao();
 		String id = req.getParameter("id");
 		String pw = req.getParameter("pw");
 		String name = req.getParameter("name");
-		String address = req.getParameter("address");
+		String address = req.getParameter("addr");
 		String birth = req.getParameter("birth");
 		String email = req.getParameter("email");
 		String major = req.getParameter("major");
-		int userKind = Integer.parseInt(req.getParameter("kind"));
+		int userKind = Integer.parseInt(req.getParameter("userKind"));
 		int phone = Integer.parseInt(req.getParameter("phone"));
-		if(req.getParameter("id")!=null) {
-			rd = req.getRequestDispatcher("/lms/intro.jsp");
-			if(kind!=3) {
-				dao.edit(id, pw, name, address, birth, email, major, phone);
-			}else {
-				dao.register(id, pw, name, address, birth, email, major, phone,userKind);
-			}
+		String lecNum = "";
+		if (req.getParameter("lecNum")!= "") {
+			lecNum = (String)req.getParameter("lecNum");
 		}
-		rd.forward(req,resp);
+		int result =0;
+		if(isAdmin) {
+			result = dao.register(id, pw, userKind, userNum, name, address, birth, email, major, phone, lecNum);
+		}else {
+			result = dao.edit(id, pw, name, address, birth, email, major, phone,lecNum);}
+		System.out.println("레지스터 성공 : 1 실패 : 0 = "+result);
 	}
 }

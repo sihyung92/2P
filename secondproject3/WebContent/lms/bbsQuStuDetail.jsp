@@ -5,26 +5,25 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <style type="text/css">
-    	#topmargin{
+       	#topmargin{
     		height:100px;
     	}
         .bbs{
-        	margin:0px auto;
             width: 800px;
             height:490px;
-            border-collapse: collapse;
             background-color: white;
-            border:1px solid black;
             z-index:1;
+            border-collapse:collapse;
         }
-       	td{
-       		border:1px solid black;
-       	}
+       
         
         #content>div{
             width: 800px;
             margin: 0px auto;
+            
         }
         #content div>select{
             display: inline-block;
@@ -33,10 +32,48 @@
             display: inline-block;
             margin: 0px 0px 10px 450px;
         }
-        .bbs tr>td{
-        	text-align:left;
-        }
         
+        .bbs{
+        	border:1px solid;
+        	margin: 0px auto;
+        	width:100%
+        	z-index:3;
+        }
+        .bbs tr:nth-child(1){
+        	height:20%;
+        	border:1px solid;
+        }
+        .bbs tr:nth-child(1)>td{
+        	padding-left:20px;
+        }
+        .bbs tr:nth-child(2){
+        	height:10%;
+        }
+         .bbs tr:nth-child(2)>td{
+        	padding-left:20px;
+        }
+        .bbs tr:nth-child(3){
+        	height:50%;
+        }
+        .bbs tr:nth-child(4){
+        	height:20%;
+        	border:1px solid;
+        }
+        .bbs tr:nth-child(4)>td+td{
+        	position:relative;
+        	left:-20px;
+        }
+       
+        .span1{
+        	float:right;
+        	text-align:right;
+        	margin-right:20px;
+        	
+        }
+        button{
+        	background-color:lightblue;
+        	font-size:10
+        }
         select{
         	text-align:left;
         }
@@ -45,47 +82,19 @@
         	height:800px;
         	margin:0px auto;
         }
-       	tr:nth-child(1){
-       		width:100%;
-       		height:10%;
-       	}
-       	tr:nth-child(2){
-       		height:10%;
-       		width:100%;
-       	}
-       	tr:nth-child(3){
-       		height:60%;
-       		width:100%;
-       	}
-       	tr:nth-child(4){
-       		height:20%;
-       		width:100%;
+       
+        select{
+        	text-align:center;
+        }
+       	#span3{
+       		float:left;
+       		margin-left:30px;
        	}
        	textarea{
-       		width:650px;
+       		margin-left:50px;
        		height:50px;
        	}
-       	.bbs{
-       		border:1px solid black;
-       	}
-       	btn{
-       		font-size:20px;
-       		width: 60px;
-       		height:40px;
-       	}
-       	#bot{
-       		margin:0px auto;
-       		width:800px;
-       		text-area:right;
-       	}
-       	#bot>button{
-       		float:right;
-       		width:60px;
-       		height:40px;
-       	}
     </style>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <script type="text/javascript">
         var big;
         $(document).ready(function() {
@@ -133,6 +142,9 @@
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
+
+<!-- 질문게시판 강사 -->
+
      <!--    헤더     -->
     <div id="header">
         <div>
@@ -149,7 +161,7 @@
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>관리자님
+                <p>강사1
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
@@ -166,30 +178,27 @@
    <section class="section">
     <div id="content">
     <div id="topmargin"></div>
+    
 	        <h1>상세페이지</h1>
 	        <br/>
-	        
+	      
         <table class="bbs">
-            <tr>
-                <td></td>
-            </tr>
-            
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <th><textarea name="bb"></textarea>&nbsp<button id="btn">입력</button></th>
-            </tr>
+          <tr>
+          	<td colspan="2">
+          		<div></div>제목<div><span>작성자</span> <span class="span1">등록일</span></div>
+          	</td>
+          </tr>
+          <tr>
+          	<td colspan="2">첨부파일</td>
+          	
+          </tr>
+          <tr>
+          	<td colspan="2"></td>
+          </tr>
+          <tr>
+          	<td><textarea cols="80"></textarea></td><td border="0"><button>입력</button></td>
+          </tr>
         </table>
-        <br/><br/>
-        
-        <div id="bot">
-        	<button>수정</button>
-        </div>
-       
     </div>
 	</section>
     <!-- *****content end***** -->

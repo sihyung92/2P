@@ -18,14 +18,13 @@ public class BbsDao {
 	
 	public ArrayList<BbsDto> getList(){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs";
+		String sql="select * from lmsBbs where num=1 and bbsNum=03";
 		
 		try {
 			Class.forName(driver);
 			conn=DriverManager.getConnection(url, user, password);
 			pstmt=conn.prepareStatement(sql);
 			rs=pstmt.executeQuery();
-			
 			while(rs.next()){
 				BbsDto bean=new BbsDto();
 				bean.setListNum(rs.getInt("listNum"));
@@ -33,10 +32,8 @@ public class BbsDao {
 				bean.setNum(rs.getInt("num"));
 				bean.setTitle(rs.getString("title"));
 				bean.setContent(rs.getString("content"));
-				bean.setStatus(rs.getString("status"));
 				bean.setId(rs.getString("id"));
 				bean.setNalja(rs.getDate("nalja"));
-				bean.setViews(rs.getInt("view"));
 				bean.setAttach(rs.getString("attach"));
 				list.add(bean);
 			}
