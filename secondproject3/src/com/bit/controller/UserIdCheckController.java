@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bit.model.UserDao;
 
-@WebServlet("/useridcheck.bit")
+@WebServlet("/lms/useridcheck.bit")
 public class UserIdCheckController extends HttpServlet {
-	//i want to ajax die,,,need modify
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		UserDao dao = new UserDao();

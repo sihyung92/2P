@@ -51,7 +51,7 @@ public class ClassDao {
 	public ArrayList<ClassDto> getIntroList(){
 		ArrayList<ClassDto> list=new ArrayList<ClassDto>();
 		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName,content from lecture where startdate>=sysdate order by startdate";
-		//¿À´Ã ÀÌÈÄ µ¥ÀÌÅÍ¸¸ °¡Á®¿È ½Ã°£¼øÁ¤·Ä.
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		try {
 			conn = Connector.getConnection();
 			pstmt=conn.prepareStatement(sql);
@@ -70,8 +70,8 @@ public class ClassDao {
 //				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
 //					isRecruiting = true;
 //				};
-				//³¯Â¥¸¦ ºñ±³ÇÏ¿© ½ÃÀÛ³¯Â¥°¡ ÇöÀç³¯Â¥º¸´Ù µÚ¶ó¸é ¸ğÁıÁß(isRecruiting = true), ¾Æ´Ï¶ó¸é ¸¶°¨(isRecruiting = false)
-				//±¸ÇöÇØ¾ßÇÒ ±â´É : È¸¿øÅ×ÀÌºí¿¡¼­ kind°¡ ÇĞ»ıÀÌ¸é¼­ ÇØ´ç°­ÀÇ¸¦ µè´Â»ç¶÷ÀÇ ¼ıÀÚ°¡ <30ÀÌ¸é isRe~=true(¸ğÁıÁß)¾Æ´Ï¸é false(¸¶°¨)
+				//ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Û³ï¿½Â¥ï¿½ï¿½ ï¿½ï¿½ï¿½ç³¯Â¥ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(isRecruiting = true), ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(isRecruiting = false)
+				//ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ : È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ kindï¿½ï¿½ ï¿½Ğ»ï¿½ï¿½Ì¸é¼­ ï¿½Ø´ç°­ï¿½Ç¸ï¿½ ï¿½ï¿½Â»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ <30ï¿½Ì¸ï¿½ isRe~=true(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½Æ´Ï¸ï¿½ false(ï¿½ï¿½ï¿½ï¿½)
 				bean.setRecruitng(isRecruiting);
 				list.add(bean);
 			}

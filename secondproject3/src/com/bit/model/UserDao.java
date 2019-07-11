@@ -85,8 +85,15 @@ public class UserDao {
 		return bean;
 	}
 
-	public int edit(String id, String pw, String name,String address, String birth, String email, String major, int phone) {
-		String sql ="UPDATE userData SET pw=?, address=?, name=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=? where id="+id;
+	public int edit(String id, String pw, String name,String address, String birth, String email, String major, int phone,String lecNum) {
+		String sql ="UPDATE userData SET pw=?, address=?, name=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=?, lecNum=? where id='"+id+"'";
+		boolean isAdmin=false;
+		int lecture = 1;
+		if(lecNum=="") {
+			isAdmin = true;
+		}else {
+			lecture = Integer.parseInt(lecNum);
+		}
 		conn=Connector.getConnection();
 		int result = 0;
 		try {
@@ -98,6 +105,11 @@ public class UserDao {
 			pstmt.setString(5, email);
 			pstmt.setString(6, major);
 			pstmt.setInt(7,phone);
+			if(isAdmin) {
+				pstmt.setString(8,null);
+			}else {
+				pstmt.setInt(8,lecture);
+			}
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -108,13 +120,37 @@ public class UserDao {
 		return result;
 	}
 
-	public int register(String id, String pw, String name,String address, String birth, String email, String major, int phone, int userKind) {
-		String sql = "INSERT INTO userData VALUES ()";
+	public int register(String id, String pw, int userKind,int userNum,String name,String address, String birth, String email, String major, int phone, String lecNum) {
+		boolean isAdmin=false;
+		int lecture = 1;
+		if(lecNum=="") {
+			isAdmin = true;
+		}else {
+			lecture = Integer.parseInt(lecNum);
+		}
+		String sql="INSERT INTO userData VALUES (userData_"+userKind+"_seq.nextval,"+userKind+",?,'"+id+"','"+pw+"','"+name+"','"+birth+"',";
+		sql+=phone+",'"+email+"','"+address+"','"+major+"')";
+		System.out.println(sql);
 		int result=0;
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			if(isAdmin) {
+				pstmt.setString(1, null);
+			}else {
+				pstmt.setInt(1, lecture);
+			}
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
 		return result;
 	}
 	
-	public int loginCheck(String id) {
+	public int idCheck(String id) {
 		String sql = "SELECT * FROM userData WHERE id=?";
 		int result = 0;
 		conn=Connector.getConnection();
@@ -127,6 +163,10 @@ public class UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
 		}
 		return result;
 	}
