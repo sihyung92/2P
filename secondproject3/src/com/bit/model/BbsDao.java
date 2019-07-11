@@ -6,30 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.bit.util.Connector;
+
 public class BbsDao {
-	String driver="oracle.jdbc.driver.OracleDriver";
-	String url="jdbc:oracle:thin:@localhost:1521:xe";
-	String user="hr";
-	String password="hr";
-	
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
-	public ArrayList<BbsDto> getList(){
+	public ArrayList<BbsDto> getNoticeList(){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs where num=1 and bbsNum=03";
-		
+		String sql="select * from lmsBbs where bbsNum=0";
+		conn=Connector.getConnection();
 		try {
-			Class.forName(driver);
-			conn=DriverManager.getConnection(url, user, password);
 			pstmt=conn.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			while(rs.next()){
 				BbsDto bean=new BbsDto();
 				bean.setListNum(rs.getInt("listNum"));
 				bean.setBbsNum(rs.getInt("bbsNum"));
-				bean.setNum(rs.getInt("num"));
+				bean.setLecNum(rs.getInt("lecnum"));
 				bean.setTitle(rs.getString("title"));
 				bean.setContent(rs.getString("content"));
 				bean.setId(rs.getString("id"));
@@ -37,33 +32,50 @@ public class BbsDao {
 				bean.setAttach(rs.getString("attach"));
 				list.add(bean);
 			}
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-				try {
-					if(rs!=null)rs.close();
-					if(pstmt!=null)pstmt.close();
-					if(conn!=null)conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				Connector.close(rs);
+				Connector.close(pstmt);
+				Connector.close(conn);
 		}
 		return list;
 	}
 	
-	
+	public ArrayList<BbsDto> getQuestionList(){
+		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
+		String sql="select * from lmsBbs where listnum=1 and bbsNum=0 order by listnum desc";
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				BbsDto bean=new BbsDto();
+				bean.setListNum(rs.getInt("listNum"));
+				bean.setBbsNum(rs.getInt("bbsNum"));
+				bean.setLecNum(rs.getInt("lecnum"));
+				bean.setTitle(rs.getString("title"));
+				bean.setContent(rs.getString("content"));
+				bean.setId(rs.getString("id"));
+				bean.setNalja(rs.getDate("nalja"));
+				bean.setAttach(rs.getString("attach"));
+				list.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+				Connector.close(rs);
+				Connector.close(pstmt);
+				Connector.close(conn);
+		}
+		return list;
+	}
+
 	public BbsDto detail(int num,int bbsNum){
 		BbsDto bean=new BbsDto();
 		String sql="select * from lmsBbs where num=? and bbsNum=?";
+		conn=Connector.getConnection();
 		try {
-			Class.forName(driver);
-			conn=DriverManager.getConnection(url, user, password);
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.setInt(2,bbsNum);
@@ -74,23 +86,12 @@ public class BbsDao {
 				bean.setNalja(rs.getDate("nalja"));
 				bean.setContent(rs.getString("content"));
 			}
-			
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-				try {
-					if(rs!=null)rs.close();
-					if(pstmt!=null)pstmt.close();
-					if(conn!=null)conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				Connector.close(rs);
+				Connector.close(pstmt);
+				Connector.close(conn);
 		}
 		return bean;
 	}
@@ -98,23 +99,18 @@ public class BbsDao {
 	public int delete(int num,int bbsNum){
 		int result=0;
 		String sql="delete from lmsBbs where num=? and bbsNum=?";
+		conn=Connector.getConnection();
 		try {
-			conn=DriverManager.getConnection(url, user, password);
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.setInt(2, bbsNum);
-			rs=pstmt.executeQuery();
+			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			try {
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
 		}
 		return result;
 	}
@@ -122,24 +118,17 @@ public class BbsDao {
 	
 	public void insert(String title, String id){
 		String sql="insert into lmsBbs(num,title,status,id,nalja,views) values(lmsBbs_2_seq.nextval,?,'미해결',?,sysdate,0)";
-		
+		conn=Connector.getConnection();
 		try {
-				conn=DriverManager.getConnection(url, user, password);
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setString(1, title);
 				pstmt.setString(2, id);
 				int result=pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			try {
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Connector.close(pstmt);
+			Connector.close(conn);
 		}
 		
 	}
@@ -147,26 +136,19 @@ public class BbsDao {
 		public int update(String sub, String content, int bbsNum, int num){
 			int result=0;
 			String sql="update lmsBbs set sub=?,content=? where num=? and bbsNum=?";
+			conn=Connector.getConnection();
 			try {
-				Class.forName(driver);
-				conn=DriverManager.getConnection(url,user,password);
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setString(1, sub);
 				pstmt.setString(2, content);
 				pstmt.setInt(3, bbsNum);
 				pstmt.setInt(4, num);
 				result=pstmt.executeUpdate();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally{
-				try {
-					if(pstmt!=null)pstmt.close();
-					if(conn!=null)conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				Connector.close(pstmt);
+				Connector.close(conn);
 			}
 			return result;
 		}

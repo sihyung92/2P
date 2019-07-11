@@ -94,7 +94,9 @@
                     <li><a href="#">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
-                 <%}else{}%>
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">

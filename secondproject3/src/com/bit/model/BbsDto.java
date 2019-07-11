@@ -5,7 +5,7 @@ import java.sql.Date;
 public class BbsDto{
 	private int listNum; 
 	private int bbsNum;	
-	private int num;	
+	private int lecNum;	
 	private String title;	
 	private String content; 
 	private String id;	
@@ -28,11 +28,11 @@ public class BbsDto{
 		this.listNum = listNum;
 	}
 	
-	public int getNum() {
-		return num;
+	public int getLecNum() {
+		return lecNum;
 	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setLecNum(int lecNum) {
+		this.lecNum = lecNum;
 	}
 	public String getTitle() {
 		return title;

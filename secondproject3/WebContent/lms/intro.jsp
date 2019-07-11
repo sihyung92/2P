@@ -1,3 +1,5 @@
+<%@page import="com.bit.model.BbsDto"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -63,7 +65,6 @@
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
     		}
-
 			if(session.getAttribute("isLogin")!=null&&((String)session.getAttribute("id")).equals((String)session.getAttribute("pw"))&&Integer.parseInt((String)session.getAttribute("userKind"))!=2){
 %>
 	<script type="text/javascript">
@@ -116,34 +117,20 @@
         <!--    공지사항     -->
         <div id="notic">
             <h3>공지사항</h3>
-            <a href="#">전체보기</a>
+            <a href="notice.bbs">전체보기</a>
             <div>
                 <table>
+            <%ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
+            	int size = list.size();
+            	if(size>5){size=5;}
+            	for(int i=0; i<size; i++){
+            		BbsDto bean = list.get(i);%>
                     <tr>
-                        <td id="td1">공지제목이에요</td>
-                        <td id="td2">작성자</td>
-                        <td id="td3">2019-07-03</td>
+                        <td id="td1"><%=bean.getTitle()%></td>
+                        <td id="td2"><%=bean.getId()%></td>
+                        <td id="td3"><%=bean.getNalja() %></td>
                     </tr>
-                    <tr>
-                        <td>공지제목이에요</td>
-                        <td>작성자</td>
-                        <td>2019-07-03</td>
-                    </tr>
-                    <tr>
-                        <td>공지제목이에요</td>
-                        <td>작성자</td>
-                        <td>2019-07-03</td>
-                    </tr>
-                    <tr>
-                        <td>공지제목이에요</td>
-                        <td>작성자</td>
-                        <td>2019-07-03</td>
-                    </tr>
-                    <tr>
-                        <td>공지제목이에요</td>
-                        <td>작성자</td>
-                        <td>2019-07-03</td>
-                    </tr>
+            <%}%>
                 </table>
             </div>
         </div>

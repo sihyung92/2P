@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.bit.model.ClassDao;
 import com.bit.model.ClassDto;
 
-@WebServlet("/lecturedetail.bit")
+@WebServlet("/lms/lecturedetail.bit")
 public class LectureDetailController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("/lectureDetail.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/lms/lectureDetail.jsp");
 		ArrayList<ClassDto> list = new ArrayList<ClassDto>();
 		ClassDao dao = new ClassDao();
 		list = dao.getIntroList();
