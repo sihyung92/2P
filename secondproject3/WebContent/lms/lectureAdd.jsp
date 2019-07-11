@@ -219,48 +219,48 @@
     %>
     <div id="content">
 	    <div> 
-			<h3>강의정보 수정</h3>
+			<h3>강의등록</h3>
 	    	<div>
 	       		<h4>강의정보입력</h4>
 	       		<form method="post">
 	        	<div id="topdiv">
 	            	<div>
 	                	<label for="name">강의명</label>
-	             		<input type="text" name="name" id="name" value="<%=bean.getName()%>"/>
+	             		<input type="text" name="name" id="name" />
 	          	  </div>
 	          	  <div>
 	          	      <label for="teacherName">강사</label>
-	          	      <input type="text" name="teacherName" id="teacherName" value="<%=bean.getTeacherName()%>"/>
+	          	      <input type="text" name="teacherName" id="teacherName" />
 		            </div>
 		            <div>
 		                <label for="startdate">수강기간</label>
-		                <input type="date" name="startdate" id="startdate" value="<%=bean.getStartdate()%>"/>
+		                <input type="date" name="startdate" id="startdate" />
 		                <span>~</span>
-		                <input type="date" name="enddate" id="enddate" value="<%=bean.getEnddate()%>"/>
+		                <input type="date" name="enddate" id="enddate" />
 		            </div>
 		            <div>
 		                <label for="starttime">수업일정</label>
-		                <input type="time" name="starttime" id="starttime" value=""/>
+		                <input type="time" name="starttime" id="starttime" />
 		                <span>~</span>
-		                <input type="time" name="endtime" id="endtime" value=""/>
+		                <input type="time" name="endtime" id="endtime" />
 		            </div>
 		            <div>
 		                <label for="classroom">강의실</label>
-		                <input type="text" name="classroom" id="classroom" value="<%=bean.getClassroom()%>"/>
+		                <input type="text" name="classroom" id="classroom"/>
 		            </div>
 		        </div>
 		        <div id="bottomdiv">
 		            <div>
 		                <label for="attach">강의계획서</label>
-		                <input type="text" name="attach" id="attach" value="<%=bean.getAttach()%>"/>
+		                <input type="text" name="attach" id="attach"/>
 		                <input type="button" value="취소" />
 		            </div>
 		            <div id="contentdiv">
 		                <label for="content">강의과정</label>
-		                <textarea name="content" id="content" value="<%=bean.getContent()%>"></textarea>
+		                <textarea name="content" id="content"></textarea>
 		            </div>
 		            <div id="btndiv">
-		                <input type="submit" value="수정" />
+		                <input type="submit" value="입력" />
 		                <input type="button" value="취소" />
 		            </div>
 		        </div>

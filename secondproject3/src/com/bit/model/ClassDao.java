@@ -1,15 +1,10 @@
 package com.bit.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.bit.util.Connector;
 
@@ -18,16 +13,16 @@ public class ClassDao {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-	
-	public ArrayList<ClassDto> getList(){
-		ArrayList<ClassDto> list=new ArrayList<ClassDto>();
-		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,classroom,content,attach,teacherName from lecture order by num";
+
+	public ArrayList<ClassDto> getList() {
+		ArrayList<ClassDto> list = new ArrayList<ClassDto>();
+		String sql = "select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,classroom,content,attach,teacherName from lecture order by num desc";
 		try {
 			conn = Connector.getConnection();
-			pstmt=conn.prepareStatement(sql);
-			rs=pstmt.executeQuery();
-			while(rs.next()){
-				ClassDto bean=new ClassDto();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ClassDto bean = new ClassDto();
 				bean.setNum(rs.getInt("num"));
 				bean.setName(rs.getString("name"));
 				bean.setStartdate(rs.getString("startdate"));
@@ -40,44 +35,48 @@ public class ClassDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			Connector.close(rs);
 			Connector.close(pstmt);
 			Connector.close(conn);
 		}
 		return list;
 	}
-	
-	public ArrayList<ClassDto> getIntroList(){
-		ArrayList<ClassDto> list=new ArrayList<ClassDto>();
-		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName,content from lecture where startdate>=sysdate order by startdate";
-		//¿À´Ã ÀÌÈÄ µ¥ÀÌÅÍ¸¸ °¡Á®¿È ½Ã°£¼øÁ¤·Ä.
+
+	public ArrayList<ClassDto> getIntroList() {
+		ArrayList<ClassDto> list = new ArrayList<ClassDto>();
+		String sql = "select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName,content from lecture where startdate>=sysdate order by startdate";
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		try {
 			conn = Connector.getConnection();
-			pstmt=conn.prepareStatement(sql);
-			rs=pstmt.executeQuery();
-			while(rs.next()){
-				ClassDto bean=new ClassDto();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ClassDto bean = new ClassDto();
 				bean.setNum(rs.getInt("num"));
 				bean.setName(rs.getString("name"));
 				bean.setStartdate(rs.getString("startdate"));
 				bean.setEnddate(rs.getString("enddate"));
-				String totalDate = rs.getString("startdate")+"~"+rs.getString("enddate");
+				String totalDate = rs.getString("startdate") + "~"
+						+ rs.getString("enddate");
 				bean.setTotalDate(totalDate);
 				bean.setTeacherName(rs.getString("teacherName"));
 				bean.setContent(rs.getString("content"));
 				boolean isRecruiting = true;
-//				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
-//					isRecruiting = true;
-//				};
-				//³¯Â¥¸¦ ºñ±³ÇÏ¿© ½ÃÀÛ³¯Â¥°¡ ÇöÀç³¯Â¥º¸´Ù µÚ¶ó¸é ¸ðÁýÁß(isRecruiting = true), ¾Æ´Ï¶ó¸é ¸¶°¨(isRecruiting = false)
-				//±¸ÇöÇØ¾ßÇÒ ±â´É : È¸¿øÅ×ÀÌºí¿¡¼­ kind°¡ ÇÐ»ýÀÌ¸é¼­ ÇØ´ç°­ÀÇ¸¦ µè´Â»ç¶÷ÀÇ ¼ýÀÚ°¡ <30ÀÌ¸é isRe~=true(¸ðÁýÁß)¾Æ´Ï¸é false(¸¶°¨)
+				// if(0>new
+				// Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
+				// isRecruiting = true;
+				// };
+				// ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Û³ï¿½Â¥ï¿½ï¿½ ï¿½ï¿½ï¿½ç³¯Â¥ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(isRecruiting =
+				// true), ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(isRecruiting = false)
+				// ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ : È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ kindï¿½ï¿½ ï¿½Ð»ï¿½ï¿½Ì¸é¼­ ï¿½Ø´ç°­ï¿½Ç¸ï¿½ ï¿½ï¿½Â»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½
+				// <30ï¿½Ì¸ï¿½ isRe~=true(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½Æ´Ï¸ï¿½ false(ï¿½ï¿½ï¿½ï¿½)
 				bean.setRecruitng(isRecruiting);
 				list.add(bean);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			Connector.close(rs);
 			Connector.close(pstmt);
 			Connector.close(conn);

@@ -1,98 +1,101 @@
-<%@page import="com.bit.model.ClassDto"%>
+<%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-  	<style type="text/css">
-  		#content{
-  			position: relative;
-  			top:150px;
-  		}
-  		#content>div{
-  			width: 600px;
-  			height: 520px;
-  			margin: 20px auto;
-  		}
-  		#content>div>div{
-  			width: 560px;
-  			height: 460px;
-  			margin: 30px auto;
-  			border-radius: 10px;		
-  			background-color: rgba(0,0,0,0.1); 	
-  		}
-  		#content>div>div>h4{
-  			margin: 30px 20px;
-  			position: relative;
-  			top: 15px;
-  		}
-  		#content>div>div>form>div{
-  			width:500px;
-  			margin: 0px auto;
-  		}
-  		#content #bottomdiv #contentdiv{
-  			position: relative;
-  			top: -146px;
-  		}
-  		#content #bottomdiv #contentdiv label{
-  			position: relative;
-  			top: 12px;
-  		}
-  		#content #bottomdiv #btndiv{
-  			position: relative;
-  			left: 400px;
-  		}
-  		#content div>label{
-  			display: inline-block;
-  			width: 120px;
-  			height:30px;
-
-  		}
-  		#content div>input[type="text"]{
-  			width: 250px;
-  			height: 26px;
-  			margin: 2px 0px;
-  		}
-  		#content #attach{
-  			width: 300px;
-  		}
-  		#content input[type="button"],input[type="submit"]{
-  			display: inline-block;
-  			background-color: white;
-            border: 1px solid black;
-            height: 26px;
-            width: 50px;
+<meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+ <style type="text/css">
+        #content {
             position: relative;
-            top: 2px;
-  		}
-  		#content div>input[type="date"]{
-  			width: 120px;
-  			height: 26px;
-  			margin: 2px 0px;
-  		}
-  		#content div>input[type="time"]{
-  			width: 120px;
-  			height: 26px;
-  			margin: 2px 0px;
-  		}
-  		#content div>textarea{
-  			width: 350px;
-  			height: 150px;
-  			resize: none;
-  			overflow-y: auto; 
-  			
-   		}
-  		#footer{
-  			top:250px;
-  		}
-  	</style>
+            top: 150px;
+        }
+
+        #content span {
+            font-weight: bold;
+            font-size: 14px;
+            position: relative;
+            top: 5px;
+            left: 20px;
+        }
+
+        #content table {
+            height: 150px;
+        }
+
+        #content table,
+        #content tr,
+        #content th,
+        #content td {
+            border: 1px solid gray;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        #content .th1 {
+            height: 32px;
+        }
+
+        #content #fronttable {
+            position: absolute;
+            top: 60px;
+            left: 30px;
+            width: 50px;
+            background-color: rgba(0, 0, 0, 0.1);
+
+        }
+
+        #content #studiv {
+            width: 800px;
+            overflow-x: scroll;
+            border-right: 1px solid gray;
+            position: absolute;
+            left: 79px;
+            top: 60px;
+        }
+
+        #content #stutable {
+            font-size: 10px;
+        }
+
+        #content #stutable select {
+            width: 40px;
+            height: 37px;
+        }
+
+        #content #btndiv {
+            position: absolute;
+            top: 250px;
+            left: 450px;
+        }
+
+        #content #btndiv button,
+        #content #btndiv input[type="submit"] {
+            border: 1px solid black;
+            background-color: white;
+            width: 60px;
+            height: 30px;
+        }
+
+        #footer {
+            top: 500px;
+        }
+    </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <script type="text/javascript">
         var big;
         $(document).ready(function() {
+            //이미지 슬라이드
+            big = $('#imgcontent').bxSlider({
+                minSlides: 1,
+                maxSlides: 1,
+                slideWidth: 800,
+                pager: true,
+                auto: true,
+                pause: 5000
+            });
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -117,8 +120,13 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-        });
 
+            //로그아웃버튼 클릭
+            $("#logoutbtn").click(function() {
+               location.href="<%=request.getContextPath()%>/lms/logout.bit";
+            });
+
+          });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -134,7 +142,7 @@
 				//0학생 1강사 2관리자
 			}
 %>
-    <!--    헤더     -->
+  <!--    헤더     -->
     <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
@@ -213,60 +221,56 @@
             </div>
         </div>
     </div>
-    <!-- *****content start***** -->
-    <% 
-    	ClassDto bean=(ClassDto)request.getAttribute("bean");
-    %>
+    <!-- *****content start*****    -->
     <div id="content">
-	    <div> 
-			<h3>강의정보 수정</h3>
-	    	<div>
-	       		<h4>강의정보입력</h4>
-	       		<form method="post">
-	        	<div id="topdiv">
-	            	<div>
-	                	<label for="name">강의명</label>
-	             		<input type="text" name="name" id="name" value="<%=bean.getName()%>"/>
-	          	  </div>
-	          	  <div>
-	          	      <label for="teacherName">강사</label>
-	          	      <input type="text" name="teacherName" id="teacherName" value="<%=bean.getTeacherName()%>"/>
-		            </div>
-		            <div>
-		                <label for="startdate">수강기간</label>
-		                <input type="date" name="startdate" id="startdate" value="<%=bean.getStartdate()%>"/>
-		                <span>~</span>
-		                <input type="date" name="enddate" id="enddate" value="<%=bean.getEnddate()%>"/>
-		            </div>
-		            <div>
-		                <label for="starttime">수업일정</label>
-		                <input type="time" name="starttime" id="starttime" value=""/>
-		                <span>~</span>
-		                <input type="time" name="endtime" id="endtime" value=""/>
-		            </div>
-		            <div>
-		                <label for="classroom">강의실</label>
-		                <input type="text" name="classroom" id="classroom" value="<%=bean.getClassroom()%>"/>
-		            </div>
-		        </div>
-		        <div id="bottomdiv">
-		            <div>
-		                <label for="attach">강의계획서</label>
-		                <input type="text" name="attach" id="attach" value="<%=bean.getAttach()%>"/>
-		                <input type="button" value="취소" />
-		            </div>
-		            <div id="contentdiv">
-		                <label for="content">강의과정</label>
-		                <textarea name="content" id="content" value="<%=bean.getContent()%>"></textarea>
-		            </div>
-		            <div id="btndiv">
-		                <input type="submit" value="수정" />
-		                <input type="button" value="취소" />
-		            </div>
-		        </div>
-		        </form>
-		    </div>
-	    </div>	   
+        <h3>성적입력</h3>
+        <span>응용 SW엔지니어링 양성과정 1회차</span>
+        <table id="fronttable">
+            <tr>
+                <th class="th1">　</th>
+            </tr>
+            <tr>
+                <th>1회차</th>
+            </tr>
+            <tr>
+                <th>2회차</th>
+            </tr>
+            <tr>
+                <th>3회차</th>
+            </tr>
+        </table>
+        <div id="studiv">
+            <form method="post">
+                <table id="stutable">
+                    <tr>
+                    <%for(int i=0; i<30; i++) {%>
+                        <th class="th1">홍길동</th>
+                    <%} %>
+                    </tr>
+                    <%for(int i=0; i<3; i++){ %>
+                    <tr>
+                    	<% for(int j=0; j<30; j++){ %>
+                        <td>
+                            <select>
+                                <option value=""></option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="F">F</option>
+                            </select>
+                        </td>
+                        <%} %>
+                    </tr>
+                    <%} %>               
+                </table>
+            </form>
+        </div>
+        <div id="btndiv">
+            <input type="submit" value="입력"/>
+            <button>뒤로</button>
+        </div>
+
     </div>
     <!-- *****content end***** -->
     <!--    바닥글     -->
@@ -286,4 +290,3 @@
         </table>
     </div>
 </body>
-</html>
