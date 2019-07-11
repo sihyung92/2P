@@ -13,16 +13,22 @@ import com.bit.model.ClassDto;
 import com.bit.model.lectureDao;
 
 @WebServlet("/lms/lectureedit.bit")
-public class lectureEditController extends HttpServlet {
+public class LectureEditController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("/lms/lectureEdit.jsp");
+
 		int num = Integer.parseInt(req.getParameter("num"));
+
 		lectureDao dao = new lectureDao();
 		ClassDto bean = dao.getLectureEdit(num);
-		req.setAttribute("bean", bean);
+
+		if (bean != null) {
+			req.setAttribute("bean", bean);
+		}
+		RequestDispatcher rd = req.getRequestDispatcher("/lms/lectureEdit.jsp");
+
 		rd.forward(req, resp);
 	}
 
@@ -30,10 +36,23 @@ public class lectureEditController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		RequestDispatcher rd = req.getRequestDispatcher("/lms/lectureEdit.jsp");
-		int num = Integer.parseInt(req.getParameter("num"));
+
+		String name = req.getParameter("name");
+		String teacherName = req.getParameter("teacherName");
+		String startdate = req.getParameter("startdate");
+		String enddate = req.getParameter("enddate");
+		String classroom = req.getParameter("classroom");
+		String attach = req.getParameter("attach");
+		String content = req.getParameter("content");
+
 		lectureDao dao = new lectureDao();
-		ClassDto bean = dao.getLectureEdit(num);
-		req.setAttribute("bean", bean);
+
+		// int result = dao.update(num);
+		// if (result > 0) {
+		// resp.sendRedirect("/lms/detail.bit?idx=" + num);
+		// } else {
+		// doGet(req, resp);
+		// }
 		rd.forward(req, resp);
 	}
 }
