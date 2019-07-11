@@ -6,7 +6,86 @@
 <head>
 <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
+  <style type="text/css">
+        #content {
+            position: relative;
+            top: 150px;
+        }
+
+        #content h3 {
+            position: relative;
+            top: -10px;
+            left: 100px;
+
+        }
+
+        #content h3+div {
+            width: 800px;
+            height: 700px;
+            margin: 0px auto;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        #content h3+div>div {
+            width: 700px;
+            margin: 0px auto;
+            position: relative;
+            top: 30px;
+            border-bottom: 2px solid gray;
+        }
+
+        #content label {
+            font-weight: bold;
+            display: inline-block;
+            width: 100px;
+            margin: 10px;
+        }
+
+        #content p {
+            display: inline-block;
+
+        }
+
+        #content button {
+            background-color: darkblue;
+            border: 0px;
+            color: white;
+            border-radius: 3px;
+            height: 40px;
+            width: 160px;
+            position: relative;
+            top: -30px;
+            left: 500px;
+        }
+
+        #content #lecturecontent {
+            display: block;
+            width: 660px;
+            height: 150px;
+            margin: 0px auto;
+            overflow-y: scroll;
+            ;
+        }
+
+        #content #studiv {
+            border: 0px;
+        }
+
+        #content #studiv div {
+            display: block;
+            width: 660px;
+            height: 80px;
+            margin: 0px auto;
+        }
+        #content #studiv div p{
+            font-size: 14px;
+        } 
+
+        #footer {
+            top: 300px;
+        }
+    </style>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             //위쪽 메뉴아이콘 마우스오버
@@ -136,8 +215,62 @@
     </div>
     <!-- *****content start*****    -->
     <div id="content">
-
-
+  <h3>강의정보 수정</h3>
+        <div>
+            <div>
+                <div>
+                    <label>강의명</label>
+                    <p>응용SW 엔지니어링 양성과정</p>
+                </div>
+                <div>
+                    <label>강사명</label>
+                    <p>김영조</p>
+                </div>
+                <div>
+                    <label>수강기간</label>
+                    <p>2019.03.27 ~ 2019.09.25</p>
+                </div>
+                <div>
+                    <label>강의일정</label>
+                    <p>월 - 금 (09:30~18:10) / 점심시간 (13:30~14:10)</p>
+                </div>
+                <div>
+                    <label>모집현황 </label>
+                    <p>27/30</p>
+                    <p>마감</p>
+                </div>
+                <div>
+                    <label>강의실</label>
+                    <p>301호</p>
+                </div>
+                <button>강의실로 바로가기</button>
+            </div>
+            <div>
+                <label for="content">강의과정</label>
+                <p id="lecturecontent">컴퓨터 프로그래밍 기술을 익혀 애플리케이션의 화면 및 기능을 구현하고 테스트할 수 있는 능력을 배양하며 개발 완료된 애플리케이션을 고객에게 전달하기 위한 형태로 패키징 할 수 있도록 한다. 또한, 애플리케이션 구현에 필요한 데이터 베이스를 구축할 수 있도록 SQL 활용방법을 익혀 DB테이블을 모델링 및 구현할 수 있도록하고 DB를 활용한 어플리케이션을 구현할 수 있는 능력을 배양한다.</p>
+            </div>
+            <div>
+                <label for="curriculum">첨부파일</label>
+                <a href="#">2019_응용_SW_엔지니어링_커리큘럼.xls</a>
+            </div>
+            <div id="studiv">
+                <label for="stucnt">학생목록</label>
+                <div>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                    <p>홍길동</p>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- *****content end***** -->
     <!--    바닥글     -->
