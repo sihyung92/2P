@@ -4,17 +4,23 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LectureManageController extends HttpServlet{
+import com.bit.model.ClassDao;
+
+@WebServlet("/lms/lecturemanage.bit")
+public class LectureManageController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		RequestDispatcher rd = req.getRequestDispatcher("LectureManage.jsp");
+		RequestDispatcher rd = req
+				.getRequestDispatcher("/lms/lectureManage.jsp");
+		ClassDao dao = new ClassDao();
+
+		req.setAttribute("list", dao.getList());
 		rd.forward(req, resp);
 	}
-	
 }

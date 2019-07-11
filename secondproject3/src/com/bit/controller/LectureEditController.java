@@ -47,12 +47,6 @@ public class LectureEditController extends HttpServlet {
 
 		lectureDao dao = new lectureDao();
 
-		// int result = dao.update(num);
-		// if (result > 0) {
-		// resp.sendRedirect("/lms/detail.bit?idx=" + num);
-		// } else {
-		// doGet(req, resp);
-		// }
 		rd.forward(req, resp);
 	}
 }
