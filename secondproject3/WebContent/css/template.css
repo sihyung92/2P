@@ -14,6 +14,7 @@
         }
 
         #header>div {
+            background-color: white;
             width: 1200px;
             height: 80px;
             margin: 0px auto;
@@ -131,16 +132,16 @@
             float: left;
             position: relative;
             top: 14px;
-            left: 90px;
+            left: 65px;
             z-index: 2;
         }
 
-       #header #lefticon {
+        #header #lefticon {
             display: block;
             width: 70px;
         }
 
-       #header #menuleft ul {
+        #header #menuleft ul {
             list-style: none;
             margin: 0px;
             padding: 0px;
@@ -149,9 +150,11 @@
             display: none;
         }
 
-       #header #menuleft ul>li {
+        #header #menuleft ul>li {
             height: 60px;
             line-height: 60px;
+            background-color: white;
+            font-size: 18px;
         }
 
         #header #menuleft ul>li>a {
@@ -161,19 +164,35 @@
             text-align: center;
             color: black;
             font-weight: bold;
-            font-size: 18px;
-            background-color: white;
         }
 
-       #header #menuleft ul>li>a:hover {
+        #header #menuleft ul>li>a:hover {
             display: block;
             width: 160px;
             color: white;
             font-weight: bold;
             background-color: darkblue;
         }
+        
+        #header #menuleft #userKind2 li:nth-child(2),
+        #header #menuleft #userKind2 li:nth-child(3),
+        #header #menuleft #userKind2 li:nth-child(4) {
+            font-size: 15px;
+            height: 30px;
+            line-height: 30px;
+        }
 
+        #header #menuleft #userKind2 li:nth-child(2)>a:hover,
+        #header #menuleft #userKind2 li:nth-child(3)>a:hover,
+        #header #menuleft #userKind2 li:nth-child(4)>a:hover {
+            width: 100px;
+            margin: 0px auto;
+            text-align: right;
+            background-color: white;
+            color: black;
 
+        }
+        
         /*content 사이즈는 1000!!!!*/
         #content {
             width: 1000px;

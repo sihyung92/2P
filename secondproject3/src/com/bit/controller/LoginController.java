@@ -19,10 +19,9 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("LoginController / method : get");
+		HttpSession session= req.getSession();
+		System.out.println("세션isNew : "+session.isNew());
 		RequestDispatcher rd = req.getRequestDispatcher("/lms/intro.jsp");
-		// �޴� ������ request.getAttribute("loginWrong")!=null �̸�
-		// out.println(request.getAttribute(loginWrong))���Ѿ���
-		// session.getAttribute("kind")�� ���� jquery�� ����
 		rd.forward(req, resp);
 	}
 
@@ -35,20 +34,18 @@ public class LoginController extends HttpServlet {
 		String pw = req.getParameter("pw");
 		UserDto bean = dao.login(id, pw);
 		HttpSession session = req.getSession();
-		//���ΰ�ħ ���� �����ؾ���
 		if (bean == null) {
-			System.out.println("bean : " + bean);
+			System.out.println("로그인에러");
 			req.setAttribute("loginWrong",
-					"<script type=\"text/javascript\">alert('ID 혹은 PW를 입력해주세요');</script>");
-			// �޴� ������ request.getAttribute(loginWrong)!=null �̸�
-			// out.println(request.getAttribute(loginWrong))���Ѿ���
+					"<script type=\"text/javascript\">alert('ID 혹은 PW를 확인해주세요');</script>");
 		} else {
 			session.setAttribute("isLogin", true);
 			session.setAttribute("id", id);
 			session.setAttribute("pw", pw);
 			session.setAttribute("userNum", bean.getUserNum());
-			session.setAttribute("userKind", bean.getUserKind());// 0�л� 1���� 2������
+			session.setAttribute("userKind", ""+bean.getUserKind());// 0�л� 1���� 2������
+			session.setAttribute("lecNum",bean.getLecNum());
 		}
-		doGet(req, resp);
+		doGet(req,resp);
 	}
 }

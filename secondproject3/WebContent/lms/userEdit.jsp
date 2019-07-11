@@ -13,6 +13,7 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
 <script type="text/javascript">
+	var userKind = <%=session.getAttribute("userKind")%>;
 	var big;
 	$(document).ready(function() {
 		//위쪽 메뉴아이콘 마우스오버
@@ -51,43 +52,128 @@
 			emailselect();
 		});
 
-		$("#editbtn").click(function() {
+		$("#idbtn").click(function() {
 			id_chk();
 		});
+		
+		if(userKind==2){
+			$('#kindOfPage1').text('회원등록');
+			$('#kindOfPage2').text('비트캠프 안양지점 회원등록페이지 입니다.');
+		}else{
+			$('#id').val('<%=session.getAttribute("id")%>').attr("readonly","readonly");
+			$('#idbtn').hide();
+			if(userKind==0){
+					$('#ctg>option[value="0"]').attr("selected","selected");
+			}else{
+					$('#ctg>option[value="1"]').attr("selected","selected");
+			}
+			$('#ctg').attr('disabled','disabled');
+		}
+		submit();
+		
+		$("#certBtn").click(function(){
+			var certText='';
+			$('.cert').each(function(){
+					certText+=$(this).val();
+					certText+=' ';
+				});
+			console.log(certText);
+			$("#cert").append(certText);
+			$("#certBtn").attr('disabled','true')
+		});
+		
+		$('#pw2').add('#pw').keyup(function(){
+			if($('#pw').val()!=$('#pw2').val()){
+				$('#pw2span').show();
+			}else{
+				$('#pw2span').hide();
+			}
+		});
 	});
-
+	
+	function submit(){
+		$("#editbtn").click(function(){
+			var id = $("#id").val();
+			var pw = $("#pw").val();
+			var name = $("#name").val();
+			var phone = $("#tel").val();
+			var kind = $("#ctg").val();
+			var birth = $("#birthdate").val();
+			var email = $("#email1").val()+"@"+$("#email2").val();
+			var addr = $("#fullAddr").val();
+			var major = $("#major").val();
+			var cert = $("#cert").val();
+			var lecNum = $("#lecture").val();
+			$.ajax({
+				url:"useredit.bit",
+				method:"POST",
+				data:{'id':id,'pw':pw,'name':name,'phone':phone,'userKind':kind,'birth':birth,'email':email,'addr':addr,'major':major,'cert':cert,'lecNum':lecNum},
+				success:function(){
+					alert("등록 성공!");
+					<%session.removeAttribute("pw");%>
+					window.location.href = "<%=request.getContextPath()%>/lms/intro.bit";
+				},
+				error:function(){
+					alert("등록 실패! 다시 시도해주세요.");
+					window.location.href = "<%=request.getContextPath()%>/lms/intro.bit";
+				}
+			});
+		});	
+	}
 	function emailselect() {
 		var emailval = $("#emailselbox").val();
-		$("#email2").val(emailval).attr("readonly","readonly");
+		if(emailval=='manual'){
+			$("#email2").val('').removeAttr("readonly")
+		}else{
+			$("#email2").val(emailval).attr("readonly","readonly");
+		}
+		
 	};
 
 	function ctgselect() {
 		var ctgval = $("#ctg").val();
-		if (ctgval != "강사") {
+		if (ctgval != "1") {
 			$("#teacherinfo").css("display", "none");
-			$("#labelback").css("height", "430px");
+			$("#labelback").css("height", "480px");
 			$("#editbtn").css("margin", "110px auto 100px 50px");
 		} else {
 			$("#teacherinfo").css("display", "block");
-			$("#labelback").css("height", "1080px");
-			$("#editbtn").css("margin", "670px auto 100px 50px");
+			$("#labelback").css("height", "780px");
+			$("#editbtn").css("margin", "370px auto 100px 50px");
+		}
+			$('#lecture').removeAttr('disabled');
+		if(ctgval=="2"){
+			$('#lecture').attr('disabled','disabled');
 		}
 	};
-
 	function id_chk() {
-		var id = $("#id").val();
-		console.log(id);
-		if (id == "" && id == null) {
-			$("#idspan").css("display", "block");
-		} else {
-			$("#idspan").css("display", "none");
-		}
-	}
+		var isAlready=0;
+		$.ajax({
+			  url: '../data/idcheck.jsp?id='+$("#id").val(),
+			  method: "GET",
+			  dataType: "text",
+			  success:function(data){
+				  isAlready=$.trim(data);
+				  console.log(isAlready);
+				if (isAlready==1) {
+					$('#idspan').show();
+				} else {
+					$('#idspan').hide();
+				}
+			  },
+			  error: function(request,status,error){
+				  var msg = "ERROR : " + request.status + " /// "
+				  msg+="내용 : " + request.responseText + " /// " + error;
+				  console.log(msg);
+			  }
+			});
+	};
 	
 	function goPopup() {
 		var pop = window.open("<%=request.getContextPath()%>/popup/jusoPopup.jsp", "pop",
 				"width=570,height=420, scrollbars=yes, resizable=yes");
-	}
+	};
+
 	function jusoCallBack(roadFullAddr, roadAddrPart1, addrDetail,
 			roadAddrPart2, engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,
 			detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn,
@@ -97,47 +183,105 @@
 		//document.form.roadAddrPart2.value = roadAddrPart2; 지번
 		document.form.addr2.value = addrDetail; //상세주소
 		document.form.zipNo.value = zipNo; //우편번호
-	}
+	};
 </script>
 <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
-	<!--    헤더     -->
-	<div id="header">
-		<div>
-			<!--    왼쪽 메뉴     -->
-			<div id="menuleft">
-				<img alt="menulefticon"
-					src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+<%
+     		if (request.getAttribute("loginWrong") != null) {
+    			out.println(request.getAttribute("loginWrong"));
+    		}
+		
+			int userKind=3;//접속하지 않았을 때 
+			if(session.getAttribute("userKind")!=null){
+				userKind=(Integer)session.getAttribute("userKind");
+				//0학생 1강사 2관리자
+			}
+%>
+  <!--    헤더     -->
+    <div id="header">
+        <div>
+            <!--    왼쪽 메뉴     -->
+            <div id="menuleft">
+                <a href="intro.bit">
+                <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+                </a>
+                <!-- 학생일 때  -->
+                <%if(userKind==0){%>
+                <ul>
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="#">스케줄</a></li>
+                </ul>
+                <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
 				<ul>
-					<li><a href="#">내 강의실</a></li>
-					<li><a href="#">질문게시판</a></li>
-					<li><a href="#">과제게시판</a></li>
-					<li><a href="#">수업자료실</a></li>
-					<li><a href="#">스케줄</a></li>
-				</ul>
-			</div>
-			<img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg"
-				id="logo" />
-			<div id="top">
-				<p>
-					환영합니다 <img alt="topmenuicon"
-						src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" />
-				</p>
-				<!--   상단메뉴   -->
-				<ul id="topmenu">
-					<li><a href="#">내 강의실</a></li>
-					<li><a href="#">내 정보</a></li>
-					<li><a href="#">메인</a></li>
-					<li><a href="#">로그아웃</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">출석 관리</a></li>
+                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="#">스케줄</a></li>
+                </ul>
+                <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="userKind2">
+                    <li><a>내 강의실</a></li>
+                    <li><a href="#">강사</a></li>
+                    <li><a href="#">학생</a></li>
+                    <li><a href="#">관리자</a></li>
+                    <li><a href="#">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                 </ul>
+                 <!-- 비 로그인  -->
+                 <%}else{}%>
+            </div>
+            <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
+            <div id="top">
+                <p><%if(session.getAttribute("isLogin")!=null) {
+                	out.println(session.getAttribute("id")+" 님");
+                }else{%>환영합니다<%}%>
+                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" />
+                </p>
+                <!--   상단메뉴   -->
+                 <!-- 학생일 때  -->
+                <%if(userKind==0){ %>
+                <ul id="topmenu">
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="#">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+                <ul id="topmenu">
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="#">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="topmenu">
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="#">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 비 로그인  -->
+                <%}else if(userKind==3){}%>
+            </div>
+        </div>
+    </div>
 	<!-- *****content start***** -->
 	<div id="content">
-		<h1>회원등록</h1>
-		<p>비트캠프 안양지점 회원등록페이지 입니다.</p>
+		<h1 id="kindOfPage1">개인정보수정</h1>
+		<p id="kindOfPage2">비트캠프 안양지점 개인정보 수정페이지 입니다.</p>
 		<div>
 			<label id="point"> </label>
 			<h3>회원 기본 정보</h3>
@@ -146,15 +290,15 @@
 				<div>
 					<label for="ctg">분류</label> <select name="ctg" id="ctg">
 						<option value="">분류</option>
-						<option value="학생">학생</option>
-						<option value="강사">강사</option>
-						<option value="직원">직원</option>
+						<option value="0">학생</option>
+						<option value="1">강사</option>
+						<option value="2">직원</option>
 					</select>
 				</div>
 				<div>
 					<label for="id">아이디</label> <input type="text" name="id" id="id" />
 					<button id="idbtn">중복</button>
-					<span id="idspan">필수입력</span>
+					<span id="idspan">중복아이디입니다.</span>
 				</div>
 				<div>
 					<label for="pw">비밀번호</label> <input type="password" name="pw"
@@ -163,7 +307,7 @@
 				</div>
 				<div>
 					<label for="pw2">비밀번호 확인</label> <input type="password" name="pw2"
-						id="pw2" /> <span id="pw2span">필수입력</span>
+						id="pw2" /> <span id="pw2span">비밀번호가 일치하지 않습니다.</span>
 				</div>
 				<div>
 					<label for="name">이름</label> <input type="text" name="name"
@@ -173,30 +317,15 @@
 					<label for="tel">연락처</label> <input type="text" name="tel" id="tel" />
 					<span id="telspan">필수입력</span>
 				</div>
-				<div id="brth">
-					<label for="year">생년월일</label> <select name="year">
-						<option value="">년도</option>
-						<option value="2019">2019</option>
-						<option value="2018">2018</option>
-						<option value="2017">2017</option>
-					</select> <label for="year">년</label> <select name="month">
-						<option value="">월</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select> <label for="month">월</label> <select name="day">
-						<option value="">일</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select> <label for="day">일</label>
-
+				<div id="birth">
+					<label for="birthdate">생년월일</label> <input type="date" name="birth"
+						id="birthdate"></input>
 				</div>
 				<div id="emaildiv">
 					<label for="email1">이메일</label> <input type="text" name="email1"
 						id="email1" /> <label for="email2" id="골뱅이">@</label> <input
 						type="text" name="email2" id="email2" /> <select id="emailselbox">
-						<option value="">직접입력</option>
+						<option value="manual">직접입력</option>
 						<option value="naver.com">naver.com</option>
 						<option value="gmail.com">gmail.com</option>
 						<option value="hanmail.net">hanmail.net</option>
@@ -204,75 +333,51 @@
 				</div>
 				<div id="addr">
 					<form name="form" id="form" method="post">
-						<input type="hidden" id="fullAddr" name="fullAddr" /><br>
-						<input id="addrbtn" type="button" onClick="goPopup();" value="주소검색" />
-						도로명주소 <input type="text" id="addr1" readonly="readonly"/><br>
-						고객입력 상세주소<input type="text" id="addr2" readonly="readonly"/><br>
+						<input type="hidden" id="fullAddr" name="fullAddr" /> 
+						<label for="addr1">도로명주소</label>
+						<input type="text" id="addr1" readonly="readonly" />
+						<label for="addr2">상세주소</label>
+						<input type="text" id="addr2" readonly="readonly" /><br>
 						<!-- 참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>-->
-						우편번호<input type="text" id="zipNo" readonly="readonly"/>
+						<label for="zipNo">우편번호</label><input type="text" id="zipNo" readonly="readonly" />
+						<input id="addrbtn" type="button" onClick="goPopup();" value="주소검색" /><br> 
 					</form>
+				</div>
+				<div id="lecturediv">
+						<label for="lecture">강좌 번호</label>
+						<input type="text" name="lecture" id="lecture"></input>
 				</div>
 			</div>
 			<!-- *********************************강사 정보 hidden part*********************************** -->
 			<div id="teacherinfo">
 				<div id="div1">
 					<div>
-						<label for="">전공</label> <input type="text" name="major" />
+						<label for="">전공</label> <input type="text" name="major"
+							id="major" />
 					</div>
 					<div>
 						<label for="" class="areala">자격사항</label>
-						<textarea></textarea>
+						<textarea name="certArea" id="cert" readonly="readonly"></textarea>
 					</div>
 					<div>
 						<label for="" class="plusla">추가</label>
 						<form id="form1">
 							<div>
-								<label for="">자격증명</label> <input type="text" />
-								<button>검색</button>
+								<label for="">자격증명</label><input type="text" class="cert" />
 							</div>
 							<div>
-								<label for="">발급처</label> <input type="text" />
+								<label for="">발급처</label><input type="text" class="cert" />
 							</div>
 							<div>
-								<label for="">취득일</label> <input type="text" />
-							</div>
-							<div class="addfile">
-								<input type="text" />
-								<button>첨부</button>
+								<label for="">취득일</label><input type="text" class="cert" />
 							</div>
 						</form>
-						<input type="submit" value="추가" />
-					</div>
-				</div>
-				<div id="div2">
-					<div>
-						<label for="" class="areala">경력사항</label>
-						<textarea></textarea>
-					</div>
-					<div>
-						<label for="" class="plusla">추가</label>
-						<form id="form2">
-							<div>
-								<label for="">직장명</label> <input type="text" />
-								<button>검색</button>
-							</div>
-							<div>
-								<label for="">직책</label> <input type="text" />
-							</div>
-							<div>
-								<label for="">근무시간</label> <input type="text" />
-							</div>
-							<div class="addfile">
-								<input type="text" />
-								<button>첨부</button>
-							</div>
-						</form>
-						<input type="submit" value="추가" />
+						<input type="submit" value="추가" id="certBtn" />
 					</div>
 				</div>
 			</div>
 		</div>
-		<button id="editbtn">수정</button>
+		<button id="editbtn">등록</button>
 	</div>
 	<!-- *****content end***** -->
 	<!--    바닥글     -->

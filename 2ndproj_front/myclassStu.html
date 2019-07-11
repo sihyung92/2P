@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
+	<style type="text/css">
+		body {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		a {
+			text-decoration: none;
+			color: black;
+		}
+
+		/*헤더, 상단메뉴*/
+		#header {
+			height: 80px;
+			border-bottom: 2px solid lightgray;
+		}
+
+		#header>img {
+			margin: 13px;
+			display: inline-block;
+			float: left;
+		}
+
+		#header>p {
+			float: right;
+			margin: 30px 0px auto auto;
+			display: inline-block;
+			font-size: 14px;
+		}
+
+		#header>p>a>img {
+			width: 25px;
+			margin: 0px 30px auto 5px;
+			float: right;
+			display: inline-block;
+		}
+
+		/*메인*/
+
+		.wrapper>div {
+			background-color: #e0e0e0;
+		}
+
+		.wrapper {
+			margin: 0px 300px;
+			display: grid;
+			grid-template-columns: 1fr 1fr 3fr;
+			grid-template-rows: 5px 280px;
+			grid-gap: 20px;
+		}
+
+		.box1 {
+			grid-auto-columns: 1/2;
+		}
+
+		.box2 {
+			grid-column: 2/4;
+		}
+
+		.box3 {
+			grid-column: 1/3;
+			display: grid;
+		}
+
+		.box4 {
+			grid-column: 3/4;
+			grid-row: 2/3;
+			padding-left: 0px;
+			padding-top: 0px;
+			padding-right: 0px;
+		}
+
+		.box4 p {
+			font-size: 20px;
+		}
+
+		.box4 image {
+			float: right;
+		}
+
+		.box5 {
+			grid-column: 1/2;
+			grid-row: 3/4;
+			width: 400px;
+			height: 165px;
+		}
+
+		.box6 {
+			grid-column: 1/2;
+			grid-row: 4/5;
+			width: 400px;
+			height: 165px;
+		}
+
+		.box7 {
+			grid-column: 1/2;
+			grid-row: 5/6;
+			width: 400px;
+			height: 165px;
+		}
+
+		.box8 {
+			grid-column: 2/4;
+			grid-row: 3/6;
+		}
+
+		.box9 {
+			grid-column: 3/4;
+		}
+
+		/*풋터*/
+		#footer {
+			width: 980px;
+			margin: 60px auto;
+		}
+
+		#footer img {
+			float: left;
+			margin: 30px 10px;
+		}
+
+		#footer div {
+			width: 980px;
+		}
+
+		/*그래프*/
+		.graph1 {
+			position: relative;
+			width: 300px;
+			height: 22px;
+			border: 1px solid #f1c40f;
+			padding: 2px;
+			font-size: 11px;
+			font-family: tahoma;
+			margin-bottom: 0px;
+			display: grid;
+		}
+		
+		.graph2 {
+			position: relative;
+			width: 300px;
+			height: 22px;
+			border: 1px solid #3498db;
+			padding: 2px;
+			font-size: 11px;
+			font-family: tahoma;
+			margin-bottom: 0px;
+			display: grid;
+		}
+
+		.graph1 .bar {
+			display: block;
+			position: relative;
+			background: #f1c40f;
+			text-align: center;
+			color: #333;
+			height: 2em;
+			line-height: 2em;
+		}
+		
+		.graph2 .bar {
+			display: block;
+			position: relative;
+			background: #3498db;
+			text-align: center;
+			color: #333;
+			height: 2em;
+			line-height: 2em;
+		}
+
+		.graph1 .bar span {
+			position: absolute;
+			left: 1em;
+		}
+		
+		.graph2 .bar span {
+			position: absolute;
+			left: 1em;
+		}
+
+		.table {
+			border: 1px solid #cccccc;
+		}
+
+		.table td {
+			border: 1px solid #cccccc;
+			padding: 3px;
+		}
+
+		.table td:nth-child(odd) {
+			width: 50px;
+			text-align: center;
+			background-color: ;
+		}
+
+		.table2 {
+			width: 500px;
+			margin: 0px auto;
+			margin-top: 30px;
+		}
+		
+		.table2 tr:nth-child(even){
+			padding-bottom: 18px;
+		}
+		
+		#browsers {
+			background-color: white;
+			border: 1px solid #eaeaea;
+			border-radius: 10px;
+			display: inline-block;
+			font: inherit;
+			line-height: 1.3em;
+			padding: 0.5em 3.5em 0.5em 1em;
+
+			margin: 0;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+
+			background-image:
+				linear-gradient(45deg, transparent 50%, gray 50%),
+				linear-gradient(135deg, gray 50%, transparent 50%),
+				radial-gradient(#ddd 70%, transparent 72%);
+			background-position:
+				calc(100% - 20px) calc(1em + 2px),
+				calc(100% - 15px) calc(1em + 2px),
+				calc(100% - .5em) .5em;
+			background-size:
+				5px 5px,
+				5px 5px,
+				1.5em 1.5em;
+			background-repeat: no-repeat;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="header">
+		<img alt="logo" src="imgs/logo3.jpg" />
+		<p>환영합니다
+			<a href="#"><img alt="topmenuicon" src="imgs/topmenu.PNG" /></a></p>
+	</div>
+
+	<div class="wrapper">
+		<div class="box1" style="background-color: white;"></div>
+		<div class="box2" style="background-color: white;"></div>
+		<div class="box3">
+			<table class="table2">
+				<tr>
+					<td colspan="5">나의 출석</td>
+				</tr>
+				<tr>
+					<td style="padding-bottom: 25px">출석: 10회</td>
+					<td style="padding-bottom: 25px">지각: 3회</td>
+					<td style="padding-bottom: 25px">조퇴: 1회</td>
+					<td style="padding-bottom: 25px">외출: 0회</td>
+					<td style="padding-bottom: 25px">결석: 1회</td>
+				</tr>
+				<tr>
+					<td colspan="5">오늘의 출석</td>
+				</tr>
+				<tr>
+					<td style="padding-bottom: 30px">입실: 09:25</td>
+					<td style="padding-bottom: 30px">복귀:</td>
+					<td style="padding-bottom: 30px">외출:</td>
+					<td  style="padding-bottom: 30px" colspan="2">퇴실:</td>
+				</tr>
+				<tr>
+					<td >나의 출석률</td>
+					<td colspan="4">
+						<div class="graph1">
+							<strong class="bar" style="width: 56.4%;">56.4% (56/100일)</strong>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>과정 진행률</td>
+					<td colspan="4">
+						<div class="graph2">
+							<strong class="bar" style="width: 58.7%;">58.7% (57/100일)</strong>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="box4">
+			<table style="margin-left: auto; margin-right: auto;">
+				<tr>
+					<td style="width: 350px; height: 215px;">
+						<p><b>내 강의정보</b><br></p>
+						비트캠프 안양센터<br>
+						(경기도 안양 031-1234-1234)<br><br>
+						응용 SW 엔지니어링 양성과정<br>
+						3 강의실<br>
+						김영조 강사님<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 340px; height: 50px;"><img alt="gradebtn" src="imgs/viewgradebtn.png" align="right"></td>
+				</tr>
+				<tr>
+
+				</tr>
+			</table>
+		</div>
+		<div class="box5">
+			<table style="width: 370px; margin-left: auto; margin-right: auto;">
+				<tr>
+					<td style="height: 30px">질문 게시판</td>
+					<td style="text-align: right;"><a href="#"><b>전체보기</b></a></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="height: 110px; background-color: white;">게시판 뜨는 곳</td>
+				</tr>
+			</table>
+		</div>
+		<div class="box6">
+			<table style="width: 370px; margin-left: auto; margin-right: auto;">
+				<tr>
+					<td style="height: 30px">과제 게시판</td>
+					<td style="text-align: right;"><a href="#"><b>전체보기</b></a></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="height: 110px; background-color: white;">게시판 뜨는 곳</td>
+				</tr>
+			</table>
+		</div>
+		<div class="box7">
+			<table style="width: 370px; margin-left: auto; margin-right: auto;">
+				<tr>
+					<td style="height: 30px">수업자료 게시판</td>
+					<td style="text-align: right;"><a href="#"><b>전체보기</b></a></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="height: 110px; background-color: white;">게시판 뜨는 곳</td>
+				</tr>
+			</table>
+		</div>
+		<div class="box8" style="text-align: center;">캘린더 위치</div>
+	</div>
+
+	<div id="footer">
+		<img alt="footerlogo" src="imgs/logo3.jpg" />
+		<div>비트캠프 서울시 서초구 강남대로 459 (서초동, 백암빌딩)｜ 사업자등록번호 : 214-85-24928<br />
+			(주)비트컴퓨터 서초본원 대표이사 : 조현정 / 문의 : 02-3486-9600 / 팩스 : 02-6007-1245<br />
+			통신판매업 신고번호 : 제 서초-00098호 / 개인정보보호관리책임자 : 최종진<br />
+			Copyright &copy; 비트캠프 All rights reserved.</div>
+	</div>
+</body></html>

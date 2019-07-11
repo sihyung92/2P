@@ -15,7 +15,7 @@ public class UserDao {
 	UserDto bean;
 
 	public UserDto login(String id, String pw) {
-		String sql = "SELECT userNum,userKind FROM userData WHERE id=? AND pw=?";
+		String sql = "SELECT userNum,userKind,lecNum FROM userData WHERE id=? AND pw=?";
 		conn = Connector.getConnection();
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -26,6 +26,7 @@ public class UserDao {
 				bean = new UserDto();
 				bean.setUserNum(rs.getInt("userNum"));
 				bean.setUserKind(rs.getInt("userKind"));
+				bean.setLecNum(rs.getInt("lecNum"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -84,22 +85,86 @@ public class UserDao {
 		return bean;
 	}
 
-	public int edit(String id, String pw, String address, String birth, String email, String major, int phone) {
-		String sql ="UPDATE userData SET pw=?, address=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=? where id="+id;
+	public int edit(String id, String pw, String name,String address, String birth, String email, String major, int phone,String lecNum) {
+		String sql ="UPDATE userData SET pw=?, address=?, name=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=?, lecNum=? where id='"+id+"'";
+		boolean isAdmin=false;
+		int lecture = 1;
+		if(lecNum=="") {
+			isAdmin = true;
+		}else {
+			lecture = Integer.parseInt(lecNum);
+		}
 		conn=Connector.getConnection();
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, pw);
 			pstmt.setString(2, address);
-			pstmt.setString(3, birth);
-			pstmt.setString(4, email);
-			pstmt.setString(5, major);
-			pstmt.setInt(6,phone);
+			pstmt.setString(3, name);
+			pstmt.setString(4, birth);
+			pstmt.setString(5, email);
+			pstmt.setString(6, major);
+			pstmt.setInt(7,phone);
+			if(isAdmin) {
+				pstmt.setString(8,null);
+			}else {
+				pstmt.setInt(8,lecture);
+			}
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return result;
+	}
+
+	public int register(String id, String pw, int userKind,int userNum,String name,String address, String birth, String email, String major, int phone, String lecNum) {
+		boolean isAdmin=false;
+		int lecture = 1;
+		if(lecNum=="") {
+			isAdmin = true;
+		}else {
+			lecture = Integer.parseInt(lecNum);
+		}
+		String sql="INSERT INTO userData VALUES (userData_"+userKind+"_seq.nextval,"+userKind+",?,'"+id+"','"+pw+"','"+name+"','"+birth+"',";
+		sql+=phone+",'"+email+"','"+address+"','"+major+"')";
+		System.out.println(sql);
+		int result=0;
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			if(isAdmin) {
+				pstmt.setString(1, null);
+			}else {
+				pstmt.setInt(1, lecture);
+			}
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return result;
+	}
+	
+	public int idCheck(String id) {
+		String sql = "SELECT * FROM userData WHERE id=?";
+		int result = 0;
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return ++result; 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
 			Connector.close(pstmt);
 			Connector.close(conn);
 		}

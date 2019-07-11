@@ -1,8 +1,8 @@
-session attribute ¸ñ·Ï
-LogoutController => (·Î±×ÀÎ ÀÌÈÄ ´ã°ÜÀÖÀ½)
+session attribute ï¿½ï¿½ï¿½
+LogoutController => (ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 			session.setAttribute("isLogin", true);
 			session.setAttribute("id", bean.getId());
 			session.setAttribute("pw", bean.getPw());
 			session.setAttribute("userNum", bean.getUserNum());
-			session.setAttribute("kind", bean.getKind());
-			
+			session.setAttribute("userkind", bean.getUserKind());
+			session.setAttribute("lecNum", bean.getLecNum());

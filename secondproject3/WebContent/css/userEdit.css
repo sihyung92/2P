@@ -11,11 +11,11 @@
             }
 
             #labelback {
+           		border:1px solid black;
                 margin: 0px;
                 display: block;
                 width: 150px;
-                height: 1080px;
-                /*height 학생일때 430px 강사일때 1080px*/
+                /*height 학생일때 430px 강사일때 700px*/
                 float: left;
                 background-color: rgba(00, 00, 00, 0.1);
                 position: relative;
@@ -58,13 +58,6 @@
 
             }
 
-            #teacherinfo #div2 {
-                position: relative;
-                top: 310px;
-                left: 0px;
-                width: 780px;
-            }
-
            #teacherinfo textarea {
                 width: 350px;
                 height: 100px;
@@ -74,7 +67,7 @@
 
             }
 
-            #teacherinfo .addfile input {
+            #teacherinfo input {
                 width: 280px;
             }
 
@@ -124,7 +117,7 @@
                 margin: 0px 10px;
             }
 
-            #brth select+label {
+            #birth select+label {
                 width: 20px;
             }
 
@@ -153,7 +146,7 @@
                 width: 120px;
                 margin: 0px;
             }
-
+			
             /*주소*/
             #addr {
                 width: 700px;
@@ -164,20 +157,31 @@
                 height: 22px;
             }
 
-            #addr input {
+            #addr input[type="text"] {
                 display: inline-block;
                 width: 350px;
-                margin: 2px 2px 0px 10px;
+                margin: 2px 2px 0px 50px;
             }
 
-            #addr #addr3 {
+            #addr #zipNo {
                 width: 100px;
+                margin: 2px 2px 0px 55px;
             }
 
             #addr #addrbtn {
                 width: 70px;
+                margin : 0;
             }
-
+            
+            
+            
+            /*강좌번호*/
+			#lecturediv{
+				position: relative;
+				top: 55px;
+				
+			}
+			
             /*span check*/
             #content span {
                 color: royalblue;
@@ -188,7 +192,8 @@
 
             /*전체버튼*/
             button,
-            input[type="submit"] {
+            input[type="submit"],
+            input[type="button"] {
                 background-color: white;
                 border: 1px solid black;
                 height: 28px;
@@ -206,7 +211,7 @@
                 color: white;
                 font-weight: bold;
                 margin: 670px auto 100px 50px;
-                /*            학생일때  margin: 110px auto 100px 50px;
+                /*학생일때  margin: 110px auto 100px 50px;
               강사일때  margin: 670px auto 100px 50px;*/
                 border-radius: 4px;
             }
