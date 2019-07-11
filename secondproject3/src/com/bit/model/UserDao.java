@@ -108,9 +108,23 @@ public class UserDao {
 		return result;
 	}
 
-	public int register(String id, String pw, String name,String address, String birth, String email, String major, int phone, int userKind) {
-		String sql = "INSERT INTO userData VALUES ()";
+	public int register(String id, String pw, int userKind,int userNum,String name,String address, String birth, String email, String major, int phone, int lecNum) {
+		String sql = "MERGE INTO userData u USING dual ON (u.userNum=? AND u.userKind=?)\nWHEN MATCHED THEN\n";
+		sql+="UPDATE SET u.pw='"+pw+"',u.name='"+name+"',u.birth='"+birth+"',u.phone="+phone+",u.email='"+email+"',u.address='"+address+"',u.major='"+major+"'\n";
+		sql+="WHEN NOT MATCHED THEN\n";
+		sql+="INSERT VALUES (userData_"+userKind+"_seq.nextval,"+userKind+","+lecNum+",'"+id+"','"+pw+"','"+name+"','"+birth+"',"+phone+",'"+email+"','"+address+"','"+major+"')";
+		System.out.println(sql);
+		//(userData_0_seq.nextval,0,1,'id','pw','name','1992-06-01','01027032283','email','address','major');
 		int result=0;
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, userNum);
+			pstmt.setInt(2, userKind);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	

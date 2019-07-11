@@ -11,11 +11,12 @@
             }
 
             #labelback {
+           		border:1px solid black;
                 margin: 0px;
                 display: block;
                 width: 150px;
-                height: 1080px;
-                /*height 학생일때 430px 강사일때 1080px*/
+                height: 700px;
+                /*height 학생일때 430px 강사일때 700px*/
                 float: left;
                 background-color: rgba(00, 00, 00, 0.1);
                 position: relative;
@@ -58,13 +59,6 @@
 
             }
 
-            #teacherinfo #div2 {
-                position: relative;
-                top: 310px;
-                left: 0px;
-                width: 780px;
-            }
-
            #teacherinfo textarea {
                 width: 350px;
                 height: 100px;
@@ -74,7 +68,7 @@
 
             }
 
-            #teacherinfo .addfile input {
+            #teacherinfo input {
                 width: 280px;
             }
 
@@ -124,7 +118,7 @@
                 margin: 0px 10px;
             }
 
-            #brth select+label {
+            #birth select+label {
                 width: 20px;
             }
 
@@ -153,7 +147,7 @@
                 width: 120px;
                 margin: 0px;
             }
-
+			
             /*주소*/
             #addr {
                 width: 700px;

@@ -4,12 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/userEdit.css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/css/template.css" />
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/css/userEdit.css" />
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
 <script type="text/javascript">
-	var kindUser = <%=session.getAttribute("kind")%>;
+	<%session.setAttribute("id", "stu01"); session.setAttribute("userKind", "2");%>
+	var userKind = <%=session.getAttribute("userKind")%>;
 	var big;
 	$(document).ready(function() {
 		//위쪽 메뉴아이콘 마우스오버
@@ -52,57 +57,90 @@
 			id_chk();
 		});
 		
-		if(kindUser==2){
+		if(userKind==2){
 			$('#kindOfPage1').text('회원등록');
 			$('#kindOfPage2').text('비트캠프 안양지점 회원등록페이지 입니다.');
 		}else{
 			$('#id').val('<%=session.getAttribute("id")%>').attr("readonly","readonly");
 			$('#idbtn').hide();
+			if(userKind==0){
+					$('#ctg>option[value="0"]').attr("selected","selected");
+			}else{
+					$('#ctg>option[value="1"]').attr("selected","selected");
+			}
+			$('#ctg').attr('disabled','disabled');
 		}
 		submit();
+		
+		$("#certBtn").click(function(){
+			var certText='';
+			$('.cert').each(function(){
+					certText+=$(this).val();
+					certText+=' ';
+				});
+			console.log(certText);
+			$("#cert").append(certText);
+			$("#certBtn").attr('disabled','true')
+		});
+		
+		$('#pw2').add('#pw').keyup(function(){
+			if($('#pw').val()!=$('#pw2').val()){
+				$('#pw2span').show();
+			}else{
+				$('#pw2span').hide();
+			}
+		});
 	});
+	
 	function submit(){
 		$("#editbtn").click(function(){
 			var id = $("#id").val();
 			var pw = $("#pw").val();
 			var name = $("#name").val();
-			var tel = $("#tel").val();
+			var phone = $("#tel").val();
 			var kind = $("#ctg").val();
-			var birth = $("#bitrhdate").val();
+			var birth = $("#birthdate").val();
 			var email = $("#email1").val()+"@"+$("#email2").val();
-			var addr = $("#fulladdr").val();
+			var addr = $("#fullAddr").val();
 			var major = $("#major").val();
 			var cert = $("#cert").val();
+			var lecNum = $("#lecture").val();
 			$.ajax({
-				url:"useredit.bit?id="+id+"\&pw="+pw+"\&name="+name+"\&tel="+tel+"\&kind="+kind+"\&birth="+birth+"\&email="+email+"\&addr="+addr+"\&major="+major+"\&cert="+cert,
-				method:"GET",
+				url:"useredit.bit",
+				method:"POST",
+				data:{'id':id,'pw':pw,'name':name,'phone':phone,'userKind':kind,'birth':birth,'email':email,'addr':addr,'major':major,'cert':cert,'lecNum':lecNum},
 				success:function(){
-					alert("성공");
+					alert("성공!");
 				},
 				error:function(){
-					alert("실패");
+					alert("실패!");
 				}
 			});
 		});
 	}
 	function emailselect() {
 		var emailval = $("#emailselbox").val();
-		$("#email2").val(emailval).attr("readonly","readonly");
+		if(emailval=='manual'){
+			$("#email2").val('').removeAttr("readonly")
+		}else{
+			$("#email2").val(emailval).attr("readonly","readonly");
+		}
+		
 	};
 
 	function ctgselect() {
 		var ctgval = $("#ctg").val();
-		if (ctgval != "2") {
+		if (ctgval != "1") {
 			$("#teacherinfo").css("display", "none");
 			$("#labelback").css("height", "430px");
 			$("#editbtn").css("margin", "110px auto 100px 50px");
 		} else {
 			$("#teacherinfo").css("display", "block");
-			$("#labelback").css("height", "1080px");
-			$("#editbtn").css("margin", "670px auto 100px 50px");
+			$("#labelback").css("height", "740px");
+			$("#editbtn").css("margin", "370px auto 100px 50px");
 		}
 	};
-
+	
 	function id_chk() {
 /* 		$.ajax({
 			  url: "http://localhost:8080/secondproject3/lms/useridcheck.bit?id="+$("id").val(),
@@ -130,7 +168,7 @@
 		var pop = window.open("<%=request.getContextPath()%>/popup/jusoPopup.jsp", "pop",
 				"width=570,height=420, scrollbars=yes, resizable=yes");
 	};
-	
+
 	function jusoCallBack(roadFullAddr, roadAddrPart1, addrDetail,
 			roadAddrPart2, engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,
 			detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn,
@@ -189,9 +227,9 @@
 				<div>
 					<label for="ctg">분류</label> <select name="ctg" id="ctg">
 						<option value="">분류</option>
-						<option value="1">학생</option>
-						<option value="2">강사</option>
-						<option value="3">직원</option>
+						<option value="0">학생</option>
+						<option value="1">강사</option>
+						<option value="2">직원</option>
 					</select>
 				</div>
 				<div>
@@ -206,7 +244,7 @@
 				</div>
 				<div>
 					<label for="pw2">비밀번호 확인</label> <input type="password" name="pw2"
-						id="pw2" /> <span id="pw2span">필수입력</span>
+						id="pw2" /> <span id="pw2span">비밀번호가 일치하지 않습니다.</span>
 				</div>
 				<div>
 					<label for="name">이름</label> <input type="text" name="name"
@@ -224,7 +262,7 @@
 					<label for="email1">이메일</label> <input type="text" name="email1"
 						id="email1" /> <label for="email2" id="골뱅이">@</label> <input
 						type="text" name="email2" id="email2" /> <select id="emailselbox">
-						<option value="">직접입력</option>
+						<option value="manual">직접입력</option>
 						<option value="naver.com">naver.com</option>
 						<option value="gmail.com">gmail.com</option>
 						<option value="hanmail.net">hanmail.net</option>
@@ -242,62 +280,36 @@
 							readonly="readonly" />
 					</form>
 				</div>
+				<div id="lecturediv">
+						<label for="lecture">강좌 번호</label><input type="text" name="lecture"
+						id="lecture"></input>
+				</div>
 			</div>
 			<!-- *********************************강사 정보 hidden part*********************************** -->
 			<div id="teacherinfo">
 				<div id="div1">
 					<div>
-						<label for="">전공</label> <input type="text" name="major" id="major" />
+						<label for="">전공</label> <input type="text" name="major"
+							id="major" />
 					</div>
 					<div>
-						<label for="" class="areala" >자격사항</label>
+						<label for="" class="areala">자격사항</label>
 						<textarea name="certArea" id="cert" readonly="readonly"></textarea>
 					</div>
 					<div>
 						<label for="" class="plusla">추가</label>
 						<form id="form1">
 							<div>
-								<label for="">자격증명</label><input type="text" />
-								<button>검색</button>
+								<label for="">자격증명</label><input type="text" class="cert" />
 							</div>
 							<div>
-								<label for="">발급처</label><input type="text" />
+								<label for="">발급처</label><input type="text" class="cert" />
 							</div>
 							<div>
-								<label for="">취득일</label><input type="text" />
-							</div>
-							<div class="addfile">
-								<input type="text" />
-								<button>첨부</button>
+								<label for="">취득일</label><input type="text" class="cert" />
 							</div>
 						</form>
-						<input type="submit" value="추가" />
-					</div>
-				</div>
-				<div id="div2">
-					<div>
-						<label for="" class="areala">경력사항</label>
-						<textarea></textarea>
-					</div>
-					<div>
-						<label for="" class="plusla">추가</label>
-						<form id="form2">
-							<div>
-								<label for="">직장명</label> <input type="text" />
-								<button>검색</button>
-							</div>
-							<div>
-								<label for="">직책</label> <input type="text" />
-							</div>
-							<div>
-								<label for="">근무시간</label> <input type="text" />
-							</div>
-							<div class="addfile">
-								<input type="text" />
-								<button>첨부</button>
-							</div>
-						</form>
-						<input type="submit" value="추가" />
+						<input type="submit" value="추가" id="certBtn" />
 					</div>
 				</div>
 			</div>
