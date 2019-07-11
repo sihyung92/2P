@@ -19,10 +19,9 @@ public class BbsListController extends HttpServlet{
 			throws ServletException, IOException {
 				BbsDao dao=new BbsDao();
 				ArrayList<BbsDto> list = dao.getList();
-				
 				req.setAttribute("alist", list);
 				
-				RequestDispatcher rd = req.getRequestDispatcher("BbsquestList.jsp");
+				RequestDispatcher rd = req.getRequestDispatcher("bbsQuStuList.jsp");
 				rd.forward(req, resp);
 	}
 	

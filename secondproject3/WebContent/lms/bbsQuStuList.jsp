@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,87 +201,22 @@
                 <th>등록일</th>
                 <th>조회수</th>
             </tr>
+            <%
+            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("alist");
+            	for(int i=0;i<list.size();i++){
+            		BbsDto bean=list.get(i);	
+            %>
             <tr>
-                <td>10</td>
-                <td>sub</td>
+                <td><%=bean.getListNum() %></td>
+                <td><%=bean.getTitle() %></td>
                 <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
+                <td><%=bean.getId() %></td>
+                <td><%=bean.getNalja() %></td>
                 <td>0</td>
             </tr>
-            <tr>
-                <td>9</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>8</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>7</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>6</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>5</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>4</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>2</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-        </table>
+            <%	
+            } %>
+       </table>
 	        <div id="ca">
 	            <a href="#">이전</a>
 	            <a href="#">1</a>
@@ -290,7 +226,7 @@
 	            <a href="#">다음</a>
 	        </div>
 	        <div id="btn">
-	            <button type="button">등록하기</button>
+	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
 	        </div>
     </div>
 	</section>

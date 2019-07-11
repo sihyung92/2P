@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -197,6 +198,11 @@
                 <th>등록일</th>
                 <th>조회수</th>
             </tr>
+            <%
+            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("alist");
+            	for(int i=0;i<list.size();i++){
+            		
+            %>
             <tr>
             	<td><input type="checkbox" name="chk10"></td>
                 <td>10</td>
@@ -206,87 +212,9 @@
                 <td>2019.3.27</td>
                 <td>0</td>
             </tr>
-            <tr>
-            <td><input type="checkbox" name="chk9"></td>
-                <td>9</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-             <td><input type="checkbox" name="chk8"></td>
-                <td>8</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-             <td><input type="checkbox" name="chk7"></td>
-                <td>7</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-             <td><input type="checkbox" name="chk6"></td>
-                <td>6</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-             <td><input type="checkbox" name="chk5"></td>
-                <td>5</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-             <td><input type="checkbox" name="chk4"></td>
-                <td>4</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-            <tr>
-            <td><input type="checkbox" name="chk3"></td>
-                <td>3</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-             <td><input type="checkbox" name="chk2"></td>
-                <td>2</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-            <tr>
-            <td><input type="checkbox" name="chk1"></td>
-                <td>1</td>
-                <td>sub</td>
-                <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
+            <%
+            }
+            %>
         </table>
 	        <div id="ca">
 	            <a href="#">이전</a>
