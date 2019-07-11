@@ -68,34 +68,90 @@
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
     		}
+		
+			int userKind=3;//접속하지 않았을 때 
+			if(session.getAttribute("userKind")!=null){
+				userKind=(Integer)session.getAttribute("userKind");
+				//0학생 1강사 2관리자
+			}
 %>
   <!--    헤더     -->
     <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
             <div id="menuleft">
+                <a href="intro.bit">
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+                </a>
+                <!-- 학생일 때  -->
+                <%if(userKind==0){%>
                 <ul>
                     <li><a href="#">내 강의실</a></li>
-                    <li><a href="<%=request.getContextPath()%>/lms/questlist.bit">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="taskBbs.jsp">과제게시판</a></li>
+
                     <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
+                <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+				<ul>
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="attendance.jsp">출석 관리</a></li>
+                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="taskBbs.jsp">과제게시판</a></li>
+                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="#">스케줄</a></li>
+                </ul>
+                <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="userKind2">
+                    <li><a>내 강의실</a></li>
+                    <li><a href="#">강사</a></li>
+                    <li><a href="#">학생</a></li>
+                    <li><a href="#">관리자</a></li>
+                    <li><a href="taskBbs.jsp">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                 </ul>
+                 <!-- 비 로그인  -->
+                 <%}else{}%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
                 <p><%if(session.getAttribute("isLogin")!=null) {
                 	out.println(session.getAttribute("id")+" 님");
                 }else{%>환영합니다<%}%>
-                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
+                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" />
+                </p>
                 <!--   상단메뉴   -->
+                 <!-- 학생일 때  -->
+                <%if(userKind==0){ %>
                 <ul id="topmenu">
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
+                 <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+                <ul id="topmenu">
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="#">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="topmenu">
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="#">강의관리</a></li>
+                    <li><a href="attendance.jsp">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 비 로그인  -->
+                <%}else if(userKind==3){}%>
             </div>
         </div>
     </div>
@@ -147,8 +203,8 @@
         <div id="logincontent">
         <!-- ***************로그인 전 상황*********** -->
         <%
-        System.out.println("userKind = "+session.getAttribute("userKind"));
-if(session.getAttribute("userKind")==null){%> 
+        System.out.println("userKind = "+userKind);
+if(userKind==3){%> 
 		<form action="<%=request.getContextPath()%>/lms/intro.bit" method="post">
             <div id="nologin">
                 <div>
@@ -163,7 +219,7 @@ if(session.getAttribute("userKind")==null){%>
 		</form>
 
         <!-- ****************학생 로그인 상황************* -->
-<%}else if ((Integer)session.getAttribute("userKind")==0){ %>
+<%}else if (userKind==0){ %>
             <div id="loginstu">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
@@ -173,7 +229,7 @@ if(session.getAttribute("userKind")==null){%>
                 </div>
             </div>
         <!-- ***************강사 로그인 상황************ -->
-<%}else if((Integer)session.getAttribute("userKind")==1){%>
+<%}else if(userKind==1){%>
             <div id="logintea">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
@@ -183,7 +239,7 @@ if(session.getAttribute("userKind")==null){%>
                 </div>
             </div>
         <!-- **************관리자 로그인 상황************** -->
-<%}else if((Integer)session.getAttribute("userKind")==2){%>
+<%}else if(userKind==2){%>
             <div id="loginadm">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <button>회원관리</button>
