@@ -132,11 +132,11 @@
 		var ctgval = $("#ctg").val();
 		if (ctgval != "1") {
 			$("#teacherinfo").css("display", "none");
-			$("#labelback").css("height", "430px");
+			$("#labelback").css("height", "480px");
 			$("#editbtn").css("margin", "110px auto 100px 50px");
 		} else {
 			$("#teacherinfo").css("display", "block");
-			$("#labelback").css("height", "740px");
+			$("#labelback").css("height", "780px");
 			$("#editbtn").css("margin", "370px auto 100px 50px");
 		}
 	};
@@ -270,19 +270,19 @@
 				</div>
 				<div id="addr">
 					<form name="form" id="form" method="post">
-						<input type="hidden" id="fullAddr" name="fullAddr" /> <label
-							for="addr1">도로명주소</label><input type="text" id="addr1"
-							readonly="readonly" /><input id="addrbtn" type="button"
-							onClick="goPopup();" value="주소검색" /><br> <label for="addr2">상세주소</label><input
-							type="text" id="addr2" readonly="readonly" /><br>
+						<input type="hidden" id="fullAddr" name="fullAddr" /> 
+						<label for="addr1">도로명주소</label>
+						<input type="text" id="addr1" readonly="readonly" />
+						<label for="addr2">상세주소</label>
+						<input type="text" id="addr2" readonly="readonly" /><br>
 						<!-- 참고주소<input type="text" id="roadAddrPart2" name="roadAddrPart2" /><br>-->
-						<label for="zipNo">우편번호</label><input type="text" id="zipNo"
-							readonly="readonly" />
+						<label for="zipNo">우편번호</label><input type="text" id="zipNo" readonly="readonly" />
+						<input id="addrbtn" type="button" onClick="goPopup();" value="주소검색" /><br> 
 					</form>
 				</div>
 				<div id="lecturediv">
-						<label for="lecture">강좌 번호</label><input type="text" name="lecture"
-						id="lecture"></input>
+						<label for="lecture">강좌 번호</label>
+						<input type="text" name="lecture" id="lecture"></input>
 				</div>
 			</div>
 			<!-- *********************************강사 정보 hidden part*********************************** -->
