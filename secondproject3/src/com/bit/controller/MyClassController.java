@@ -54,4 +54,10 @@ public class MyClassController extends HttpServlet {
 		RequestDispatcher rd = req.getRequestDispatcher("/lms/myClass.jsp");
 		rd.forward(req,resp);
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+	}
 }
