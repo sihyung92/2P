@@ -1,3 +1,7 @@
+<%@page import="java.util.Calendar"%>
+<%@page import="com.bit.model.UserDto"%>
+<%@page import="com.bit.model.ClassDto"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -54,7 +58,8 @@
             left: 79px;
         }
 
-        #content #studiv>table {}
+        #content #studiv table th {
+        }
 
         #content #percenttable {
             width: 80px;
@@ -144,12 +149,14 @@
 	            
 	            $("#footer").css("top","950px");
 	         }
+
         });
         
         function className() {
             var val = $("#className").val();
             $("h3").html(val);
         };
+        
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -161,7 +168,7 @@
 		
 			int userKind=3;//접속하지 않았을 때 
 			if(session.getAttribute("userKind")!=null){
-				userKind=(Integer)session.getAttribute("userKind");
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
 				//0학생 1강사 2관리자
 			}
 %>
@@ -259,6 +266,19 @@
 	            <option value="응용SW 엔지니어링 양성과정 6회차">응용SW 엔지니어링 양성과정 6회차</option>
 	        </select>
         </div>
+            <%
+           	ClassDto classBean = (ClassDto)request.getAttribute("bean");
+            ///시간 얻어오기
+           	String startDay = classBean.getStartdate(); // MM-dd
+           	Date day = new SimpleDateFormat("YYYY-MM-dd").parse(startDay);
+           	Calendar cal = Calendar.getInstance();
+           	String nalja = "";
+           	cal.setTime(day);
+           	///유저리스트 얻어오기
+            ArrayList<UserDto> userList = (ArrayList<UserDto>)request.getAttribute("list");
+           	int size = userList.size()+1;
+            for(int i=0; i<userList.size(); i++){ 
+            UserDto userBean = userList.get(i);%>
         <table id="fronttable">
             <tr>
                 <th>일차</th>
@@ -266,28 +286,32 @@
             <tr>
                 <th>일자</th>
             </tr>
-            <%for(int i=1; i<=30; i++){ %>
             <tr>
-                <th>학생<%=i %></th>
+                <th><%=userBean.getName() %></th>
             </tr>
        		<%} %>
         </table>
         <div id="studiv">
             <table>
                 <tr>
-            	<%for(int i=1; i<90; i++){ %>
+            	<%for(int i=1; i<=90; i++){ %>
                     <th><%=i %></th>
                 <%} %>
                 </tr>
                 <tr>
-                   <%for(int i=1; i<90; i++){ %>
-                    <th>12/31</th>
+                   <%for(int i=1; i<=90; i++){
+                	   cal.add(Calendar.DAY_OF_YEAR,1);
+                	   nalja = cal.get(Calendar.MONTH)+1+"/"+cal.get(Calendar.DAY_OF_MONTH);
+                	   %>
+                    <th>
+                    	<%=nalja%>
+                    </th>
                 <%} %>
                 </tr>
-                <%for(int i=0; i<30; i++){ %>
+                <%for(int i=1; i<userList.size()+1; i++){ %>
                 <tr>
-                   <%for(int j=1; j<90; j++){ %>
-                    <td>　</td>
+                   <%for(int j=1; j<=90; j++){ %>
+                    <td class="td<%=i+"x"+j%>">ㅇ<input class="td<%=j%>" type=hidden name="<%=nalja%>"></td>
                 <%} %>
                 </tr>
                 <%}%>             
@@ -300,7 +324,7 @@
             <tr>
                 <th>출석률</th>
             </tr>
-            <%for(int i=0; i<30; i++){ %>
+            <%for(int i=0; i<userList.size(); i++){ %>
             <tr>
                 <th>100%</th>
             </tr>
@@ -309,10 +333,9 @@
         <div class="teachersession" id="dailydiv">
 <%
 	SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy년 MM월 dd일  ");
-	Date date = new Date(); 
-	String day = format1.format(date);
+	String day2 = format1.format(day);
 %>
-            <span><%=day%> 출결상황</span>
+            <span><%=day2%> 출결상황</span>
             <table id="thtable">
                 <tr>
                     <th>출석</th>
