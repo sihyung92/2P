@@ -119,7 +119,7 @@
                     <li><a href="#">강사</a></li>
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                  </ul>
@@ -156,7 +156,7 @@
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
                     <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>

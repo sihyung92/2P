@@ -38,15 +38,16 @@
             border-bottom: 2px solid gray;
         }
 		
-		#content #editbtn{
+		#content #editbtn,
+		#content #deletebtn{
 			color:black;
 			background-color: white;
 			border: 1px solid black;
 			width: 70px;
 			height: 40px;
-			position: absolute;
-			top: 35px;
-			left: 810px;
+			position: relative;
+			top: 20px;
+			left: 600px;
 		}
 		
         #content label {
@@ -70,7 +71,7 @@
             width: 160px;
             position: relative;
             top: -30px;
-            left: 500px;
+            left: 500px; 
         }
 
         #content #lecturecontent {
@@ -141,13 +142,31 @@
             var statusval=$("#status").html();
             if(statusval=="마감"){
             	$("#status").css("color","red");
-            }
+            };
             
             //수정 이동경로
             $("#editbtn").click(function(){
            		location.href="<%=request.getContextPath()%>/lms/lectureedit.bit?num=<%=request.getParameter("num")%>";
            	});
-
+            
+            //삭제 경로이동
+            $("#deletebtn").click(function(){
+        		var result=confirm('삭제하시겠습니까?');
+        		if(result){
+        			$.ajax({
+        				url:'/lms/lecturedelete.bit',
+        				method: 'post',
+        				data: 'num='+<%=request.getParameter("num") %>,
+        				error: function() {
+        					alert('삭제실패');
+        				},
+        				success: function(){
+        					window.location.href='<%=request.getContextPath()%>/lms/lecturemanage.bit';
+        				}
+        			});		
+        		}
+            });
+            
           });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -200,7 +219,7 @@
                     <li><a href="#">강사</a></li>
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                  </ul>
@@ -235,7 +254,7 @@
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
                     <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -260,6 +279,7 @@
   <h3>강의정보</h3>
         <div>
         	<button id="editbtn">수정</button>
+        	<button id="deletebtn">삭제</button>
             <div>
                 <div>
                     <label>강의명</label>

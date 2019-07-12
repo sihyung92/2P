@@ -62,7 +62,6 @@ public class lectureDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			Connector.close(rs);
 			Connector.close(pstmt);
 			Connector.close(conn);
 		}
@@ -70,9 +69,52 @@ public class lectureDao {
 		return result;
 	}
 
-	public int lectureUpdate() {
+	public int lectureUpdate(String name, Date startdate, Date enddate,
+			String classroom, String content, String attach,
+			String teacherName, int num) {
 		int result = 0;
-		String sql = "update lecture set sub=?,nalja=to_date(?,'yyyy-mm-dd'),pay=? where num=?";
+		String sql = "update lecture set name=?,teacherName=?,startdate=to_date(?,'yyyy-mm-dd'),enddate=to_date(?,'yyyy-mm-dd'),classroom=?,attach=?,content=? where num=?";
+
+		try {
+			conn = Connector.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, teacherName);
+			pstmt.setDate(3, startdate);
+			pstmt.setDate(4, enddate);
+			pstmt.setString(5, classroom);
+			pstmt.setString(6, attach);
+			pstmt.setString(7, content);
+			pstmt.setInt(8, num);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+
 		return result;
 	}
+
+	public int lectureDelete(int num) {
+		int result = 0;
+		String sql = "delete from lecture where num=?";
+
+		conn = Connector.getConnection();
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+
+		return result;
+	}
+
 }

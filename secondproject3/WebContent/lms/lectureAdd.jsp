@@ -157,8 +157,30 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
+            
+            //현재날짜 받기
+            date();
         });
 
+        function date() {
+            var date = new Date();
+
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1) > 9 ? '' + (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+            var day = date.getDate() > 9 ? '' + date.getDate() : '0' + date.getDate();
+
+            var nowdate = year + '-' + month + '-' + day;
+            console.log(nowdate);
+
+            //1. 현재 날짜로 자동세팅
+            $("input[type='date']").val(nowdate);
+
+            //2. Startdate날 짜로 enddate 자동설정
+            $("#startdate").change(function() {
+                var startdate = $("#startdate").val();
+                $("#enddate").val(startdate);
+            });
+        }
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -209,7 +231,7 @@
                     <li><a href="#">강사</a></li>
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                  </ul>
@@ -244,7 +266,7 @@
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
                     <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>

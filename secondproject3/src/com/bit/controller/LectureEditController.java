@@ -1,6 +1,7 @@
 package com.bit.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,18 +36,22 @@ public class LectureEditController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
 		RequestDispatcher rd = req.getRequestDispatcher("/lms/lectureEdit.jsp");
-
+		int num = Integer.parseInt(req.getParameter("num"));
 		String name = req.getParameter("name");
 		String teacherName = req.getParameter("teacherName");
-		String startdate = req.getParameter("startdate");
-		String enddate = req.getParameter("enddate");
+		Date startdate = Date.valueOf(req.getParameter("startdate"));
+		Date enddate = Date.valueOf(req.getParameter("enddate"));
 		String classroom = req.getParameter("classroom");
 		String attach = req.getParameter("attach");
 		String content = req.getParameter("content");
 
 		lectureDao dao = new lectureDao();
+		dao.lectureUpdate(name, startdate, enddate, classroom, content, attach,
+				teacherName, num);
 
-		rd.forward(req, resp);
+		resp.sendRedirect(req.getContextPath() + "/lms/lecturedetail.bit?num="
+				+ num);
 	}
 }
