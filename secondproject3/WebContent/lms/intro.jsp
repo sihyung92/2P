@@ -56,6 +56,12 @@
            	$(".user").click(function(){
            		location.href="<%=request.getContextPath()%>/lms/useredit.bit";
            	});
+           	
+           	//내 강의실 버튼 클릭
+        	$("#myclassbtn").click(function(){
+           		location.href="<%=request.getContextPath()%>/lms/myClass.bit";
+           	});
+           	
           });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -81,7 +87,7 @@
             <div id="menuleft">
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="<%=request.getContextPath()%>/lms/questlist.bit">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
                     <li><a href="#">수업자료실</a></li>
@@ -96,7 +102,7 @@
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -157,7 +163,7 @@ if(session.getAttribute("userKind")==null){%>
             <div id="loginstu">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
-                    <button>내 강의실</button>
+                    <button id="myclassbtn">내 강의실</button>
                     <button>출석관리</button>
                     <button id="logoutbtn">로그아웃</button>
                 </div>
@@ -167,7 +173,7 @@ if(session.getAttribute("userKind")==null){%>
             <div id="logintea">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
-                    <button>내 강의실</button>
+                    <button id="myclassbtn">내 강의실</button>
                     <button>과 제</button>
                     <button id="logoutbtn">로그아웃</button>
                 </div>
