@@ -701,3 +701,4 @@ insert into lmsBbs values (lmsBbs_3_seq.nextval,03,3,'qu2','help me',
 insert into lmsBbs values (lmsBbs_3_seq.nextval,03,3,'qu3','hellllp me',
 		'stu05','2019-07-05',23,'ex05.java');
 commit
+
