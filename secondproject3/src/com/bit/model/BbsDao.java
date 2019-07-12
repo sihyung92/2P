@@ -15,7 +15,7 @@ public class BbsDao {
 	
 	public ArrayList<BbsDto> getNoticeList(){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs where bbsNum=0";
+		String sql="select * from lmsBbs where bbsNum=0 order by listnum desc";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);

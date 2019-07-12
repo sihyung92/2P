@@ -275,18 +275,18 @@
         <div id="studiv">
             <table>
                 <tr>
-            	<%for(int i=1; i<151; i++){ %>
+            	<%for(int i=1; i<90; i++){ %>
                     <th><%=i %></th>
                 <%} %>
                 </tr>
                 <tr>
-                   <%for(int i=1; i<151; i++){ %>
+                   <%for(int i=1; i<90; i++){ %>
                     <th>12/31</th>
                 <%} %>
                 </tr>
                 <%for(int i=0; i<30; i++){ %>
                 <tr>
-                   <%for(int j=1; j<151; j++){ %>
+                   <%for(int j=1; j<90; j++){ %>
                     <td>　</td>
                 <%} %>
                 </tr>
@@ -306,7 +306,6 @@
             </tr>
             <%} %>
         </table>
-
         <div class="teachersession" id="dailydiv">
 <%
 	SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy년 MM월 dd일  ");

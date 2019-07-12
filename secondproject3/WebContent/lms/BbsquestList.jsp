@@ -173,7 +173,6 @@
    <section class="section">
     <div id="content">
     <div id="topmargin"></div>
-    
 	        <h1>질문 게시판</h1>
 	        <br/>
 	      <table id="bbs2">
@@ -199,9 +198,8 @@
                 <th>조회수</th>
             </tr>
             <%
-            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("alist");
+            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
             	for(int i=0;i<list.size();i++){
-            		
             %>
             <tr>
             	<td><input type="checkbox" name="chk10"></td>

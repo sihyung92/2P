@@ -45,8 +45,9 @@ public class ClassDao {
 
 	public ArrayList<ClassDto> getIntroList() {
 		ArrayList<ClassDto> list = new ArrayList<ClassDto>();
-		String sql = "select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName,content from lecture where startdate>=sysdate order by startdate";
-		// ���� ���� �����͸� ������ �ð�������.
+		String sql = "select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,";
+			sql+="TO_CHAR(enddate,'YYYY-MM-DD') as enddate,teacherName,content from lecture ";
+			sql+="where startdate>=sysdate order by startdate";
 		try {
 			conn = Connector.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -63,14 +64,6 @@ public class ClassDao {
 				bean.setTeacherName(rs.getString("teacherName"));
 				bean.setContent(rs.getString("content"));
 				boolean isRecruiting = true;
-				// if(0>new
-				// Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
-				// isRecruiting = true;
-				// };
-				// ��¥�� ���Ͽ� ���۳�¥�� ���糯¥���� �ڶ�� ������(isRecruiting =
-				// true), �ƴ϶�� ����(isRecruiting = false)
-				// �����ؾ��� ��� : ȸ�����̺��� kind�� �л��̸鼭 �ش簭�Ǹ� ��»���� ���ڰ�
-				// <30�̸� isRe~=true(������)�ƴϸ� false(����)
 				bean.setRecruitng(isRecruiting);
 				list.add(bean);
 			}
@@ -82,5 +75,30 @@ public class ClassDao {
 			Connector.close(conn);
 		}
 		return list;
+	}
+	
+	public ClassDto getAttendanceBean(int lecNum) {
+		ClassDto bean=null;
+		String sql="SELECT num,TO_CHAR(startDate,'MM-DD') as startDate, TO_CHAR(endDate,'MM-DD') as endDate, name from lecture where lecnum=?";
+		try {
+			conn = Connector.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, lecNum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				bean = new ClassDto();
+				bean.setNum(rs.getInt("num"));
+				bean.setName(rs.getString("name"));
+				bean.setStartdate(rs.getString("startDate"));
+				bean.setEnddate(rs.getString("enddate"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return bean;
 	}
 }

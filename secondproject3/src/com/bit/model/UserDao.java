@@ -38,6 +38,8 @@ public class UserDao {
 		return bean;
 	}
 
+	public 
+	
 	public ArrayList<UserDto> getList() {
 		ArrayList<UserDto> list = new ArrayList<UserDto>();
 		String sql = "";

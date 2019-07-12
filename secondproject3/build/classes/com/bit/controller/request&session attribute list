@@ -6,3 +6,8 @@ LogoutController => (�α��� ���� �������)
 			session.setAttribute("userNum", bean.getUserNum());
 			session.setAttribute("userkind", bean.getUserKind());
 			session.setAttribute("lecNum", bean.getLecNum());
+인원 분류
+0학생 1강사 2직원
+
+게시판 분류
+0공지사항 1수업자료 2과제 3질문
