@@ -77,9 +77,11 @@ public class ClassDao {
 		return list;
 	}
 	
+
+
 	public ClassDto getAttendanceBean(int lecNum) {
 		ClassDto bean=null;
-		String sql="SELECT num,TO_CHAR(startDate,'MM-DD') as startDate, TO_CHAR(endDate,'MM-DD') as endDate, name from lecture where lecnum=?";
+    String sql="SELECT num,TO_CHAR(startDate,'YYYY-MM-DD') as startDate, TO_CHAR(endDate,'YYYY-MM-DD') as endDate, name from lecture where num=?";
 		try {
 			conn = Connector.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -91,6 +93,19 @@ public class ClassDao {
 				bean.setName(rs.getString("name"));
 				bean.setStartdate(rs.getString("startDate"));
 				bean.setEnddate(rs.getString("enddate"));
+				String totalDate = rs.getString("startdate")+"~"+rs.getString("enddate");
+				bean.setTotalDate(totalDate);
+				bean.setTeacherName(rs.getString("teacherName"));
+				bean.setContent(rs.getString("content"));
+				boolean isRecruiting = true;
+//				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
+//					isRecruiting = true;
+//				};
+				//��¥�� ���Ͽ� ���۳�¥�� ���糯¥���� �ڶ�� ������(isRecruiting = true), �ƴ϶�� ����(isRecruiting = false)
+				//�����ؾ��� ��� : ȸ�����̺��� kind�� �л��̸鼭 �ش簭�Ǹ� ��»���� ���ڰ� <30�̸� isRe~=true(������)�ƴϸ� false(����)
+				bean.setRecruitng(isRecruiting);
+				list.add(bean);
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -101,4 +116,59 @@ public class ClassDao {
 		}
 		return bean;
 	}
+
+	public ClassDto LecDetail(int lecNum){
+		ClassDto bean=new ClassDto();
+		String sql="select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,classroom,content,attach,teacherName from lecture where num=?";
+		try {
+			conn = Connector.getConnection();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, lecNum);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				bean.setNum(rs.getInt("num"));
+				bean.setName(rs.getString("name"));
+				bean.setStartdate(rs.getString("startdate"));
+				bean.setEnddate(rs.getString("enddate"));
+				bean.setClassroom(rs.getString("classroom"));
+				bean.setContent(rs.getString("content"));
+				bean.setAttach(rs.getString("attach"));
+				bean.setTeacherName(rs.getString("teacherName"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return bean;
+	}
+	
+	public ArrayList<ClassDto> getListAsc() {
+		ArrayList<ClassDto> list = new ArrayList<ClassDto>();
+		String sql = "select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,classroom,content,attach,teacherName from lecture";
+		try {
+			conn = Connector.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ClassDto bean = new ClassDto();
+				bean.setNum(rs.getInt("num"));
+				bean.setName(rs.getString("name"));
+				list.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return list;
+	}
+	
+	
 }
+
+

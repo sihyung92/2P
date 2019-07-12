@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 import com.bit.util.Connector;
+import com.bit.util.*;
 
 public class BbsDao {
 	Connection conn;
@@ -159,6 +160,44 @@ public class BbsDao {
 			}
 			return result;
 		}
+
+		//상위 5개 글 가져오기
+	public ArrayList<BbsDto> precedenceList(int num,int bbsNum){
+		ArrayList<BbsDto> list= new ArrayList<BbsDto>();
+		
+		String sql="select * from lmsbbs where lecnum=? and bbsNum=? and ROWNUM < 6 order by listnum desc";
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.setInt(2,bbsNum);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				BbsDto bean = new BbsDto();
+				bean.setTitle(rs.getString("title"));
+				bean.setId(rs.getString("id"));
+				bean.setNalja(rs.getDate("nalja"));
+				
+				
+				list.add(bean);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+				try {
+					if(rs!=null)rs.close();
+					if(pstmt!=null)pstmt.close();
+					if(conn!=null)conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return list;
+	}
 		
 }
 
