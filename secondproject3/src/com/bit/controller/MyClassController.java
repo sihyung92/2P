@@ -20,21 +20,31 @@ import com.bit.model.ClassDto;
 public class MyClassController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		
-		String param1 = (String) session.getAttribute("lecNum");
-		int lecNum= Integer.parseInt(param1);
-			
+		int lecNum=1;
 		String param2 = (String) session.getAttribute("userKind");
 		int userKind= Integer.parseInt(param2);
+		
+		if(userKind!=2){
+		String param1 = (String) session.getAttribute("lecNum");
+		lecNum= Integer.parseInt(param1);
+		
 		//int userKind = (Integer)session.getAttribute("userKind");
+		}else{
+			
+			lecNum=Integer.parseInt(req.getParameter("lecNum"));
+			
+		}
 		
 		ClassDao dao = new ClassDao();
 		ClassDto bean= dao.LecDetail(lecNum);
+		ArrayList<ClassDto> beanAsc = new ArrayList<ClassDto>();
+		beanAsc = dao.getListAsc();
 		//System.out.println(bean.getName());
 		
 		BbsDao bDao = new BbsDao();
 		
 		req.setAttribute("bean", bean);
+		req.setAttribute("beanAsc",beanAsc);
 		//����, ����, �����ڷ� �Խ���
 		req.setAttribute("bbs3List", bDao.precedenceList(lecNum,3));
 		req.setAttribute("bbs2List", bDao.precedenceList(lecNum,2));

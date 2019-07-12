@@ -146,6 +146,29 @@ public class ClassDao {
 		return bean;
 	}
 	
+	public ArrayList<ClassDto> getListAsc() {
+		ArrayList<ClassDto> list = new ArrayList<ClassDto>();
+		String sql = "select num,name,TO_CHAR(startdate,'YYYY-MM-DD') as startdate,TO_CHAR(enddate,'YYYY-MM-DD') as enddate,classroom,content,attach,teacherName from lecture";
+		try {
+			conn = Connector.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ClassDto bean = new ClassDto();
+				bean.setNum(rs.getInt("num"));
+				bean.setName(rs.getString("name"));
+				list.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return list;
+	}
+	
 	
 }
 

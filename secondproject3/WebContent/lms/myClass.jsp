@@ -17,31 +17,6 @@
 			color: black;
 		}
 
-		/*헤더, 상단메뉴*/
-		#header {
-			height: 80px;
-			border-bottom: 2px solid lightgray;
-		}
-
-		#header>img {
-			margin: 13px;
-			display: inline-block;
-			float: left;
-		}
-
-		#header>p {
-			float: right;
-			margin: 30px 0px auto auto;
-			display: inline-block;
-			font-size: 14px;
-		}
-
-		#header>p>a>img {
-			width: 25px;
-			margin: 0px 30px auto 5px;
-			float: right;
-			display: inline-block;
-		}
 
 		/*메인*/
 
@@ -53,7 +28,7 @@
 			margin: 0px 300px;
 			display: grid;
 			grid-template-columns: 1fr 1fr 3fr;
-			grid-template-rows: 80px 320px;
+			grid-template-rows: 80px 380px;
 			grid-gap: 20px;
 		}
 		
@@ -67,29 +42,37 @@
 		
 
 		.box1 {
-			grid-auto-columns: 1/2;
-			padding-top:40px;
-			font-size:27px;
+			grid-column: 1/2;
+			grid-row: 1/2;
+			padding-top: 85px;
+			font-size: 27px;
 		}
 
 		.box2 {
-			grid-column: 3/4;
+			grid-column: 2/3;
+			grid-row: 1/2;
 			text-align: right;
-			padding-top: 50px;
+			padding-top: 85px;
 			
 		}
 
 		.box3 {
-			grid-column: 1/3;
+			grid-column: 1/2;
+			grid-row: 2/3;
+			width: 554px;
 			display: grid;
+			margin-top:35px;
+			
 		}
 
 		.box4 {
-			grid-column: 3/4;
+			grid-column: 2/3;
 			grid-row: 2/3;
 			padding-left: 0px;
 			padding-top: 0px;
 			padding-right: 0px;
+			width: 403px;
+			margin-top:35px;
 		}
 
 		.box4 p {
@@ -98,6 +81,18 @@
 
 		.box4 image {
 			float: right;
+		}
+
+		.wrapper2>div {
+			background-color: #e0e0e0;
+		}
+		
+		.wrapper2{
+			margin: -20px 300px;
+			display: grid;
+			grid-template-columns: 1fr 1fr 3fr;
+			/*grid-template-rows: 80px 280px;*/
+			grid-gap: 20px;
 		}
 
 		.box5 {
@@ -122,12 +117,10 @@
 		}
 
 		.box8 {
-			grid-column: 2/4;
+			grid-column: 2/3;
 			grid-row: 3/6;
-		}
-
-		.box9 {
-			grid-column: 3/4;
+			width: 563px;
+			text-align: center;
 		}
 
 		/*풋터*/
@@ -258,7 +251,9 @@
 	</style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-    var userKind = <%=session.getAttribute("userKind")%>;    
+    var userKind = <%=session.getAttribute("userKind")%>;  
+    var lecPage;
+    var lecNum;
     $(document).ready(function() {
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
@@ -290,6 +285,7 @@
                location.href="<%=request.getContextPath()%>/lms/logout.bit";
             });
             
+            //로그인 유저별 화면뷰
             $('.box1').hide();
     		$('.box2').hide();
     		$('.box3').hide();
@@ -312,6 +308,14 @@
     			$('.box2').show();
     		}
 
+    		//관리자 강의별 페이지 이동
+			$("select").change(function(){
+    			lecPage=$("#browsers option:selected").val();
+				location.href="<%=request.getContextPath()%>/lms/myClassAdm.bit?lecnum="+lecPage;	
+    			alert(lecPage);
+			});
+    		
+			
           });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -413,6 +417,7 @@
    
 	<%
 	ClassDto bean=(ClassDto)request.getAttribute("bean"); //강의정보
+	ArrayList<ClassDto> beanAsc=(ArrayList<ClassDto>)request.getAttribute("beanAsc"); //강의리스트
 	ArrayList<BbsDto> bbs3List,bbs2List,bbs1List = null; //0 공지사항 게시판 상위 5개 출력
 	bbs3List = (ArrayList<BbsDto>)request.getAttribute("bbs3List");
 	bbs2List = (ArrayList<BbsDto>)request.getAttribute("bbs2List");
@@ -422,12 +427,17 @@
 	<div class="wrapper">
 		<div class="box1stu" style="background-color: white;"></div>
 		<div class="box2stu" style="background-color: white;"></div>
-		<div class="box1" style="background-color: white;"><b>응용 SW 엔지니어링 양성 1회차</b></div>
+		<div class="box1" style="background-color: white;"><b><%=bean.getName() %></b></div>
 		<div class="box2" style="background-color: white;">
 			<select id="browsers" name="browsers">
-				<option value="응용 SW 엔지니어링 양성 1회차">응용 SW 엔지니어링 양성 1회차</option>
-				<option value="응용 SW 엔지니어링 양성 2회차">응용 SW 엔지니어링 양성 2회차</option>
-				<option value="응용 SW 엔지니어링 양성 3회차">응용 SW 엔지니어링 양성 3회차</option>
+			<%
+				for(int i=0; i<beanAsc.size(); i++) {
+				ClassDto bean2=beanAsc.get(i);
+				%>
+				<option value=<%=i+1 %>><%=bean2.getName() %></option>
+			<% }
+			System.out.println(request.getParameter("browsers"));
+			%>
 			</select>
 		</div>
 		<!-- student attendance start-->
@@ -563,9 +573,10 @@
 				</tr>
 			</table>
 		</div>
+		</div>
 		<!-- class box4 #admin 종료-->
 		
-		
+		<div class="wrapper2">
 		<div class="box5">
 			<table style="width: 370px; margin-left: auto; margin-right: auto;">
 				<tr>
@@ -661,7 +672,7 @@
 		</div>
 		<div class="box8" style="text-align: center;">캘린더 위치</div>
 	</div>
-
+</div>
 
     <br/>
     <br/>

@@ -183,7 +183,7 @@ if(session.getAttribute("userKind")==null){%>
             <div id="loginadm">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <button class="user">회원관리</button>
-                <button class="lecture">강의관리</button>
+                <button class="lecture" id="myclassbtn">강의관리</button>
                 <button class="attendance">출결관리</button>
                 <button class="scheduler">일정관리</button>
             </div>
