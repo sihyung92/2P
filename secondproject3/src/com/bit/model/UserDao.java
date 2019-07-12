@@ -38,16 +38,14 @@ public class UserDao {
 		return bean;
 	}
 
-	public 
-	
 	public ArrayList<UserDto> getList() {
 		ArrayList<UserDto> list = new ArrayList<UserDto>();
 		String sql = "";
-		conn=Connector.getConnection();
+		conn = Connector.getConnection();
 		try {
-			pstmt=conn.prepareStatement(sql);
-			rs=pstmt.executeQuery();
-			while(rs.next()) {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
 				bean = new UserDto();
 				list.add(bean);
 			}
@@ -87,16 +85,18 @@ public class UserDao {
 		return bean;
 	}
 
-	public int edit(String id, String pw, String name,String address, String birth, String email, String major, int phone,String lecNum) {
-		String sql ="UPDATE userData SET pw=?, address=?, name=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=?, lecNum=? where id='"+id+"'";
-		boolean isAdmin=false;
+	public int edit(String id, String pw, String name, String address,
+			String birth, String email, String major, int phone, String lecNum) {
+		String sql = "UPDATE userData SET pw=?, address=?, name=?, birth=TO_DATE(?,'YYYY-MM-DD'), email=?, major=?, phone=?, lecNum=? where id='"
+				+ id + "'";
+		boolean isAdmin = false;
 		int lecture = 1;
-		if(lecNum=="") {
+		if (lecNum == "") {
 			isAdmin = true;
-		}else {
+		} else {
 			lecture = Integer.parseInt(lecNum);
 		}
-		conn=Connector.getConnection();
+		conn = Connector.getConnection();
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -106,11 +106,11 @@ public class UserDao {
 			pstmt.setString(4, birth);
 			pstmt.setString(5, email);
 			pstmt.setString(6, major);
-			pstmt.setInt(7,phone);
-			if(isAdmin) {
-				pstmt.setString(8,null);
-			}else {
-				pstmt.setInt(8,lecture);
+			pstmt.setInt(7, phone);
+			if (isAdmin) {
+				pstmt.setString(8, null);
+			} else {
+				pstmt.setInt(8, lecture);
 			}
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -122,24 +122,28 @@ public class UserDao {
 		return result;
 	}
 
-	public int register(String id, String pw, int userKind,int userNum,String name,String address, String birth, String email, String major, int phone, String lecNum) {
-		boolean isAdmin=false;
+	public int register(String id, String pw, int userKind, int userNum,
+			String name, String address, String birth, String email,
+			String major, int phone, String lecNum) {
+		boolean isAdmin = false;
 		int lecture = 1;
-		if(lecNum=="") {
+		if (lecNum == "") {
 			isAdmin = true;
-		}else {
+		} else {
 			lecture = Integer.parseInt(lecNum);
 		}
-		String sql="INSERT INTO userData VALUES (userData_"+userKind+"_seq.nextval,"+userKind+",?,'"+id+"','"+pw+"','"+name+"','"+birth+"',";
-		sql+=phone+",'"+email+"','"+address+"','"+major+"')";
+		String sql = "INSERT INTO userData VALUES (userData_" + userKind
+				+ "_seq.nextval," + userKind + ",?,'" + id + "','" + pw + "','"
+				+ name + "','" + birth + "',";
+		sql += phone + ",'" + email + "','" + address + "','" + major + "')";
 		System.out.println(sql);
-		int result=0;
-		conn=Connector.getConnection();
+		int result = 0;
+		conn = Connector.getConnection();
 		try {
-			pstmt=conn.prepareStatement(sql);
-			if(isAdmin) {
+			pstmt = conn.prepareStatement(sql);
+			if (isAdmin) {
 				pstmt.setString(1, null);
-			}else {
+			} else {
 				pstmt.setInt(1, lecture);
 			}
 			result = pstmt.executeUpdate();
@@ -151,17 +155,17 @@ public class UserDao {
 		}
 		return result;
 	}
-	
+
 	public int idCheck(String id) {
 		String sql = "SELECT * FROM userData WHERE id=?";
 		int result = 0;
-		conn=Connector.getConnection();
+		conn = Connector.getConnection();
 		try {
-			pstmt=conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				return ++result; 
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return ++result;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -171,5 +175,28 @@ public class UserDao {
 			Connector.close(conn);
 		}
 		return result;
+	}
+
+	public ArrayList<String> getStudent(int num) {
+		ArrayList<String> list = new ArrayList<String>();
+		String sql = "select name from userData where userKind=0 and lecNum = ?";
+		conn = Connector.getConnection();
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				list.add(rs.getString("name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+
+		return list;
 	}
 }

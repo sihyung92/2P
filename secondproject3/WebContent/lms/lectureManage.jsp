@@ -63,7 +63,22 @@
         	text-align:right;
         }
         #content #ca{
-        text-align:center;
+        	position: relative;
+        	top: 10px;
+        	width:150px;
+        }
+        #content #ca .movebtn{
+        	position: relative;
+        	top: 2px;
+        	
+        }
+        #content #ca button{
+        	text-decoration:none;
+        	text-align:center;
+        	color:black;
+        	width: 25px;
+        	height: 25px;
+        	border: 1px solid black;
         }
         #content #btn{
        	 text-align:right;
@@ -72,9 +87,15 @@
         #content button{
         	background-color:white;
         	border: 1px solid black;
-        	width: 30px;
-        	height: 28px;
+        	width: 80px;
+          	height: 35px;
+        	
         }
+        
+        #content #searchbtn{
+         	width: 50px;
+       		height: 28px;
+         }
         #content select{
         	text-align:left;
         }
@@ -130,9 +151,12 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            	$('button').click(function(){
-            		window.location.href='Bbsadd.jsp';
-            	});
+            //등록버튼 경로
+           	$("#addbtn").click(function(){
+           		location.href="<%=request.getContextPath()%>/lms/lectureadd.bit";
+           	});
+            	
+            	
             
         });
     </script>
@@ -147,8 +171,9 @@
     		}
 		
 			int userKind=3;//접속하지 않았을 때 
+			
 			if(session.getAttribute("userKind")!=null){
-				userKind=(Integer)session.getAttribute("userKind");
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
 				//0학생 1강사 2관리자
 			}
 %>
@@ -186,7 +211,7 @@
                     <li><a href="#">강사</a></li>
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                  </ul>
@@ -221,7 +246,7 @@
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
                     <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -246,7 +271,7 @@
 			        </td>
 			        <td>
 		                <input type="text" id="search" name="search" />
-		                <button>검색</button>
+		                <button id="searchbtn">검색</button>
 			        </td>
 	            </tr>
 	        </table>
@@ -278,15 +303,14 @@
            <%} %>
         </table>
 	        <div id="ca">
-	            <a href="#">이전</a>
-	            <a href="#">1</a>
-	            <a href="#">2</a>
-	            <a href="#">3</a>
-	            <a href="#">4</a>
-	            <a href="#">다음</a>
+	            <a href="#"><button class="movebtn">〈</button></a>
+	            <a href="#"><button>1</button></a>
+	            <a href="#"><button>2</button></a>
+	            <a href="#"><button>3</button></a>
+	            <a href="#"><button class="movebtn">〉</button></a>
 	        </div>
 	        <div id="btn">
-	            <button type="button">등록</button>
+	            <button type="button" id="addbtn">등록</button>
 	            <button type="button">삭제</button>
 	        </div>
     </div>
