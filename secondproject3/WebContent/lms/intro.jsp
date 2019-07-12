@@ -56,6 +56,11 @@
            	$(".user").click(function(){
            		location.href="<%=request.getContextPath()%>/lms/useredit.bit";
            	});
+           	//내 강의실 버튼 클릭
+        	$("#myclassbtn").click(function(){
+           		location.href="<%=request.getContextPath()%>/lms/myClass.bit";
+           	});
+
         	$(".lecture").click(function(){
            		location.href="<%=request.getContextPath()%>/lms/lecturemanage.bit";
            	});
@@ -96,18 +101,8 @@
                 <!-- 학생일 때  -->
                 <%if(userKind==0){%>
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
-                </ul>
-                <!-- 강사일 때  -->
-                <%}else if(userKind==1){ %>
-				<ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/questlist.bit">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
                     <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
@@ -147,7 +142,7 @@
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -221,7 +216,7 @@ if(session.getAttribute("userKind")==null){%>
             <div id="loginstu">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
-                    <button>내 강의실</button>
+                    <button id="myclassbtn">내 강의실</button>
                     <button>출석관리</button>
                     <button id="logoutbtn">로그아웃</button>
                 </div>
@@ -231,7 +226,7 @@ if(session.getAttribute("userKind")==null){%>
             <div id="logintea">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
-                    <button>내 강의실</button>
+                    <button id="myclassbtn">내 강의실</button>
                     <button>과 제</button>
                     <button id="logoutbtn">로그아웃</button>
                 </div>
@@ -241,7 +236,7 @@ if(session.getAttribute("userKind")==null){%>
             <div id="loginadm">
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <button class="user">회원관리</button>
-                <button class="lecture">강의관리</button>
+                <button class="lecture" id="myclassbtn">강의관리</button>
                 <button class="attendance">출결관리</button>
                 <button class="scheduler">일정관리</button>
             </div>
