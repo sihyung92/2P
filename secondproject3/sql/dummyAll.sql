@@ -358,7 +358,7 @@ insert into userKind values (02,'관리자');
 
 
 /*
-강의
+ 강의
 CREATE TABLE lecture
 (
 	num number NOT NULL,
@@ -368,6 +368,7 @@ CREATE TABLE lecture
 	classroom varchar2(21),
 	content varchar2(2000),
 	attach varchar2(1000),
+	teacherName varchar2(30),
 	PRIMARY KEY (num)
 );
 */
@@ -391,7 +392,7 @@ CREATE TABLE userData
 	-- 00 학생
 	-- 01 강사
 	-- 02 관리자
-	kind number NOT NULL,
+	userKind number NOT NULL,
 	lecNum number,
 	id varchar2(50) NOT NULL,
 	pw varchar2(20) NOT NULL,
