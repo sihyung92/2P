@@ -22,8 +22,8 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("LoginController / method : get");
-		HttpSession session= req.getSession();
-		System.out.println("세션isNew : "+session.isNew());
+		HttpSession session = req.getSession();
+		System.out.println("세션isNew : " + session.isNew());
 		BbsDao dao = new BbsDao();
 		ArrayList<BbsDto> list = dao.getNoticeList();
 		req.setAttribute("list", list);
@@ -52,6 +52,6 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("userKind", "" + bean.getUserKind());
 			session.setAttribute("lecNum", "" + bean.getLecNum());
 		}
-		doGet(req,resp);
+		doGet(req, resp);
 	}
 }
