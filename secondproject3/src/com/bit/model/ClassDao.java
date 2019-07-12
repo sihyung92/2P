@@ -79,7 +79,7 @@ public class ClassDao {
 	
 	public ClassDto getAttendanceBean(int lecNum) {
 		ClassDto bean=null;
-		String sql="SELECT num,TO_CHAR(startDate,'MM-DD') as startDate, TO_CHAR(endDate,'MM-DD') as endDate, name from lecture where lecnum=?";
+		String sql="SELECT num,TO_CHAR(startDate,'YYYY-MM-DD') as startDate, TO_CHAR(endDate,'YYYY-MM-DD') as endDate, name from lecture where num=?";
 		try {
 			conn = Connector.getConnection();
 			pstmt = conn.prepareStatement(sql);

@@ -38,11 +38,34 @@ public class UserDao {
 		return bean;
 	}
 
-	public 
-	
+	public ArrayList<UserDto> getAttendanceList(int lecNum) {
+		ArrayList<UserDto> list = new ArrayList<UserDto>();
+		String sql = "SELECT name, userKind, userNum FROM userData where lecNum=?";
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, lecNum);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				bean = new UserDto();
+				bean.setName(rs.getString("name"));
+				bean.setUserKind(rs.getInt("UserKind"));
+				bean.setUserNum(rs.getInt("UserNum"));
+				list.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return list;
+	}
+
 	public ArrayList<UserDto> getList() {
 		ArrayList<UserDto> list = new ArrayList<UserDto>();
-		String sql = "";
+		String sql = "SELECT * FROM userData WHERE ";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -53,10 +76,14 @@ public class UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
 		}
 		return list;
-	}
-
+	}	
+	
 	public UserDto detail(String id) {
 		String sql = "SELECT * FROM userData WHERE id=?";
 		conn = Connector.getConnection();
