@@ -52,7 +52,7 @@
         	width:800px;
         		
         }
-        .bbs th:nth-child(3){
+        .bbs th:nth-child(2){
         	width:40%;
         }
         input[name="serch"]{
@@ -168,7 +168,6 @@
             </div>
         </div>
     </div>
-
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
@@ -189,7 +188,6 @@
 	        </table>
         <table class="bbs">
             <tr>
-            	<th><input type="checkbox" name="chk"></th>
                 <th >NO.</th>
                 <th>제목</th>
                 <th>상태</th>
@@ -200,14 +198,14 @@
             <%
             	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
             	for(int i=0;i<list.size();i++){
+            		BbsDto bean=list.get(i);
             %>
             <tr>
-            	<td><input type="checkbox" name="chk10"></td>
-                <td>10</td>
-                <td>sub</td>
+                <td><%=bean.getListNum() %></td>
+              	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
                 <td>미답변</td>
-                <td>학생1</td>
-                <td>2019.3.27</td>
+                <td><%=bean.getId() %></td>
+                <td><%=bean.getNalja() %></td>
                 <td>0</td>
             </tr>
             <%
@@ -219,11 +217,10 @@
 	            <a href="#">1</a>
 	            <a href="#">2</a>
 	            <a href="#">3</a>
-	            <a href="#">4</a>
 	            <a href="#">다음</a>
 	        </div>
 	        <div id="btn">
-	            <button type="button">삭제</button>
+	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
 	        </div>
     </div>
 	</section>

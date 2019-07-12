@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
+
 import com.bit.util.Connector;
 
 public class BbsDao {
@@ -71,14 +73,14 @@ public class BbsDao {
 		return list;
 	}
 
-	public BbsDto questiondetail(int lecNum, int num,int bbsNum){
+	public BbsDto questiondetail(int listNum,int lecNum){
 		BbsDto bean=new BbsDto();
-		String sql="select * from lmsBbs where num=? and bbsNum=?";
+		String sql="select * from lmsBbs where listNum=? and bbsNum=3 and lecNum=?";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			pstmt.setInt(2,bbsNum);
+			pstmt.setInt(1,listNum);
+			pstmt.setInt(2,lecNum);
 			rs=pstmt.executeQuery();
 			if(rs.next()){
 				bean.setTitle(rs.getString("title"));
@@ -96,14 +98,14 @@ public class BbsDao {
 		return bean;
 	}
 	
-	public int delete(int num,int bbsNum){
+	public int questionDelete(int lecNum,int listNum){
 		int result=0;
-		String sql="delete from lmsBbs where num=? and bbsNum=?";
+		String sql="delete from lmsBbs where lecNum=? and bbsNum=3 and listNum=?";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			pstmt.setInt(2, bbsNum);
+			pstmt.setInt(1, lecNum);
+			pstmt.setInt(2, listNum);
 			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -159,3 +161,6 @@ public class BbsDao {
 		}
 		
 }
+
+
+

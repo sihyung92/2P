@@ -4,12 +4,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <style type="text/css">
-    	#topmargin{
+       	#topmargin{
     		height:100px;
     	}
         .bbs{
@@ -52,7 +52,7 @@
         	width:800px;
         		
         }
-        .bbs th:nth-child(3){
+        .bbs th:nth-child(2){
         	width:40%;
         }
         input[name="serch"]{
@@ -129,7 +129,7 @@
             });
             
             	$('button').click(function(){
-            		window.location.href='bbsQuAdd.jsp';
+            		window.location.href='Bbsadd.jsp';
             	});
             
         });
@@ -138,8 +138,7 @@
 </head>
 <body>
 
-<!-- 질문게시판 학생 -->
-
+<!-- 질문게시판 강사 -->
 
      <!--    헤더     -->
     <div id="header">
@@ -157,7 +156,7 @@
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>학생1
+                <p>강사1
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
@@ -173,20 +172,16 @@
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
-    <div id="topmargin">
-    
-    </div>
-	        <h1>질문 게시판</h1><br/>
-	        <table id="bbs2">
+    <div id="topmargin"></div>
+	        <h1>질문 게시판</h1>
+	        <br/>
+	      <table id="bbs2">
 		       		<tr>
 		       			<td>
 					        <select>
 					        	<option value="">전체보기</option>
 					        </select>
-				        </td>
-				     
-				   
-				        <td>
+				        </td> <td>
 				                <input type="text" id="search" name="search" />
 				                <button>검색</button>
 				        </td>
@@ -202,27 +197,27 @@
                 <th>조회수</th>
             </tr>
             <%
-            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("alist");
+            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
             	for(int i=0;i<list.size();i++){
-            		BbsDto bean=list.get(i);	
+            		BbsDto bean=list.get(i);
             %>
             <tr>
                 <td><%=bean.getListNum() %></td>
-                <td><%=bean.getTitle() %></td>
+              	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
                 <td>미답변</td>
                 <td><%=bean.getId() %></td>
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
             </tr>
-            <%	
-            } %>
-       </table>
+            <%
+            }
+            %>
+        </table>
 	        <div id="ca">
 	            <a href="#">이전</a>
 	            <a href="#">1</a>
 	            <a href="#">2</a>
 	            <a href="#">3</a>
-	            <a href="#">4</a>
 	            <a href="#">다음</a>
 	        </div>
 	        <div id="btn">
