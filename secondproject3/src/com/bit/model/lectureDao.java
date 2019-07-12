@@ -1,6 +1,7 @@
 package com.bit.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,6 +41,33 @@ public class lectureDao {
 			Connector.close(conn);
 		}
 		return bean;
+	}
+
+	public int lectureAdd(String name, Date startdate, Date enddate,
+			String classroom, String content, String attach, String teacherName) {
+		int result = 0;
+		String sql = "insert into LECTURE values (lecture_seq.nextval,?,?,?,?,?,?,?)";
+		ClassDto bean = new ClassDto();
+		try {
+			conn = Connector.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setDate(2, startdate);
+			pstmt.setDate(3, enddate);
+			pstmt.setString(4, classroom);
+			pstmt.setString(5, content);
+			pstmt.setString(6, attach);
+			pstmt.setString(7, teacherName);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+
+		return result;
 	}
 
 	public int lectureUpdate() {
