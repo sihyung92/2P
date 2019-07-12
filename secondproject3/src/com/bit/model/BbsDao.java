@@ -44,7 +44,7 @@ public class BbsDao {
 	
 	public ArrayList<BbsDto> getQuestionList(){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs where listnum=1 and bbsNum=0 order by listnum desc";
+		String sql="select * from lmsBbs where lecNum=1 AND bbsNum=3 order by listnum desc";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -71,7 +71,7 @@ public class BbsDao {
 		return list;
 	}
 
-	public BbsDto detail(int num,int bbsNum){
+	public BbsDto questiondetail(int lecNum, int num,int bbsNum){
 		BbsDto bean=new BbsDto();
 		String sql="select * from lmsBbs where num=? and bbsNum=?";
 		conn=Connector.getConnection();
@@ -116,21 +116,26 @@ public class BbsDao {
 	}
 	
 	
-	public void insert(String title, String id){
-		String sql="insert into lmsBbs(num,title,status,id,nalja,views) values(lmsBbs_2_seq.nextval,?,'미해결',?,sysdate,0)";
+	public int questionInsert(int lecNum,String title, String content,String id){
+		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		//lecNum,title,content,id
+		int result=0;
 		conn=Connector.getConnection();
+		System.out.println("questionInsert-lecNum : "+lecNum);
 		try {
 				pstmt=conn.prepareStatement(sql);
-				pstmt.setString(1, title);
-				pstmt.setString(2, id);
-				int result=pstmt.executeUpdate();
+				pstmt.setInt(1, lecNum);
+				pstmt.setString(2, title);
+				pstmt.setString(3, content);
+				pstmt.setString(4, id);
+				result=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 			Connector.close(pstmt);
 			Connector.close(conn);
 		}
-		
+		return result;
 	}
 	
 		public int update(String sub, String content, int bbsNum, int num){
@@ -154,4 +159,3 @@ public class BbsDao {
 		}
 		
 }
-

@@ -138,6 +138,11 @@
             	});
             
         });
+        
+        function goback(){
+        		window.his
+        	
+        }
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -189,7 +194,7 @@
           	</td>
           </tr>
           <tr>
-          	<td colspan="2">첨부파일</td>
+          	<td colspan="2"></td>
           	
           </tr>
           <tr>
