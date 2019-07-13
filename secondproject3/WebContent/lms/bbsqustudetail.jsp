@@ -1,5 +1,5 @@
-<%@page import="com.bit.model.BbsDao"%>
 <%@page import="com.bit.model.BbsDto"%>
+<%@page import="com.bit.model.BbsDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -147,7 +147,7 @@
         		window.history.back();
         }
         function godelete(){
-        	
+        	window.location.href='qudelete.bit';
         }
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -214,6 +214,7 @@
         <div>
            <input type="button" value="뒤로" onclick=goback() name="goback"/>
         </div>
+        
     </div>
 	</section>
     <!-- *****content end***** -->

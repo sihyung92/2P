@@ -61,14 +61,6 @@
         #ca{
         text-align:center;
         }
-        #btn{
-       	 text-align:right;
-       	 
-        }
-        button{
-        	background-color:lightblue;
-        	font-size:10
-        }
         select{
         	text-align:left;
         }
@@ -88,6 +80,21 @@
         }
         #bbs2 tr>td+td{
         	text-align:right;
+        }
+       
+       	#btn{
+       	
+        	text-align:right;
+       	}
+        #btn button{
+        	background-color:lightblue;
+        	font-size:10;
+        	border-radius:6px;
+        }
+        button[name="delebtn"]{
+        	font-size:6px;
+        	background-color:lightblue;
+        	border-radius:6px;
         }
     </style>
     <script type="text/javascript">
@@ -194,6 +201,7 @@
                 <th>작성자</th>
                 <th>등록일</th>
                 <th>조회수</th>
+                <th>삭제</th>
             </tr>
             <%
             	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
@@ -207,6 +215,7 @@
                 <td><%=bean.getId() %></td>
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
+	            <td><a href="<%=request.getContextPath()%>/lms/qudelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
             </tr>
             <%
             }

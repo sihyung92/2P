@@ -160,6 +160,22 @@ public class BbsDao {
 			}
 			return result;
 		}
+		
+		public int getPage() throws SQLException{
+			String sql="select count(*) as cnt from lmsbbs where lecNum=1 and bbsNum=3";
+			conn=Connector.getConnection();
+			int total=0;
+			try{
+				pstmt=conn.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				if(rs.next())total=rs.getInt("cnt");
+			}finally{
+				Connector.close(rs);
+				Connector.close(pstmt);
+				Connector.close(conn);
+			}
+			return total;
+		}
 
 		//상위 5개 글 가져오기
 	public ArrayList<BbsDto> precedenceList(int num,int bbsNum){
