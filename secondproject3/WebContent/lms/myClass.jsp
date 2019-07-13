@@ -251,10 +251,12 @@
 	</style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-    var userKind = <%=session.getAttribute("userKind")%>;  
-    var lecPage;
-    var lecNum;
     $(document).ready(function() {
+    var userKind = <%=session.getAttribute("userKind")%>;  
+    var lecPage= <%=request.getParameter("lecNum")%>;
+    var lecNum;
+    		$('#browsers option[value='+ lecPage +']').attr('selected', true);
+    	
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -311,13 +313,20 @@
     		//관리자 강의별 페이지 이동
 			$("select").change(function(){
     			lecPage=$("#browsers option:selected").val();
+    			
 				location.href="<%=request.getContextPath()%>/lms/myClass.bit?lecNum="+lecPage;
-				$("select").val(lacPage).prop("selected",true);
+
+				//$('#browsers option[value='+ lecPage +']').attr('selected', true);
+				//$("select").val(lacPage).prop("selected",true);
     			//alert(lecPage);
+
 			});
     		
 			
           });
+    
+    
+    
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -431,14 +440,14 @@
 		<div class="box1" style="background-color: white;"><b><%=bean.getName() %></b></div>
 		<div class="box2" style="background-color: white;">
 			<select id="browsers" name="browsers">
-			<option>강의선택</option>
+			
 			<%
 				for(int i=0; i<beanAsc.size(); i++) {
 				ClassDto bean2=beanAsc.get(i);
 				%>
 				<option value=<%=i+1 %>><%=bean2.getName() %></option>
 			<% }
-			System.out.println(request.getParameter("browsers"));
+			//System.out.println(request.getParameter("browsers"));
 			%>
 			</select>
 		</div>
