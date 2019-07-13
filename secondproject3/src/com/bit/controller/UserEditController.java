@@ -23,7 +23,7 @@ public class UserEditController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		int userNum = (Integer) session.getAttribute("userNum");
+		int userNum = Integer.parseInt((String)session.getAttribute("userNum"));
 		boolean isAdmin=false;
 		if(((String)session.getAttribute("userKind")).equals("2")) {
 			isAdmin=true;
