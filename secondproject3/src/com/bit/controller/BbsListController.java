@@ -30,6 +30,7 @@ public class BbsListController extends HttpServlet{
 					req.setAttribute("list", list);
 					rd = req.getRequestDispatcher("bbsquestList.jsp");
 				}
+			
 				rd.forward(req, resp);
 	}
 	

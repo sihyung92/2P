@@ -12,14 +12,14 @@ import com.bit.model.BbsDao;
 
 @WebServlet("/lms/qudelete.bit")
 public class BbsdeleteController extends HttpServlet{
-
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+				
 		int lecnum=Integer.parseInt(req.getParameter("lecNum"));
 		int listnum=Integer.parseInt(req.getParameter("listNum"));
 		BbsDao dao=new BbsDao();
 		dao.questionDelete(lecnum,listnum);
-		resp.sendRedirect("Bbsquestlist.jsp");
+		resp.sendRedirect("question.bbs");
 	}
 }
