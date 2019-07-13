@@ -156,10 +156,10 @@
             
             //삭제 경로이동
             $("#deletebtn").click(function(){
-        		var result=confirm('삭제하시겠습니까?');
+        <%-- 		var result=confirm('삭제하시겠습니까?');
         		if(result){
         			$.ajax({
-        				url:'/lms/lecturedelete.bit',
+        				url:'<%=request.getContextPath()%>/lms/lecturedelete.bit',
         				method: 'post',
         				data: 'num='+<%=request.getParameter("num") %>,
         				error: function() {
@@ -169,7 +169,8 @@
         					window.location.href='<%=request.getContextPath()%>/lms/lecturemanage.bit';
         				}
         			});		
-        		}
+        		} --%>
+        		location.href="<%=request.getContextPath()%>/lms/lecturedelete.bit?num=<%=request.getParameter("num")%>";
             });
             
           });

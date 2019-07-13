@@ -123,7 +123,6 @@
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-        var big;
         $(document).ready(function() {
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
@@ -156,9 +155,38 @@
            		location.href="<%=request.getContextPath()%>/lms/lectureadd.bit";
            	});
             	
-            	
-            
+           	$('#delete').click(function(){
+                if(confirm("삭제하시겠습니까?")){
+                    $("input[name=chk10]:checked").each(function(){
+                        var tr_value =$(this).val();
+                        var tr=$("tr[data-tr_value='"+tr_value+"']");
+                        tr.remove();
+                    });
+                }else{
+                    return false;
+                }
+            });
         });
+        
+        function allChk(obj){
+            var chkObj = document.getElementsByName("chk10");
+            var rowCnt = chkObj.length - 1;
+            var check = obj.checked;
+            if (check) {﻿
+                for (var i=0; i<=rowCnt; i++){
+                 if(chkObj[i].type == "checkbox")
+                     chkObj[i].checked = true; 
+                }
+            } else {
+                for (var i=0; i<=rowCnt; i++) {
+                 if(chkObj[i].type == "checkbox"){
+                     chkObj[i].checked = false; 
+                 }
+                }
+            }
+        }
+﻿
+        
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -277,7 +305,7 @@
 	        </table>
         <table class="bbs">
             <tr>
-            	<th><input type="checkbox" name="chk"></th>
+            	<th><input type="checkbox" name="chk" id="chk" onclick="allChk(this);" /></th>
                 <th >NO.</th>
                 <th>강의명</th>
                 <th>강사명</th>
@@ -286,12 +314,13 @@
                 <th>상태</th>
                 <th>강의실</th>
             </tr>
-            <% ArrayList<ClassDto> list =null;
+            <% 
+            ArrayList<ClassDto> list =null;
             list=(ArrayList<ClassDto>)request.getAttribute("list"); 
             	for(ClassDto bean:list){
             %>
             <tr>
-            	<td><input type="checkbox" name="chk10" value="<%=bean.getNum() %>"></td>
+            	<td><input type="checkbox" name="chk10" value="<%=bean.getNum() %>"/></td>
                 <td><%=bean.getNum() %></td>
                 <td><a href="lecturedetail.bit?num=<%=bean.getNum() %>"><%=bean.getName() %></a></td>
                 <td><%=bean.getTeacherName() %></td>
@@ -311,7 +340,7 @@
 	        </div>
 	        <div id="btn">
 	            <button type="button" id="addbtn">등록</button>
-	            <button type="button">삭제</button>
+	            <button type="button" id="delete">삭제</button>
 	        </div>
     </div>
 	</section>

@@ -12,15 +12,15 @@ import com.bit.model.lectureDao;
 
 @WebServlet("/lms/lecturedelete.bit")
 public class LectureDeleteController extends HttpServlet {
+
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int num = Integer.parseInt(req.getParameter("num"));
 
 		lectureDao dao = new lectureDao();
 		dao.lectureDelete(num);
 
-		// resp.sendRedirect(req.getContextPath() + "/lms/lecturemanage.bit");
+		resp.sendRedirect(req.getContextPath() + "/lms/lecturemanage.bit");
 	}
 
 }
