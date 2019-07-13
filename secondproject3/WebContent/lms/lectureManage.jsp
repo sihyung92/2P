@@ -286,7 +286,9 @@
                 <th>상태</th>
                 <th>강의실</th>
             </tr>
-            <% ArrayList<ClassDto> list =null;
+            <%
+           
+            ArrayList<ClassDto> list =null;
             list=(ArrayList<ClassDto>)request.getAttribute("list"); 
             	for(ClassDto bean:list){
             %>
@@ -296,7 +298,7 @@
                 <td><a href="lecturedetail.bit?num=<%=bean.getNum() %>"><%=bean.getName() %></a></td>
                 <td><%=bean.getTeacherName() %></td>
                 <td><%=bean.getStartdate() %></td>
-                <td>27/30</td>
+                <td><%=bean.getPersonal() %>/30</td>
                 <td>모집중</td>
                 <td><%=bean.getNum() %></td>
             </tr>

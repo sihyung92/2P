@@ -14,12 +14,20 @@ public class ClassDto {
 	private String totalDate;
 	private String teacherName;
 	private boolean isRecruitng;
+	private int personal;
 	
 	public String getTotalDate() {
 		return totalDate;
 	}
 	public void setTotalDate(String totalDate) {
 		this.totalDate = totalDate;
+	}
+	
+	public int getPersonal() {
+		return personal;
+	}
+	public void setPersonal(int personal) {
+		this.personal = personal;
 	}
 	public boolean isRecruitng() {
 		return isRecruitng;
