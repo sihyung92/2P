@@ -3,9 +3,9 @@ package com.bit.model;
 import java.sql.Date;
 
 public class BbsDto{
-	private int listNum; 
-	private int bbsNum;	
-	private int lecNum;	
+	private int listNum;  //게시글번호순서
+	private int bbsNum;	  //게시판종류번호
+	private int lecNum;	  //강의종류번호
 	private String title;	
 	private String content; 
 	private String id;	

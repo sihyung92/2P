@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <style type="text/css">
        	#topmargin{
@@ -158,21 +158,22 @@
     
 	        <h1>작성하기</h1>
 	        <br/>
-	       
+	<form action="addquadd.bit" method="post">
         <table class="bbs">
       		<tr>
-      			<td align="center"><label for="sub">제목</label></td><td align="left"><input type="text" id="sub"/></td>
+      			<td align="center"><label for="sub">제목</label></td><td align="left"><input type="text" id="sub" name="title"/></td>
       		</tr> 
       		<tr>
-      			<td align="center"><label>내용</label></td><td align="center">&nbsp&nbsp<textarea class="context"></textarea></td>
+      			<td align="center"><label>내용</label></td><td align="center">&nbsp&nbsp<textarea class="context" name="content"></textarea></td>
       		</tr>
       		<tr>
-      			<td align="center"><label>파일첨부</label></td><td align="left"><input type="text" id="sub1"/><button>..</button></td>
+      			<td align="center"><label>파일첨부</label></td><td align="left"><input type="text" id="sub1" readonly="readonly"/><button>..</button></td>
       		</tr>
       		<tr>
-      			<td colspan="2"><button>취소</button><button>입력</button></td>
+      			<td colspan="2"><button>취소</button><button type="submit">입력</button></td>
       		</tr> 
         </table>
+	</form>       
     </div>
 	</section>
     <!-- *****content end***** -->

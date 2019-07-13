@@ -1,3 +1,6 @@
+<%@page import="com.bit.model.BbsDao"%>
+<%@page import="com.bit.model.BbsDto"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -5,7 +8,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <style type="text/css">
        	#topmargin{
@@ -14,7 +17,7 @@
         .bbs{
             width: 800px;
             height:490px;
-            background-color: white;
+            background-color: lightgray;
             z-index:1;
             border-collapse:collapse;
         }
@@ -94,6 +97,12 @@
        		margin-left:50px;
        		height:50px;
        	}
+       	input[name='goback']{
+       		clear:both;
+       		float:right;
+       		right:100px;
+       		margin-top:20px;
+       	}
     </style>
     <script type="text/javascript">
         var big;
@@ -132,12 +141,14 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-            
-            	$('button').click(function(){
-            		window.location.href='Bbsadd.jsp';
-            	});
-            
         });
+        
+        function goback(){
+        		window.history.back();
+        }
+        function godelete(){
+        	
+        }
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -181,24 +192,28 @@
     
 	        <h1>상세페이지</h1>
 	        <br/>
-	      
+	      <%
+	      	BbsDto bean=(BbsDto)request.getAttribute("detail"); 
+	      %>
         <table class="bbs">
           <tr>
           	<td colspan="2">
-          		<div></div>제목<div><span>작성자</span> <span class="span1">등록일</span></div>
+          		<div></div>제목 &nbsp&nbsp<%=bean.getTitle() %><div><span>작성자&nbsp&nbsp<%=bean.getId() %></span> <span class="span1">등록일&nbsp&nbsp<%=bean.getNalja() %></span></div>
           	</td>
-          </tr>
-          <tr>
-          	<td colspan="2">첨부파일</td>
-          	
           </tr>
           <tr>
           	<td colspan="2"></td>
           </tr>
           <tr>
-          	<td><textarea cols="80"></textarea></td><td border="0"><button>입력</button></td>
+          	<td colspan="2"><%=bean.getContent() %></td>
+          </tr>
+          <tr>
+          	<td rowspan="3"><textarea cols="80" readonly="readonly">준비중입니다.</textarea></td><td border="0" rowspan="3"><button>입력</button></td>
           </tr>
         </table>
+        <div>
+           <input type="button" value="뒤로" onclick=goback() name="goback"/>
+        </div>
     </div>
 	</section>
     <!-- *****content end***** -->
