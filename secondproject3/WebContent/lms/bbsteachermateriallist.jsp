@@ -61,6 +61,14 @@
         #ca{
         text-align:center;
         }
+        #btn{
+       	 text-align:right;
+       	 
+        }
+        button{
+        	background-color:lightblue;
+        	font-size:10
+        }
         select{
         	text-align:left;
         }
@@ -80,21 +88,6 @@
         }
         #bbs2 tr>td+td{
         	text-align:right;
-        }
-       
-       	#btn{
-       	
-        	text-align:right;
-       	}
-        #btn button{
-        	background-color:lightblue;
-        	font-size:10;
-        	border-radius:6px;
-        }
-        button[name="delebtn"]{
-        	font-size:6px;
-        	background-color:lightblue;
-        	border-radius:6px;
         }
     </style>
     <script type="text/javascript">
@@ -135,9 +128,6 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            $('button').click(function(){
-            		window.location.href='Bbsadd.jsp';
-            	});
             
         });
     </script>
@@ -145,7 +135,7 @@
 </head>
 <body>
 
-<!-- 질문게시판 학생 -->
+<!-- 수업자료 게시판 강사 -->
 
      <!--    헤더     -->
     <div id="header">
@@ -163,7 +153,7 @@
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>학생1
+                <p>강사1
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
@@ -175,11 +165,12 @@
             </div>
         </div>
     </div>
+
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
     <div id="topmargin"></div>
-	        <h1>질문 게시판</h1>
+	        <h1>수업자료 게시판</h1>
 	        <br/>
 	      <table id="bbs2">
 		       		<tr>
@@ -197,7 +188,6 @@
             <tr>
                 <th >NO.</th>
                 <th>제목</th>
-                <th>상태</th>
                 <th>작성자</th>
                 <th>등록일</th>
                 <th>조회수</th>
@@ -209,12 +199,11 @@
             %>
             <tr>
                 <td><%=bean.getListNum() %></td>
-              	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
-                <td>미답변</td>
+              	<td><a href="bbsmaterialdetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
                 <td><%=bean.getId() %></td>
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
-	        </tr>
+            </tr>
             <%
             }
             %>
@@ -227,8 +216,9 @@
 	            <a href="#">다음</a>
 	        </div>
 	        <div id="btn">
-	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
+	          <a href="<%=request.getContextPath()%>/lms/bbsmaterialadd.jsp"><button type="button">등록하기</button></a>
 	        </div>
+	        
     </div>
 	</section>
     <!-- *****content end***** -->

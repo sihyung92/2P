@@ -320,11 +320,11 @@ public class BbsDao {
 	
 	//공지등록
 	public int noticeInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_0_seq.nextval,3,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
-		System.out.println("questionInsert-lecNum : "+lecNum);
+		System.out.println("noticeInsert-lecNum : "+lecNum);
 		try {
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, lecNum);
@@ -342,11 +342,11 @@ public class BbsDao {
 	}
 	//자료등록
 	public int materialInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_1_seq.nextval,3,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
-		System.out.println("questionInsert-lecNum : "+lecNum);
+		System.out.println("marterialInsert-lecNum : "+lecNum);
 		try {
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, lecNum);
@@ -369,7 +369,7 @@ public class BbsDao {
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
-		System.out.println("questionInsert-lecNum : "+lecNum);
+		System.out.println("assignmentInsert-lecNum : "+lecNum);
 		try {
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, lecNum);
@@ -388,7 +388,7 @@ public class BbsDao {
 	
 	//질문등록
 	public int questionInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_3_seq.nextval,3,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
@@ -429,21 +429,7 @@ public class BbsDao {
 			return result;
 		}
 		
-		public int getPage() throws SQLException{
-			String sql="select count(*) as cnt from lmsbbs where lecNum=1 and bbsNum=3";
-			conn=Connector.getConnection();
-			int total=0;
-			try{
-				pstmt=conn.prepareStatement(sql);
-				rs=pstmt.executeQuery();
-				if(rs.next())total=rs.getInt("cnt");
-			}finally{
-				Connector.close(rs);
-				Connector.close(pstmt);
-				Connector.close(conn);
-			}
-			return total;
-		}
+		
 
 		//상위 5개 글 가져오기
 	public ArrayList<BbsDto> precedenceList(int num,int bbsNum){

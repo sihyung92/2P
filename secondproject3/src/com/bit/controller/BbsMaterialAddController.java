@@ -16,13 +16,13 @@ import javax.servlet.http.HttpSession;
 
 import com.bit.model.BbsDao;
 
-@WebServlet("/lms/addquadd.bit")
-public class BbsAddController extends HttpServlet {
+@WebServlet("/lms/bbsmaterialadd.bit")
+public class BbsMaterialAddController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("bbsQuAdd.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("bbsmaterialadd.jsp");
 		rd.forward(req,resp);
 	}
 	
@@ -41,8 +41,8 @@ public class BbsAddController extends HttpServlet {
 		String content=param2.trim();
 		String id = (String)session.getAttribute("id");
 		BbsDao dao=new BbsDao();
-		System.out.println("BbsAddcon / method : post / insert result-1성공0실패 : "+dao.questionInsert(lecNum, title, content, id));
-		resp.sendRedirect("question.bbs");
+		System.out.println("BbsAddcon / method : post / insert result-1성공0실패 : "+dao.materialInsert(lecNum, title, content, id));
+		resp.sendRedirect("material.bbs");
 	}
 }
 

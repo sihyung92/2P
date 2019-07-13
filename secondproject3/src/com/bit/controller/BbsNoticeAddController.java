@@ -16,13 +16,13 @@ import javax.servlet.http.HttpSession;
 
 import com.bit.model.BbsDao;
 
-@WebServlet("/lms/addquadd.bit")
-public class BbsAddController extends HttpServlet {
+@WebServlet("/lms/bbsnoticeadd.bit")
+public class BbsNoticeAddController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("bbsQuAdd.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("bbsnoticeadd.jsp");
 		rd.forward(req,resp);
 	}
 	
@@ -32,7 +32,7 @@ public class BbsAddController extends HttpServlet {
 		HttpSession session = req.getSession();
 		//////////////test
 		session.setAttribute("lecNum", 1);
-		session.setAttribute("id", "stu01");
+		session.setAttribute("id", "ad");
 		/////////////
 		String param1=req.getParameter("title");
 		String param2=req.getParameter("content");
@@ -41,8 +41,8 @@ public class BbsAddController extends HttpServlet {
 		String content=param2.trim();
 		String id = (String)session.getAttribute("id");
 		BbsDao dao=new BbsDao();
-		System.out.println("BbsAddcon / method : post / insert result-1성공0실패 : "+dao.questionInsert(lecNum, title, content, id));
-		resp.sendRedirect("question.bbs");
+		System.out.println("BbsAddcon / method : post / insert result-1성공0실패 : "+dao.noticeInsert(lecNum, title, content, id));
+		resp.sendRedirect("notice.bbs");
 	}
 }
 

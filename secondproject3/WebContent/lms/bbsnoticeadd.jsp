@@ -1,5 +1,4 @@
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,87 +13,63 @@
     	}
         .bbs{
             width: 800px;
-            height:490px;
-            background-color: white;
-            border-top:1px solid black;
-            border-bottom:1px solid black;
-            z-index:1;
-        }
-       	.bbs th{
-       		border-bottom: 1px solid #ccc;
-       	}
-       	.bbs td{
-       		border-bottom: 1px solid #ccc;
-       	}
-        
-        #content>div{
-            width: 800px;
+            height:450px;
             margin: 0px auto;
-            
+        	z-index:1;
+        	background:lightgray;
         }
-        #content div>select{
-            display: inline-block;
+        .bbs tr:nth-child(1){
+        	height:15%;
         }
-        #content div>div{
-            display: inline-block;
-            margin: 0px 0px 10px 450px;
+        .bbs tr:nth-child(2){
+        	height:60%;
         }
-        .bbs tr>td{
-        	text-align:center;
+        .bbs tr:nth-child(3){
+        	height:15%;
         }
-        .bbs{
-        	margin: 0px auto;
-        	width:100%
-        	z-index:3;
-        }
-        #bbs2{
-        	margin:0px auto; 
-        	width:800px;
-        		
-        }
-        .bbs th:nth-child(2){
-        	width:40%;
-        }
-        input[name="serch"]{
+        .bbs tr:nth-child(4){
         	text-align:right;
+        	right:50px;
+        	height:10%;
         }
-        #ca{
-        text-align:center;
-        }
-        select{
-        	text-align:left;
+        #content{
+        	margin:0px auto;
         }
         .section{
         	claer:both;
         	height:800px;
         	margin:0px auto;
         }
-        #bbs2>tr>td{
-        	background:pink;
-        }
+       
         select{
         	text-align:center;
         }
-        #bbs2 tr>td{
-        	text-align:left;
+        .context{
+        	width:95%;
+        	height:95%;
+        	margin:0px auto;
+        	padding-left:10px;
         }
-        #bbs2 tr>td+td{
-        	text-align:right;
+        #sub{
+        	width:75%;
+        	height:60%;
+        	margin:0px auto;
+        	margin-left:15px;
         }
-       
-       	#btn{
-       	
-        	text-align:right;
-       	}
-        #btn button{
-        	background-color:lightblue;
+        #sub1{
+        	width:85%;
+        	height:65%;
+        	margin:0px auto;
+        	margin-left:15px;
+        }
+        button{
+       		background-color:lightblue;
         	font-size:10;
-        	border-radius:6px;
-        }
-        button[name="delebtn"]{
-        	font-size:6px;
-        	background-color:lightblue;
-        	border-radius:6px;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
         }
     </style>
     <script type="text/javascript">
@@ -135,7 +110,7 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            $('button').click(function(){
+            	$('button').click(function(){
             		window.location.href='Bbsadd.jsp';
             	});
             
@@ -145,7 +120,7 @@
 </head>
 <body>
 
-<!-- 질문게시판 학생 -->
+<!-- 공지게시판 관리자 -->
 
      <!--    헤더     -->
     <div id="header">
@@ -163,7 +138,7 @@
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>학생1
+                <p>관리자
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
@@ -175,60 +150,30 @@
             </div>
         </div>
     </div>
+
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
     <div id="topmargin"></div>
-	        <h1>질문 게시판</h1>
+    
+	        <h1>작성하기</h1>
 	        <br/>
-	      <table id="bbs2">
-		       		<tr>
-		       			<td>
-					        <select>
-					        	<option value="">전체보기</option>
-					        </select>
-				        </td> <td>
-				                <input type="text" id="search" name="search" />
-				                <button>검색</button>
-				        </td>
-		            </tr>
-	        </table>
+	<form action="bbsnoticeadd.bit" method="post">
         <table class="bbs">
-            <tr>
-                <th >NO.</th>
-                <th>제목</th>
-                <th>상태</th>
-                <th>작성자</th>
-                <th>등록일</th>
-                <th>조회수</th>
-            </tr>
-            <%
-            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
-            	for(int i=0;i<list.size();i++){
-            		BbsDto bean=list.get(i);
-            %>
-            <tr>
-                <td><%=bean.getListNum() %></td>
-              	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
-                <td>미답변</td>
-                <td><%=bean.getId() %></td>
-                <td><%=bean.getNalja() %></td>
-                <td>0</td>
-	        </tr>
-            <%
-            }
-            %>
+      		<tr>
+      			<td align="center"><label for="sub">제목</label></td><td align="left"><input type="text" id="sub" name="title"/></td>
+      		</tr> 
+      		<tr>
+      			<td align="center"><label>내용</label></td><td align="center">&nbsp&nbsp<textarea class="context" name="content"></textarea></td>
+      		</tr>
+      		<tr>
+      			<td align="center"><label>파일첨부</label></td><td align="left"><input type="text" id="sub1" readonly="readonly"/><button>..</button></td>
+      		</tr>
+      		<tr>
+      			<td colspan="2"><button>취소</button><button type="submit">입력</button></td>
+      		</tr> 
         </table>
-	        <div id="ca">
-	            <a href="#">이전</a>
-	            <a href="#">1</a>
-	            <a href="#">2</a>
-	            <a href="#">3</a>
-	            <a href="#">다음</a>
-	        </div>
-	        <div id="btn">
-	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
-	        </div>
+	</form>       
     </div>
 	</section>
     <!-- *****content end***** -->

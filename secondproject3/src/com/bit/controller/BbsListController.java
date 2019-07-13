@@ -24,11 +24,15 @@ public class BbsListController extends HttpServlet{
 				if(path.equals("/lms/notice.bbs")) {
 					ArrayList<BbsDto> list = dao.getNoticeList();
 					req.setAttribute("list", list);
-					rd = req.getRequestDispatcher("bbsNotice.jsp");
+					rd = req.getRequestDispatcher("bbsnoticelist.jsp");//공지사항게시판
 				}else if(path.equals("/lms/question.bbs")) {
 					ArrayList<BbsDto> list = dao.getQuestionList();
 					req.setAttribute("list", list);
-					rd = req.getRequestDispatcher("bbsquestList.jsp");
+					rd = req.getRequestDispatcher("bbsquestList.jsp");//질문게시판
+				}else if(path.equals("/lms/material.bbs")) {  
+					ArrayList<BbsDto> list = dao.getmaterialList();
+					req.setAttribute("list", list);
+					rd = req.getRequestDispatcher("bbsteachermateriallist.jsp");//수업자료게시판 
 				}
 			
 				rd.forward(req, resp);
