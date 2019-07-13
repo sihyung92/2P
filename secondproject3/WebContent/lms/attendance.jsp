@@ -27,6 +27,7 @@
         }
 
         #content select {
+        	position : absolute;
             display: inline-block;
             margin: 0px auto 0px 443px;
             height: 28px;
@@ -70,7 +71,6 @@
         }
 
         #content #dailydiv {
-            /*display: none;*/
             position: absolute;
             top: 800px;
             width: 1000px;
@@ -149,7 +149,28 @@
 	            
 	            $("#footer").css("top","950px");
 	         }
-
+            var y = $('#fronttable tr').length-2;
+        	var tds=$('#studiv>table td');
+        	tds.each(function(idx,item){
+        		$(item).click(function(){
+        			var cls = $(item).attr('class')
+        			var txt = $.trim($(item).text());
+        			console.log(cls);
+        			if(txt==""){
+        				$(item).text("O");
+        				$('input.'+cls).val("0");
+        			}else if(txt=="O"){
+        				$(item).text("△");
+        				$('input.'+cls).val("1");
+        			}else if(txt=="△"){
+	        			$(item).text("X");
+        				$('input.'+cls).val("2");
+        			}else if(txt=="X"){
+	        			$(item).text(" ");
+        				$('input.'+cls).val("");
+        			}
+        		});
+        	});
         });
         
         function className() {
@@ -255,7 +276,22 @@
     <div id="content">
         <h3>해당 강좌명 받아오기</h3>
         <div class="adminsession">
-       		<span>startdate~enddate</span>
+            <%
+           	ClassDto classBean = (ClassDto)request.getAttribute("bean");
+            ///시간 얻어오기
+           	String startDay = classBean.getStartdate(); 
+           	String endDay = classBean.getEnddate(); 
+           	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+           	Date day = df.parse(startDay);
+           	Date end = df.parse(endDay);
+           	Calendar cal = Calendar.getInstance();
+           	String tableNalja = "";
+           	String sendNalja = "";
+           	cal.setTime(day);
+           	///유저리스트 얻어오기
+            ArrayList<UserDto> userList = (ArrayList<UserDto>)request.getAttribute("list");
+     		%>
+       		<span><%=df.format(day)%>~<%=df.format(end)%></span>
        		<input type="hidden" value="<%=userKind %>" id="userKind"/>
         	<select id="className">
             	<option value="응용SW 엔지니어링 양성과정 1회차">응용SW 엔지니어링 양성과정 1회차</option>
@@ -266,19 +302,6 @@
 	            <option value="응용SW 엔지니어링 양성과정 6회차">응용SW 엔지니어링 양성과정 6회차</option>
 	        </select>
         </div>
-            <%
-           	ClassDto classBean = (ClassDto)request.getAttribute("bean");
-            ///시간 얻어오기
-           	String startDay = classBean.getStartdate(); // MM-dd
-           	Date day = new SimpleDateFormat("YYYY-MM-dd").parse(startDay);
-           	Calendar cal = Calendar.getInstance();
-           	String nalja = "";
-           	cal.setTime(day);
-           	///유저리스트 얻어오기
-            ArrayList<UserDto> userList = (ArrayList<UserDto>)request.getAttribute("list");
-           	int size = userList.size()+1;
-            for(int i=0; i<userList.size(); i++){ 
-            UserDto userBean = userList.get(i);%>
         <table id="fronttable">
             <tr>
                 <th>일차</th>
@@ -286,6 +309,8 @@
             <tr>
                 <th>일자</th>
             </tr>
+            <%for(int i=0; i<userList.size(); i++){ 
+            UserDto userBean = userList.get(i);%>
             <tr>
                 <th><%=userBean.getName() %></th>
             </tr>
@@ -301,17 +326,24 @@
                 <tr>
                    <%for(int i=1; i<=90; i++){
                 	   cal.add(Calendar.DAY_OF_YEAR,1);
-                	   nalja = cal.get(Calendar.MONTH)+1+"/"+cal.get(Calendar.DAY_OF_MONTH);
+                	   tableNalja = cal.get(Calendar.MONTH)+1+"/"+cal.get(Calendar.DAY_OF_MONTH);
                 	   %>
                     <th>
-                    	<%=nalja%>
+                    	<%=tableNalja%>
                     </th>
                 <%} %>
                 </tr>
-                <%for(int i=1; i<userList.size()+1; i++){ %>
+                <%for(int i=0; i<userList.size(); i++){ 
+                	UserDto userBean = userList.get(i);
+                %>
                 <tr>
-                   <%for(int j=1; j<=90; j++){ %>
-                    <td class="td<%=i+"x"+j%>">ㅇ<input class="td<%=j%>" type=hidden name="<%=nalja%>"></td>
+                <%cal.setTime(day);
+ 	              for(int j=0; j<90; j++){
+                	 cal.add(Calendar.DAY_OF_YEAR,1);
+                	sendNalja = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+                %>
+                    <td class="td<%=userBean.getUserNum()+"and"+j%>">&nbsp;</td>
+                    <input class="td<%=userBean.getUserNum()+"and"+j%>" type=hidden name="<%=sendNalja%>">
                 <%} %>
                 </tr>
                 <%}%>             

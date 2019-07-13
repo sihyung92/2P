@@ -40,7 +40,7 @@ public class UserDao {
 
 	public ArrayList<UserDto> getAttendanceList(int lecNum) {
 		ArrayList<UserDto> list = new ArrayList<UserDto>();
-		String sql = "SELECT name, userKind, userNum FROM userData where lecNum=?";
+		String sql = "SELECT name, userKind, userNum FROM userData where lecNum=? AND userKind=0";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);

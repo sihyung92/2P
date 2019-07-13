@@ -133,7 +133,7 @@ public class BbsDao {
 		
 	}
 	
-		public int update(String sub, String content, int bbsNum, int num){
+	public int update(String sub, String content, int bbsNum, int num){
 			int result=0;
 			String sql="update lmsBbs set sub=?,content=? where num=? and bbsNum=?";
 			conn=Connector.getConnection();

@@ -156,9 +156,11 @@
 				  isAlready=$.trim(data);
 				  console.log(isAlready);
 				if (isAlready==1) {
-					$('#idspan').show();
+					$('#idspan1').show();
+					$('#idspan2').hide();
 				} else {
-					$('#idspan').hide();
+					$('#idspan2').show();
+					$('#idspan1').hide();
 				}
 			  },
 			  error: function(request,status,error){
@@ -298,7 +300,8 @@
 				<div>
 					<label for="id">아이디</label> <input type="text" name="id" id="id" />
 					<button id="idbtn">중복</button>
-					<span id="idspan">중복아이디입니다.</span>
+					<span id="idspan1">중복아이디입니다.</span>
+					<span id="idspan2">생성 가능한 아이디입니다.</span>
 				</div>
 				<div>
 					<label for="pw">비밀번호</label> <input type="password" name="pw"
