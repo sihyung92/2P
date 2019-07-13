@@ -286,10 +286,10 @@
             });
             
             //로그인 유저별 화면뷰
-            $('.box1').hide();
-    		$('.box2').hide();
-    		$('.box3').hide();
-    		$('.box4').hide();
+            $('.box1').css('display','none').hide();
+    		$('.box2').css('display','none');
+    		$('.box3').css('display','none');
+    		$('.box4').css('display','none');
     		$('#teacher').hide();
     		if(userKind==0){
     			$('#atdStu').show();
@@ -311,8 +311,9 @@
     		//관리자 강의별 페이지 이동
 			$("select").change(function(){
     			lecPage=$("#browsers option:selected").val();
-				location.href="<%=request.getContextPath()%>/lms/myClassAdm.bit?lecnum="+lecPage;	
-    			alert(lecPage);
+				location.href="<%=request.getContextPath()%>/lms/myClass.bit?lecNum="+lecPage;
+				$("select").val(lacPage).prop("selected",true);
+    			//alert(lecPage);
 			});
     		
 			
@@ -343,7 +344,7 @@
                 <!-- 학생일 때  -->
                 <%if(userKind==0){%>
                 <ul>
-                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
                     <li><a href="#">수업자료실</a></li>
@@ -352,7 +353,7 @@
                 <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
 				<ul>
-                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">출석 관리</a></li>
                     <li><a href="#">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
@@ -366,7 +367,7 @@
                     <li><a href="#">강사</a></li>
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
-                    <li><a href="#">강의관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                  </ul>
@@ -430,6 +431,7 @@
 		<div class="box1" style="background-color: white;"><b><%=bean.getName() %></b></div>
 		<div class="box2" style="background-color: white;">
 			<select id="browsers" name="browsers">
+			<option>강의선택</option>
 			<%
 				for(int i=0; i<beanAsc.size(); i++) {
 				ClassDto bean2=beanAsc.get(i);

@@ -104,6 +104,11 @@
         #footer {
             top: 300px;
         }
+        
+        button >a {
+        	text-decoration:none;
+       		 color:white;
+        }
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
@@ -237,7 +242,7 @@
                  <!-- 학생일 때  -->
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -245,7 +250,7 @@
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -306,7 +311,7 @@
                     <label>강의실</label>
                     <p><%=bean.getClassroom() %></p>
                 </div>
-                <button>강의실로 바로가기</button>
+                <button><a href="myClass.bit?lecNum=<%=bean.getNum()%>">강의실로 바로가기</a></button>
             </div>
             <div>
                 <label for="content">강의과정</label>
