@@ -101,8 +101,7 @@ public class ClassDao {
 //				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
 //					isRecruiting = true;
 //				};
-				//��¥�� ���Ͽ� ���۳�¥�� ���糯¥���� �ڶ�� ������(isRecruiting = true), �ƴ϶�� ����(isRecruiting = false)
-				//�����ؾ��� ��� : ȸ�����̺��� kind�� �л��̸鼭 �ش簭�Ǹ� ��»���� ���ڰ� <30�̸� isRe~=true(������)�ƴϸ� false(����)
+				
 				bean.setRecruitng(isRecruiting);
 				list.add(bean);
 

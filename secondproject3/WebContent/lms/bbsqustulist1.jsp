@@ -135,7 +135,7 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            	$('button').click(function(){
+            $('button').click(function(){
             		window.location.href='Bbsadd.jsp';
             	});
             
@@ -163,7 +163,7 @@
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>강사1
+                <p>학생1
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
@@ -201,7 +201,6 @@
                 <th>작성자</th>
                 <th>등록일</th>
                 <th>조회수</th>
-                <th>삭제</th>
             </tr>
             <%
             	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
@@ -215,8 +214,7 @@
                 <td><%=bean.getId() %></td>
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
-	            <td><a href="<%=request.getContextPath()%>/lms/qudelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
-            </tr>
+	        </tr>
             <%
             }
             %>
@@ -228,7 +226,7 @@
 	            <a href="#">3</a>
 	            <a href="#">다음</a>
 	        </div>
-	         <div id="btn">
+	        <div id="btn">
 	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
 	        </div>
     </div>

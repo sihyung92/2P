@@ -205,7 +205,7 @@
           	<td colspan="2"></td>
           </tr>
           <tr>
-          	<td colspan="2"><%=bean.getContent() %></td>
+          	<td colspan="2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%=bean.getContent() %></td>
           </tr>
           <tr>
           	<td rowspan="3"><textarea cols="80" readonly="readonly">준비중입니다.</textarea></td><td border="0" rowspan="3"><button>입력</button></td>
