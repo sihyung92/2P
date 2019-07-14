@@ -1,6 +1,4 @@
 <%@page import="com.bit.model.BbsDto"%>
-<%@page import="com.bit.model.BbsDao"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,69 +14,32 @@
     	}
         .bbs{
             width: 800px;
-            height:490px;
-            background-color: lightgray;
-            z-index:1;
-            border-collapse:collapse;
-        }
-       
-        
-        #content>div{
-            width: 800px;
+            height:450px;
             margin: 0px auto;
-            
-        }
-        #content div>select{
-            display: inline-block;
-        }
-        #content div>div{
-            display: inline-block;
-            margin: 0px 0px 10px 450px;
-        }
-        
-        .bbs{
-        	border:1px solid;
-        	margin: 0px auto;
-        	width:100%
-        	z-index:3;
+        	z-index:1;
+        	background:azure;
+        	border-collapse:collapse;
         }
         .bbs tr:nth-child(1){
-        	height:20%;
-        	border:1px solid;
+        	height:15%;
         }
-        .bbs tr:nth-child(1)>td{
-        	padding-left:20px;
+        .bbs td:nth-child(1){
+        	width:30%;
         }
+        
         .bbs tr:nth-child(2){
-        	height:10%;
-        }
-         .bbs tr:nth-child(2)>td{
-        	padding-left:20px;
+        	height:60%;
         }
         .bbs tr:nth-child(3){
-        	height:50%;
+        	height:15%;
         }
         .bbs tr:nth-child(4){
-        	height:20%;
-        	border:1px solid;
-        }
-        .bbs tr:nth-child(4)>td+td{
-        	position:relative;
-        	left:-20px;
-        }
-       
-        .span1{
-        	float:right;
         	text-align:right;
-        	margin-right:20px;
-        	
+        	right:50px;
+        	height:10%;
         }
-        button{
-        	background-color:lightblue;
-        	font-size:10
-        }
-        select{
-        	text-align:left;
+        #content{
+        	margin:0px auto;
         }
         .section{
         	claer:both;
@@ -89,20 +50,33 @@
         select{
         	text-align:center;
         }
-       	#span3{
-       		float:left;
-       		margin-left:30px;
-       	}
-       	textarea{
-       		margin-left:50px;
-       		height:50px;
-       	}
-       	input[name='goback']{
-       		clear:both;
-       		float:right;
-       		right:100px;
-       		margin-top:20px;
-       	}
+        .context{
+        	width:95%;
+        	height:95%;
+        	margin:0px auto;
+        	padding-left:10px;
+        }
+        #sub{
+        	width:75%;
+        	height:60%;
+        	margin:0px auto;
+        	margin-left:15px;
+        }
+        #sub1{
+        	width:85%;
+        	height:65%;
+        	margin:0px auto;
+        	margin-left:15px;
+        }
+        button{
+       		background-color:lightblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
+        }
     </style>
     <script type="text/javascript">
         var big;
@@ -141,18 +115,18 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
+            
+            	
+           	$('button[name="goback"]').click(function(){
+           		window.location.href="material.bbs";
+           	})
         });
-        
-        function goback(){
-        		window.history.back();
-        }
-        
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
 
-<!-- 자료상세게시판 -->
+<!-- 질문게시판 상세페이지 -->
 
      <!--    헤더     -->
     <div id="header">
@@ -162,15 +136,15 @@
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
                 <ul>
                     <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>강사1
+                <p>학생1
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
@@ -187,31 +161,28 @@
    <section class="section">
     <div id="content">
     <div id="topmargin"></div>
+    
 	        <h1>상세페이지</h1>
 	        <br/>
+	 
 	      <%
 	      	BbsDto bean=(BbsDto)request.getAttribute("detail"); 
 	      %>
-        <table class="bbs">
-          <tr>
-          	<td colspan="2">
-          		<div></div>제목 &nbsp&nbsp<%=bean.getTitle() %><div><span>작성자&nbsp&nbsp<%=bean.getId() %></span> <span class="span1">등록일&nbsp&nbsp<%=bean.getNalja() %></span></div>
-          	</td>
-          </tr>
-          <tr>
-          	<td colspan="2"></td>
-          </tr>
-          <tr>
-          	<td colspan="2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%=bean.getContent() %></td>
-          </tr>
-          <tr>
-          	<td rowspan="3"><textarea cols="80" readonly="readonly">준비중입니다.</textarea></td><td><button>입력</button></td>
-          </tr>
+        <table class="bbs" border="1">
+      		<tr>
+      			<td align="center"><label for="sub">제목</label></td><td align="left">&nbsp&nbsp<%=bean.getTitle() %></td>
+      		</tr> 
+      		<tr>
+      			<td align="center"><label>내용</label></td><td align="left">&nbsp&nbsp<%=bean.getContent() %></td>
+      		</tr>
+      		<tr>
+      			<td align="center"><label>파일첨부</label></td><td align="left"><button>..</button></td>
+      		</tr>
+      		<tr>
+      			<td colspan="2"><button name="goback">뒤로</button></td>
+      		</tr> 
         </table>
-        <div>
-           <input type="button" value="뒤로" onclick=goback() name="goback"/>
-        </div>
-        
+	</form>       
     </div>
 	</section>
     <!-- *****content end***** -->

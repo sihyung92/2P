@@ -33,6 +33,7 @@ public class BbsMaterialAddController extends HttpServlet {
 		//////////////test
 		session.setAttribute("lecNum", 1);
 		session.setAttribute("id", "stu01");
+		session.setAttribute("userkind", 2);
 		/////////////
 		String param1=req.getParameter("title");
 		String param2=req.getParameter("content");

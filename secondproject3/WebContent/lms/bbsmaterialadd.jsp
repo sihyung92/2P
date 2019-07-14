@@ -62,7 +62,25 @@
         	margin:0px auto;
         	margin-left:15px;
         }
-        button{
+        .button{
+       		background-color:lightblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
+        }
+        .button2{
+       		background-color:lightblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
+        }
+        .button1{
        		background-color:lightblue;
         	font-size:10;
         	float:right;
@@ -109,7 +127,9 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-            
+            $('.button1').click(function(){
+            	window.location.href='material.bbs';
+            })	
         });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -126,9 +146,9 @@
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
                 <ul>
                     <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
             </div>
@@ -163,10 +183,10 @@
       			<td align="center"><label>내용</label></td><td align="center">&nbsp&nbsp<textarea class="context" name="content"></textarea></td>
       		</tr>
       		<tr>
-      			<td align="center"><label>파일첨부</label></td><td align="left"><input type="text" id="sub1" readonly="readonly"/><button>..</button></td>
+      			<td align="center"><label>파일첨부</label></td><td align="left"><input type="text" id="sub1" readonly="readonly"/><input type="button" value=".." class="button2"></td>
       		</tr>
       		<tr>
-      			<td colspan="2"><button>취소</button><button type="submit">입력</button></td>
+      			<td colspan="2"><input type="reset" value="취소" class="button1"><button type="submit" class="button">입력</button></td>
       		</tr> 
         </table>
 	</form>       

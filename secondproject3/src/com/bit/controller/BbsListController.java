@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.bit.model.BbsDao;
 import com.bit.model.BbsDto;
@@ -17,6 +19,7 @@ public class BbsListController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
 				BbsDao dao = new BbsDao();
 				RequestDispatcher rd = null;
 				String path = req.getRequestURI().replaceAll(req.getContextPath(),"");
@@ -32,7 +35,7 @@ public class BbsListController extends HttpServlet{
 				}else if(path.equals("/lms/material.bbs")) {  
 					ArrayList<BbsDto> list = dao.getmaterialList();
 					req.setAttribute("list", list);
-					rd = req.getRequestDispatcher("bbsteachermateriallist.jsp");//수업자료게시판 
+					rd = req.getRequestDispatcher("bbsmateriallist.jsp");//수업자료게시판 
 				}
 			
 				rd.forward(req, resp);

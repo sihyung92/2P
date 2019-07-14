@@ -92,7 +92,7 @@
         	border-radius:6px;
         }
         button[name="delebtn"]{
-        	font-size:6px;
+        	font-size:8;
         	background-color:lightblue;
         	border-radius:6px;
         }
@@ -135,9 +135,32 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            	$('button').click(function(){
-            		window.location.href='Bbsadd.jsp';
-            	});
+			
+           
+            console.log(userkind);
+            if(userkind==0){
+            	console.log(userkind);
+            	$('button[name="enroll"]').show(); //학생에게만
+            }else if(userkind==1){
+            	console.log(userkind);
+            	$('button[name="enroll"]').hide();
+            }else{
+            	console.log(userkind);
+            	$('button[name="enroll"]').hide(); 
+            }
+            
+            if(userkind==0){
+            	console.log(userkind);
+            	$('button[name="delebtn"]').hide(); 
+            }else if(userkind==1){
+            	console.log(userkind);
+            	$('button[name="delebtn"]').hide();
+            }else{
+            	console.log(userkind);
+            	$('button[name="delebtn"]').show(); //관리자
+            }
+           
+            
             
         });
     </script>
@@ -146,32 +169,85 @@
 <body>
 
 <!-- 질문게시판 강사 -->
-
+<%
+     		if (request.getAttribute("loginWrong") != null) {
+    			out.println(request.getAttribute("loginWrong"));
+    		}
+		
+			int userKind=3;//접속하지 않았을 때 
+			if(session.getAttribute("userKind")!=null){
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
+				//0학생 1강사 2관리자
+			}
+%>
      <!--    헤더     -->
-    <div id="header">
+ <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
             <div id="menuleft">
+                <a href="intro.bit">
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+                </a>
+                <!-- 학생일 때  -->
+                <%if(userKind==0){%>
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/questlist.bit">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
                     <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
+                <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="userKind2">
+                    <li><a>내 강의실</a></li>
+                    <li><a href="#">강사</a></li>
+                    <li><a href="#">학생</a></li>
+                    <li><a href="#">관리자</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                 </ul>
+                 <!-- 비 로그인  -->
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>강사1
-                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
+                <p><%if(session.getAttribute("isLogin")!=null) {
+                	out.println(session.getAttribute("id")+" 님");
+                }else{%>환영합니다<%}%>
+                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" />
+                </p>
                 <!--   상단메뉴   -->
+                 <!-- 학생일 때  -->
+                <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
+                 <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+                <ul id="topmenu">
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="#">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="topmenu">
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="#">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 비 로그인  -->
+                <%}else if(userKind==3){}%>
             </div>
         </div>
     </div>
@@ -210,7 +286,7 @@
             %>
             <tr>
                 <td><%=bean.getListNum() %></td>
-              	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
+              	<td><a href="bbsqudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
                 <td>미답변</td>
                 <td><%=bean.getId() %></td>
                 <td><%=bean.getNalja() %></td>
@@ -228,9 +304,13 @@
 	            <a href="#">3</a>
 	            <a href="#">다음</a>
 	        </div>
-	         <div id="btn">
-	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
+	       
+	        <div id="btn">
+	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button" name="enroll">등록하기</button></a>
 	        </div>
+	        
+			        
+	        
     </div>
 	</section>
     <!-- *****content end***** -->
