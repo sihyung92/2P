@@ -482,7 +482,34 @@ public class BbsDao {
 		}
 		return list;
 	}
-		
+	
+	//과제게시판 가장 최신 글 가져오기
+	public BbsDto getLastAsm(){
+		BbsDto bean=new BbsDto();
+		String sql="select * from (select * from lmsBbs where lecNum=1 AND bbsNum=2 order by listnum desc) where rownum=1";
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()){
+				bean.setListNum(rs.getInt("listNum"));
+				bean.setBbsNum(rs.getInt("bbsNum"));
+				bean.setLecNum(rs.getInt("lecnum"));
+				bean.setTitle(rs.getString("title"));
+				bean.setContent(rs.getString("content"));
+				bean.setId(rs.getString("id"));
+				bean.setNalja(rs.getDate("nalja"));
+				bean.setAttach(rs.getString("attach"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return bean;
+	}	
 }
 
 
