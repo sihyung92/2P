@@ -79,7 +79,7 @@ public class BbsDao {
 	//과제게시판
 	public ArrayList<BbsDto> getAssignmentList(){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs where lecNum=1 AND bbsNum=2 order by listnum desc";
+		String sql="select * from lmsBbs where lecNum=? AND bbsNum=2 order by listnum desc";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
