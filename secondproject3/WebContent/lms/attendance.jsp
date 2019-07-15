@@ -229,27 +229,27 @@
 			}
 %>
     <!--    헤더     -->
- <div id="header">
+  <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
             <div id="menuleft">
-                 <a href="intro.bit">
+                <a href="intro.bit">
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
                 </a>
                 <!-- 학생일 때  -->
                 <%if(userKind==0){%>
                 <ul>
-                    <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
                     <li><a href="assignment.bbs">과제게시판</a></li>
-                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/material.bbs">수업자료실</a></li>
                     <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
 				<ul>
-                    <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="attendance.bit">출석 관리</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="attendance.bit?lecNum=<%=session.getAttribute("lecNum")%>">출석 관리</a></li>
                     <li><a href="question.bbs">질문게시판</a></li>
                     <li><a href="assignment.bbs">과제게시판</a></li>
                     <li><a href="material.bbs">수업자료실</a></li>
@@ -263,11 +263,13 @@
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="attendance.jsp">출결관리</a></li>
-                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
+                    <li><a href="attendance.bit?lecNum=1">출결관리</a></li>
+                    <li><a href="schedule.jsp">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
-                 <%}else{}%>
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
@@ -281,7 +283,7 @@
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
                     <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
                     <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
@@ -289,7 +291,7 @@
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
                     <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
                     <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
@@ -298,12 +300,14 @@
                 <ul id="topmenu">
                     <li><a href="useredit.bit">회원관리</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="attendance.bit">출결관리</a></li>
-                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
+                    <li><a href="attendance.bit?lecNum=1">출결관리</a></li>
+                    <li><a href="schedule.jsp">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
-                <%}else{}%>
+                <%}else if(userKind==3){
+                	
+                }%>
             </div>
         </div>
     </div>
