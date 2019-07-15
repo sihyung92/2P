@@ -110,6 +110,9 @@
     <script type="text/javascript">
         var big;
         $(document).ready(function() {
+        	var lecPage= <%=request.getAttribute("lecNum")%>;
+        	$('#className option[value='+ lecPage +']').attr('selected', true);
+        	
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -135,22 +138,25 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            var userKind=$("#userKind").val();
+            var userKind=<%=session.getAttribute("userKind")%>;
             
             if(userKind==1){//강사로 접속할 때 
             	$(".adminsession").css("display","none");
             
             }else if(userKind==2){//관리자로 접속할 때
            		$("#dailydiv").css("display","none");
-
             //과정명 Select
-	            className();
-	            $("#className").click(function() {
-	                className();
-	            });
 	            
 	            $("#footer").css("top","950px");
 	         }
+	            $("#className").change(function() {
+	            	
+	            	lecPage=$("#className option:selected").val();
+	            	
+					location.href="<%=request.getContextPath()%>/lms/attendance.bit?lecNum="+lecPage;
+	 
+				});
+	            
             
             var y = $('#fronttable tr').length-2;
         	var tds=$('#studiv table td');
@@ -208,10 +214,7 @@
             });
         });
         
-        function className() {
-            var val = $("#className").val();
-            $("h3").html(val);
-        };
+       
         
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -309,10 +312,10 @@
     </div>
     <!-- *****content start***** -->
     <div id="content">
-        <h3>해당 강좌명 받아오기</h3>
-        <div class="adminsession">
             <%
            	ClassDto classBean = (ClassDto)request.getAttribute("bean");
+           	ClassDto classBean2 = (ClassDto)request.getAttribute("bean2");
+           
             ///시간 얻어오기
            	String startDay = classBean.getStartdate(); 
            	String endDay = classBean.getEnddate(); 
@@ -326,17 +329,23 @@
            	///유저리스트 얻어오기
             ArrayList<UserDto> userList = (ArrayList<UserDto>)request.getAttribute("userList");
             ArrayList<AttendanceDto> atteList = (ArrayList<AttendanceDto>)request.getAttribute("atteList");
+            
+            //강의리스트 출력
+            ArrayList<ClassDto> beanAsc=(ArrayList<ClassDto>)request.getAttribute("beanAsc");
      		%>
+        <h3><%=classBean2.getName() %></h3>
+        <div class="adminsession">
        		<span><%=df.format(day)%>~<%=df.format(end)%></span>
-       		<input type="hidden" value="<%=userKind %>" id="userKind"/>
         	<select id="className">
-            	<option value="응용SW 엔지니어링 양성과정 1회차">응용SW 엔지니어링 양성과정 1회차</option>
-	            <option value="응용SW 엔지니어링 양성과정 2회차">응용SW 엔지니어링 양성과정 2회차</option>
-	            <option value="응용SW 엔지니어링 양성과정 3회차">응용SW 엔지니어링 양성과정 3회차</option>
-	            <option value="응용SW 엔지니어링 양성과정 4회차">응용SW 엔지니어링 양성과정 4회차</option>
-	            <option value="응용SW 엔지니어링 양성과정 5회차">응용SW 엔지니어링 양성과정 5회차</option>
-	            <option value="응용SW 엔지니어링 양성과정 6회차">응용SW 엔지니어링 양성과정 6회차</option>
-	        </select>
+            <%
+				for(int i=0; i<beanAsc.size(); i++) {
+				ClassDto bean2=beanAsc.get(i);
+			%>
+				<option value=<%=i+1 %>><%=bean2.getName() %></option>
+			<% 
+			}
+			%>	
+            </select>
         </div>
         <table id="fronttable">
             <tr>

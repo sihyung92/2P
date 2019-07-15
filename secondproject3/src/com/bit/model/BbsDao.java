@@ -320,7 +320,7 @@ public class BbsDao {
 	
 	//공지등록
 	public int noticeInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_0_seq.nextval,0,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
@@ -342,7 +342,7 @@ public class BbsDao {
 	}
 	//자료등록
 	public int materialInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_1_seq.nextval,1,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
@@ -365,11 +365,11 @@ public class BbsDao {
 	
 	//과제등록
 	public int assignmentInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,2,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
-		System.out.println("questionInsert-lecNum : "+lecNum);
+		System.out.println("assignmentInsert-lecNum : "+lecNum);
 		try {
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, lecNum);
@@ -388,7 +388,7 @@ public class BbsDao {
 	
 	//질문등록
 	public int questionInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_3_seq.nextval,3,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();

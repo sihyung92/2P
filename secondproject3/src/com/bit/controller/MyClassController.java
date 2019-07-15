@@ -27,11 +27,11 @@ public class MyClassController extends HttpServlet {
 		String param2 = (String) session.getAttribute("userKind");
 		int userKind= Integer.parseInt(param2);
 		if(userKind!=2){
-		String param1 = (String) session.getAttribute("lecNum");
-		lecNum= Integer.parseInt(param1);
-		int userNum = Integer.parseInt((String)session.getAttribute("userNum"));
-		myRate= atteDao.myRate(userNum);
-		//int userKind = (Integer)session.getAttribute("userKind");
+			String param1 = (String) session.getAttribute("lecNum");
+			lecNum= Integer.parseInt(param1);
+			int userNum = Integer.parseInt((String)session.getAttribute("userNum"));
+			myRate= atteDao.myRate(userNum);
+			//int userKind = (Integer)session.getAttribute("userKind");
 		}else{
 			lecNum=Integer.parseInt(req.getParameter("lecNum"));
 		}

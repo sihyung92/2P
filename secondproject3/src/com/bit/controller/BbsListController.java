@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bit.model.BbsDao;
 import com.bit.model.BbsDto;
@@ -17,6 +18,11 @@ public class BbsListController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+			
+				HttpSession session = req.getSession();
+				String param = (String) session.getAttribute("userKind");
+				int userKind= Integer.parseInt(param);
+		
 				BbsDao dao = new BbsDao();
 				RequestDispatcher rd = null;
 				String path = req.getRequestURI().replaceAll(req.getContextPath(),"");

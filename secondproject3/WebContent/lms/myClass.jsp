@@ -358,8 +358,8 @@
                 <%if(userKind==0){%>
                 <ul>
                     <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
                     <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
@@ -369,7 +369,7 @@
                     <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">출석 관리</a></li>
                     <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
                     <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
@@ -601,7 +601,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width: 340px; height: 50px;"><img alt="gradebtn" src="imgs/viewgradebtn.png" align="right"></td>
+					<td style="width: 340px; height: 50px;"><img alt="gradebtn" src="<%=request.getContextPath()%>/imgs/viewgradebtn.png" align="right"></td>
 				</tr>
 			</table>
 		</div>
