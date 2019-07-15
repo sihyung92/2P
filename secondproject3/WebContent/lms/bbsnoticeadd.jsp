@@ -6,22 +6,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD:secondproject3/WebContent/lms/bbsNotice.jsp
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
-=======
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
->>>>>>> master:secondproject3/WebContent/lms/bbsnoticeadd.jsp
     <style type="text/css">
        	#topmargin{
     		height:100px;
     	}
         .bbs{
             width: 800px;
-<<<<<<< HEAD:secondproject3/WebContent/lms/bbsNotice.jsp
+
 /*             height:490px; */
             background-color: white;
             border-top:1px solid black;
@@ -37,9 +32,6 @@
         
         #content>div{
             width: 800px;
-=======
-            height:450px;
->>>>>>> master:secondproject3/WebContent/lms/bbsnoticeadd.jsp
             margin: 0px auto;
         	z-index:1;
         	background:lightgray;
@@ -58,7 +50,6 @@
         	right:50px;
         	height:10%;
         }
-<<<<<<< HEAD:secondproject3/WebContent/lms/bbsNotice.jsp
         
          #content #bbs2 select{
             display: inline-block;
@@ -111,10 +102,7 @@
         }
         select{
         	text-align:left;
-=======
-        #content{
-        	margin:0px auto;
->>>>>>> master:secondproject3/WebContent/lms/bbsnoticeadd.jsp
+
         }
         .section{
         	claer:both;
@@ -190,23 +178,16 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-<<<<<<< HEAD:secondproject3/WebContent/lms/bbsNotice.jsp
+            secondproject3/WebContent/lms/bbsNotice.jsp
             //입력버튼
            	$('#addbtn').click(function(){
            		window.location.href="<%=request.getContextPath()%>/lms/bbsnoticeadd.bit";
-           	});
-=======
-            	$('button').click(function(){
-            		window.location.href='Bbsadd.jsp';
-            	});
->>>>>>> master:secondproject3/WebContent/lms/bbsnoticeadd.jsp
-            
+           	});      
         });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
-<<<<<<< HEAD:secondproject3/WebContent/lms/bbsNotice.jsp
 <%
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
@@ -220,12 +201,6 @@
 			}
 %>
   <!--    헤더     -->
-=======
-
-<!-- 공지게시판 관리자 -->
-
-     <!--    헤더     -->
->>>>>>> master:secondproject3/WebContent/lms/bbsnoticeadd.jsp
     <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
@@ -309,7 +284,6 @@
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
-<<<<<<< HEAD:secondproject3/WebContent/lms/bbsNotice.jsp
     <div id="topmargin">    
     </div>
 	        <h1>공지사항</h1><br/>
@@ -379,28 +353,6 @@
 	        <div id="btn">
 	            <button id="addbtn">작성</button>
 	        </div>
-=======
-    <div id="topmargin"></div>
-    
-	        <h1>작성하기</h1>
-	        <br/>
-	<form action="bbsnoticeadd.bit" method="post">
-        <table class="bbs">
-      		<tr>
-      			<td align="center"><label for="sub">제목</label></td><td align="left"><input type="text" id="sub" name="title"/></td>
-      		</tr> 
-      		<tr>
-      			<td align="center"><label>내용</label></td><td align="center">&nbsp&nbsp<textarea class="context" name="content"></textarea></td>
-      		</tr>
-      		<tr>
-      			<td align="center"><label>파일첨부</label></td><td align="left"><input type="text" id="sub1" readonly="readonly"/><button>..</button></td>
-      		</tr>
-      		<tr>
-      			<td colspan="2"><button>취소</button><button type="submit">입력</button></td>
-      		</tr> 
-        </table>
-	</form>       
->>>>>>> master:secondproject3/WebContent/lms/bbsnoticeadd.jsp
     </div>
 	</section>
     <!-- *****content end***** -->
