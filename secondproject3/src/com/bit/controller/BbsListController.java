@@ -29,6 +29,12 @@ public class BbsListController extends HttpServlet{
 					ArrayList<BbsDto> list = dao.getQuestionList();
 					req.setAttribute("list", list);
 					rd = req.getRequestDispatcher("bbsquestList.jsp");
+				}else if(path.equals("/lms/assignment.bbs")) {
+					ArrayList<BbsDto> list = dao.getAssignmentList();
+					req.setAttribute("list", list);
+					BbsDto last = dao.getLastAsm();
+					req.setAttribute("last", last);
+					rd = req.getRequestDispatcher("bbsAsmList.jsp");
 				}
 			
 				rd.forward(req, resp);
