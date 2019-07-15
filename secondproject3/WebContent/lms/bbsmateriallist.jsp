@@ -1,3 +1,4 @@
+<%@page import="com.bit.model.BbsDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
 <!DOCTYPE html>
@@ -90,6 +91,10 @@
         }
         #bbs2 tr>td+td{
         	text-align:right;
+        }
+        #under{
+        	text-align:center;
+        	font-size:5;
         }
     </style>
     <script type="text/javascript">
@@ -269,7 +274,30 @@
                 <th>삭제</th>
             </tr>
             <%
+            int lecnum=Integer.parseInt((String)session.getAttribute("lecNum"));
             	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
+            	BbsDao dao=new BbsDao();
+            	int total=0;
+        		total=dao.getPage(lecnum,3);
+        		//System.out.println(total);
+        		String param=request.getParameter("idx");
+        		if(param==null)param="1";
+        		int pageNum=Integer.parseInt(param);
+        		//System.out.println(pageNum);
+        		//pageNum 1= 1~10
+        		//pageNum 2= 11~20
+        		int start=(pageNum-1)*10;
+        		//1 = 0
+        		//2 = 10
+        		//3 = 20
+        		int end1=(pageNum*10);
+        		//1=10
+        		//2=20
+        		//3=30 
+        		int fin=(total/10)+1;
+        		if(fin==pageNum){
+        			end1=list.size();
+        		}
             	for(int i=0;i<list.size();i++){
             		BbsDto bean=list.get(i);
             %>
@@ -285,17 +313,38 @@
             }
             %>
         </table>
-	        <div id="ca">
-	            <a href="#">이전</a>
-	            <a href="#">1</a>
-	            <a href="#">2</a>
-	            <a href="#">3</a>
-	            <a href="#">다음</a>
-	        </div>
+	       
 	        <div id="btn">
 	          <a href="<%=request.getContextPath()%>/lms/bbsmaterialadd.jsp"><button type="button"  name="enroll">등록하기</button></a>
 	        </div>
-	        
+	        <%
+			int pStart=0;
+			pStart=((pageNum-1)/5)*5;
+			int end2=0;
+			end2=total/10;
+			if(total%10!=0){
+				end2++;
+			}
+			int end3=end2;
+			if(pStart+5<end2){
+				end2=pStart+5;
+			}
+			int endPage=pageNum+1;
+		%>
+		<div id="under">
+		<%
+		if(pStart>0){
+		%><a href="question.bbs?idx=<%=pageNum-1%>"> ◀ </a><%
+		}
+		%>
+		<%for(int i=pStart; i<end2; i++){ %>
+		<a href="question.bbs?idx=<%=i+1%>">[&nbsp;<%=i+1 %>&nbsp;]</a>
+		<%}%>
+		<%if(endPage==fin+1){
+			
+		}else if(end2<=end3){ %>
+		<a href="question.bbs?idx=<%=endPage%>"> ▶ </a><%} %>
+		</div>
     </div>
 	</section>
     <!-- *****content end***** -->

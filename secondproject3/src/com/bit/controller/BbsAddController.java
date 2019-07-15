@@ -37,6 +37,7 @@ public class BbsAddController extends HttpServlet {
 		int userkind=Integer.parseInt(param3);
 		
 		req.setCharacterEncoding("utf-8");
+		
 		String param1=req.getParameter("title");
 		String param2=req.getParameter("content");
 		System.out.print(param1);

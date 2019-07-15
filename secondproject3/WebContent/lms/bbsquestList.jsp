@@ -99,6 +99,11 @@
         	border-radius:6px;
         	color: white;
         }
+        
+        #under{
+        	text-align:center;
+        	font-size:5;
+        }
     </style>
  
     <script type="text/javascript">

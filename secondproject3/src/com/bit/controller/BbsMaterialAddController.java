@@ -32,6 +32,8 @@ public class BbsMaterialAddController extends HttpServlet {
 		HttpSession session = req.getSession();
 		String param3=(String)session.getAttribute("userKind");
 		int userkind=Integer.parseInt(param3);
+		
+		req.setCharacterEncoding("utf-8");
 		//////////////test
 		
 		/////////////
