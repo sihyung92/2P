@@ -66,9 +66,10 @@
        	 
         }
         button{
-        	background-color:lightblue;
+        	background-color:darkblue;
         	border-radius:5px;
-        	font-size:10
+        	font-size:10;
+        	color: white;
         }
         select{
         	text-align:left;
@@ -150,6 +151,7 @@
             	$('button[name="delebtn"]').show(); //관리자 보이게
             }
             
+            
         });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -181,9 +183,9 @@
                 <ul>
                     <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
                     <li><a href="material.bbs">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
@@ -193,8 +195,8 @@
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
                  <%}else{
@@ -213,8 +215,8 @@
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
                     <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 강사일 때  -->
@@ -222,16 +224,16 @@
                 <ul id="topmenu">
                     <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
-                    <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="useredit.bit">회원관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
@@ -253,7 +255,7 @@
 					        </select>
 				        </td> <td>
 				                <input type="text" id="search" name="search" />
-				                <button>검색</button>
+				                <button class="serchbtn">검색</button>
 				        </td>
 		            </tr>
 	        </table>

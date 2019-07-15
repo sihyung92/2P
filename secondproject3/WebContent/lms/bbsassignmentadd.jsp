@@ -1,76 +1,111 @@
-<%@page import="com.bit.model.*"%>
-<%@page import="java.nio.channels.SeekableByteChannel"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
- <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-     <style type="text/css">
-        #content{
-            position: relative;
-            top: 150px;
-        }
-        
-        #content>div{ 
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
+    <style type="text/css">
+       	#topmargin{
+    		height:100px;
+    	}
+        .bbs{
             width: 800px;
-            height: 500px;
+            height:450px;
             margin: 0px auto;
-            border: 1px solid gray;
-            
+        	z-index:1;
+        	background:lightgray;
         }
-        #content>div>div{
-            width: 700px;
-            margin: 50px auto;
-            height: 400px;
+        .bbs tr:nth-child(1){
+        	height:15%;
         }
-        #content>div>div>div{
-            border-bottom:  1px solid gray;
-        } 
-        
-        #content>div>div>div p{
-            font-size: 14px;
-            margin: 10px 0px;
-            
+        .bbs tr:nth-child(2){
+        	height:60%;
         }
-        #content>div>div>div #writer,
-        #content>div>div>div #nalja{
-            position: relative;
-            top: 10px;
-            width: 150px;
-            
+        .bbs tr:nth-child(3){
+        	height:15%;
         }
-        #content>div>div>div #nalja{
-            position: relative;
-            top: -10px;
-            left: 600px;
+        .bbs tr:nth-child(4){
+        	text-align:right;
+        	right:50px;
+        	height:10%;
         }
-        #content>div>div>div:nth-child(3){
-            border: 0px;
+        #content{
+        	margin:0px auto;
         }
-        .button1, .button2{
-            position: relative;
-            top: 10px;
-            left: 750px;
-            border: 0px;
-            background-color: darkblue;
-            color: white;
-            border-radius: 3px;
-            width: 60px;
-            height: 30px;
-            
+        .section{
+        	claer:both;
+        	height:800px;
+        	margin:0px auto;
         }
-
-        #footer{
-            top: 300px;
+       
+        select{
+        	text-align:center;
+        }
+        .context{
+        	width:95%;
+        	height:95%;
+        	margin:0px auto;
+        	padding-left:10px;
+        }
+        #sub{
+        	width:75%;
+        	height:60%;
+        	margin:0px auto;
+        	margin-left:15px;
+        }
+        #sub1{
+        	width:85%;
+        	height:65%;
+        	margin:0px auto;
+        	margin-left:15px;
+        }
+        .button{
+       		background-color:darkblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
+        	color: white;
+        }
+        .button2{
+       		background-color:darkblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
+        	color: white;
+        }
+        .button1{
+       		background-color:darkblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
+        	color: white;
         }
     </style>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-    
-    	var userkind=<%=session.getAttribute("userKind")%>
+        var big;
+        var userkind=<%=session.getAttribute("userKind")%>
         $(document).ready(function() {
+            //이미지 슬라이드
+            big = $('#imgcontent').bxSlider({
+                minSlides: 1,
+                maxSlides: 1,
+                slideWidth: 800,
+                pager: true,
+                auto: true,
+                pause: 5000
+            });
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -89,55 +124,36 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
+
             //왼쪽 메뉴 마우스오버
             $("#menuleft>ul").hover(function() {
                 $("#menuleft>ul").stop().fadeIn();
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-
-            //로그아웃버튼 클릭
-            $("#logoutbtn").click(function() {
-               location.href="<%=request.getContextPath()%>/lms/logout.bit";
-            });
-            
-            
-           	if(userkind==0){
-           		console.log(userkind);
-           		$('button[name="edit"]').show(); //학생만 보이게
-           	}else if(userkind==1){
-           		console.log(userkind);
-           		$('button[name="edit"]').hide();
-           	}else{
-           		console.log(userkind);
-           		$('#content [name="edit"]').hide()
-           	}
-
-          });
-        
-        	function goback(){
-        		
-        			window.location.href='question.bbs';
-        		
-        	}
+            $('.button1').click(function(){
+            	window.location.href='assignment.bbs';
+            })	
+        });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
+
+<!-- 과제게시판 등록 -->
 <%
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
     		}
 		
 			int userKind=3;//접속하지 않았을 때 
-			
 			if(session.getAttribute("userKind")!=null){
 				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
 				//0학생 1강사 2관리자
 			}
 %>
-  <!--    헤더     -->
-    <div id="header">
+     <!--    헤더     -->
+ <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
             <div id="menuleft">
@@ -147,20 +163,10 @@
                 <!-- 학생일 때  -->
                 <%if(userKind==0){%>
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
-                </ul>
-                <!-- 강사일 때  -->
-                <%}else if(userKind==1){ %>
-				<ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
@@ -190,7 +196,7 @@
                  <!-- 학생일 때  -->
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -198,7 +204,7 @@
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -207,7 +213,7 @@
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
                     <li><a href="#">회원관리</a></li>
-                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="#">강의관리</a></li>
                     <li><a href="#">출결관리</a></li>
                     <li><a href="#">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -218,30 +224,30 @@
         </div>
     </div>
     <!-- *****content start*****    -->
-    
-    
+   <section class="section">
     <div id="content">
-	<%
-		BbsDto bean=(BbsDto)request.getAttribute("detail");
-	%>
-		<div>
-            <div>
-                <div >
-                    <h2><%=bean.getTitle() %></h5>
-                    <p id="writer">작성자&nbsp&nbsp&nbsp<%=bean.getId() %></p>
-                    <p id="nalja"><%=bean.getNalja() %></p>
-                </div>
-                <div>
-                    <p>첨부파일 : <a href="#">첨부파일.jpg</a></p>
-                </div>
-                <div>
-                    <p><%=bean.getContent() %></p>
-                </div>
-            </div>
-        </div>
-        <input type="button" value="수정" class="button2" name="edit"/>
-        <input type="reset" value="이전" class="button1" onclick="goback()"/>
+    <div id="topmargin"></div>
+    
+	        <h1>작성하기</h1>
+	        <br/>
+	<form action="bbsassignmentadd.bit" method="post">
+        <table class="bbs">
+      		<tr>
+      			<td align="center"><label for="sub">제목</label></td><td align="left"><input type="text" id="sub" name="title"/></td>
+      		</tr> 
+      		<tr>
+      			<td align="center"><label>내용</label></td><td align="center">&nbsp&nbsp<textarea class="context" name="content"></textarea></td>
+      		</tr>
+      		<tr>
+      			<td align="center"><label>파일첨부</label></td><td align="left"><input type="text" id="sub1" readonly="readonly"/><input type="button" value=".." class="button2"></td>
+      		</tr>
+      		<tr>
+      			<td colspan="2"><input type="reset" value="취소" class="button1"><button type="submit" class="button1">입력</button></td>
+      		</tr> 
+        </table>
+	</form>       
     </div>
+	</section>
     <!-- *****content end***** -->
     <!--    바닥글     -->
     <div id="footer">
@@ -260,3 +266,4 @@
         </table>
     </div>
 </body>
+</html>

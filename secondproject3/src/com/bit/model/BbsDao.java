@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 
 
-import com.bit.util.Connector;
 import com.bit.util.*;
 
 public class BbsDao {
@@ -468,6 +467,27 @@ public class BbsDao {
 				}
 		}
 		return list;
+	}
+	
+	public int getPage(int lecnum, int bbsnum) throws SQLException{
+		String sql="select count(*) as cnt from lmsbbs where lecnum=? and bbsnum=?";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int total=0;
+		conn=Connector.getConnection();
+		try{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, lecnum);
+			pstmt.setInt(2, bbsnum);
+			rs=pstmt.executeQuery();
+			if(rs.next())total=rs.getInt("cnt");
+		}finally{
+			if(rs!=null)rs.close();
+			if(pstmt!=null)pstmt.close();
+			if(conn!=null)conn.close();
+		}
+		return total;
 	}
 		
 }

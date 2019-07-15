@@ -23,7 +23,6 @@ public class BbsAddController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		
 		RequestDispatcher rd = req.getRequestDispatcher("bbsQuAdd.jsp");
 		rd.forward(req,resp);
 	}
@@ -31,11 +30,13 @@ public class BbsAddController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		
 		HttpSession session = req.getSession();
 		String param3=(String)session.getAttribute("userKind");
 		int userkind=Integer.parseInt(param3);
 		
-		
+		req.setCharacterEncoding("utf-8");
 		String param1=req.getParameter("title");
 		String param2=req.getParameter("content");
 		System.out.print(param1);
