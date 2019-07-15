@@ -1,4 +1,4 @@
-package com.bit.controller;
+﻿package com.bit.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,38 +13,58 @@ import javax.servlet.http.HttpSession;
 
 import com.bit.model.BbsDao;
 import com.bit.model.BbsDto;
+
 @WebServlet("*.bbs")
-public class BbsListController extends HttpServlet{
+public class BbsListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-			
-				HttpSession session = req.getSession();
-				String param = (String) session.getAttribute("userKind");
-				int userKind= Integer.parseInt(param);
-		
-				BbsDao dao = new BbsDao();
-				RequestDispatcher rd = null;
-				String path = req.getRequestURI().replaceAll(req.getContextPath(),"");
-				System.out.println(path);
-				if(path.equals("/lms/notice.bbs")) {
-					ArrayList<BbsDto> list = dao.getNoticeList();
-					req.setAttribute("list", list);
-					rd = req.getRequestDispatcher("bbsNotice.jsp");
-				}else if(path.equals("/lms/question.bbs")) {
-					ArrayList<BbsDto> list = dao.getQuestionList();
-					req.setAttribute("list", list);
-					rd = req.getRequestDispatcher("bbsquestList.jsp");
-					
-				}else if(path.equals("/lms/assignment.bbs")) {
-					ArrayList<BbsDto> list = dao.getAssignmentList();
-					req.setAttribute("list", list);
-					BbsDto last = dao.getLastAsm();
-					req.setAttribute("last", last);
-					rd = req.getRequestDispatcher("bbsAsmList.jsp");
-				}
-			
-				rd.forward(req, resp);
+		RequestDispatcher rd = null;
+		String path = req.getRequestURI().replaceAll(req.getContextPath(), "");
+		System.out.println(path);
+		if (path.equals("/lms/bbsnotice.bbs")) {
+			// ArrayList<BbsDto> list = dao.getNoticeList();
+			int total = dao.getTotlaCount();
+			String param = req.getParameter("page");
+			String param2 = req.getParameter("limit");
+			if (param == null) {
+				param = "1";
+			}
+			int p = Integer.parseInt(param);
+
+			if (param2 == null) {
+				param2 = "10";
+			}
+			int limit = Integer.parseInt(param2);
+			int start = ((p - 1) / 5) * 5;
+			int end = total / limit;
+			if (total % limit != 0) {
+				end++;
+			}
+			int end2 = end;
+			if (start + 5 < end) {
+				end = start + 5;
+			}
+
+			ArrayList<BbsDto> list = dao.getNoticeList2(p, limit);
+
+			req.setAttribute("list", list);
+			rd = req.getRequestDispatcher("/lms/bbsNotice.jsp");
+		} else if (path.equals("/lms/question.bbs")) {
+			ArrayList<BbsDto> list = dao.getQuestionList();
+			req.setAttribute("list", list);
+			rd = req.getRequestDispatcher("/lms/bbsquestList.jsp");
+		}else if(path.equals("/lms/material.bbs")) {  
+			ArrayList<BbsDto> list = dao.getmaterialList();
+			req.setAttribute("list", list);
+			rd = req.getRequestDispatcher("bbsmateriallist.jsp");//수업자료게시판 
+		}else if(path.equals("/lms/assignment.bbs")){
+			ArrayList<BbsDto> list = dao.getAssignmentList();
+			req.setAttribute("list", list);
+			BbsDto last = dao.getLastAsm();
+			req.setAttribute("last", last);
+			rd = req.getRequestDispatcher("bbsAsmList.jsp");
+		}
+		rd.forward(req, resp);
 	}
-	
 }

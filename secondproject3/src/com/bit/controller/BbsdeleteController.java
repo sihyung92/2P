@@ -23,3 +23,6 @@ public class BbsdeleteController extends HttpServlet{
 		resp.sendRedirect("question.bbs");
 	}
 }
+
+
+

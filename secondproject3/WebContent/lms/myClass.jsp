@@ -250,8 +250,29 @@
 				1.5em 1.5em;
 			background-repeat: no-repeat;
 		}
+		
+		/*캘린더*/
+		
+		#calendar {
+	      	width: 400px;
+	      	height: 450px;
+		    margin: 0 auto;
+		    padding-top: 130px;
+		  }
+		  
+		  
 	</style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
+    <link href='../fullcalendar/packages/core/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/list/main.css' rel='stylesheet' />
+	<script src='../fullcalendar/packages/core/main.js'></script>
+	<script src='../fullcalendar/packages/interaction/main.js'></script>
+	<script src='../fullcalendar/packages/daygrid/main.js'></script>
+	<script src='../fullcalendar/packages/timegrid/main.js'></script>
+	<script src='../fullcalendar/packages/list/main.js'></script>
+	<script src='../fullcalender/packages/core/locales/ko.js'></script>
     <script type="text/javascript">
     $(document).ready(function() {
     var userKind = <%=session.getAttribute("userKind")%>;  
@@ -326,9 +347,101 @@
 			$('#writebtn').click(function(){
 				location.href="attendance.bit?lecNum="+lecPage;
 			});
+			$('#gradebtn').click(function(){
+				location.href="grade.bit";
+			});
 			
           });
-    
+
+    	//캘린더
+       
+	    document.addEventListener('DOMContentLoaded', function() {
+	    var calendarEl = document.getElementById('calendar');
+	
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	      plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+	      header: {
+	        left: 'prev,next today',
+	        center: 'title',
+	        right: 'dayGridMonth,timeGridDay'
+	      },
+	
+	      navLinks: true, 
+	      selectable: true,
+	      selectMirror: true,
+	      selectHelper: true,
+	      editable: true,
+	      eventLimit: true,
+	      events: '/events.json',
+	      
+	      select: function(arg) {
+	        var title = prompt('일정 등록:');
+	        if (title) {
+	          calendar.addEvent({
+	            title: title,
+	            start: arg.start,
+	            end: arg.end,
+	            allDay: arg.allDay
+	          })
+	        }
+	        calendar.unselect()
+	      },
+	      
+	      eventDrop: function(event, delta, revertFunc) {
+	          event_data = { 
+	            event: {
+	              id: event.id,
+	              start: event.start.format(),
+	              end: event.end.format()
+	            }
+	          };
+	          $.ajax({
+	              url: event.update_url,
+	              data: event_data,
+	              type: 'PATCH'
+	          });
+	        },
+	      
+	      eventClick: function(event, jsEvent, view) {
+	    	  $.getScript(event.eidt_url, function() {});
+	      },
+	        
+	        events: [
+	                 {
+	                   title: '발표일',
+	                   start: '2019-07-16',
+	                 },
+	                 {
+	                   title: 'React 특강',
+	                   start: '2019-07-20',
+	                   end: '2019-07-21'
+	                 },
+	                 {
+	                     title: '과제 제출일',
+	                     start: '2019-07-03'
+	                   },
+	                 {
+	                   title: 'git 스터디',
+	                   start: '2019-07-02',
+	                   end: '2019-07-05'
+	                 },
+	                 {
+	                   title: '개인 미니 프로젝트',
+	                   start: '2019-07-19',
+	                   end: '2019-07-26'
+	                 },
+	                 {
+	                     title: '2차 프로젝트',
+	                     start: '2019-07-09',
+	                     end: '2019-07-16'
+	                   },
+	               ] 
+	      
+	    });
+	    
+	    calendar.render();
+	  });
+
     
     
     </script>
@@ -357,21 +470,21 @@
                 <!-- 학생일 때  -->
                 <%if(userKind==0){%>
                 <ul>
-                    <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
                     <li><a href="assignment.bbs">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
 				<ul>
-                    <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="attendance.bit?lecNum=<%=session.getAttribute("lecNum")%>">출석 관리</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
                     <li><a href="assignment.bbs">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
@@ -381,12 +494,11 @@
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="attendance.bit?lecNum=1">출결관리</a></li>
+                    <li><a href="schedule.jsp">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
                  <%}else{
-                	 
                  }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
@@ -400,30 +512,32 @@
                  <!-- 학생일 때  -->
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
-                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
-                    <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="useredit.bit">회원관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit?lecNum=1">출결관리</a></li>
+                    <li><a href="schedule.jsp">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
-                <%}else if(userKind==3){}%>
+                <%}else if(userKind==3){
+                	
+                }%>
             </div>
         </div>
     </div>
@@ -482,7 +596,7 @@
 		<div class="box3" id="atdStu">
 			<table class="table2">
 				<tr>
-					<td colspan="5">나의 출석</td>
+					<td colspan="5"><h2>나의 출석</h2></td>
 				</tr>
 				<tr>
 					<td style="padding-bottom: 50px">출석: <%=roll %>회</td>
@@ -490,13 +604,7 @@
 					<td style="padding-bottom: 50px">결석: <%=absent %>회</td>
 				</tr>
 				<tr>
-					<td colspan="5">오늘의 출석</td>
-				</tr>
-				<tr>
-					<td style="padding-bottom: 30px">입실: 09:25</td>
-					<td style="padding-bottom: 30px">복귀:</td>
-					<td style="padding-bottom: 30px">외출:</td>
-					<td  style="padding-bottom: 30px" colspan="2">퇴실:</td>
+					<td colspan="5"><h2>오늘의 출석</h2></td>
 				</tr>
 				<tr>
 					<td >나의 출석률</td>
@@ -578,7 +686,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width: 340px; height: 50px;"><img id="teacher" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/gradebtn.png" align="right" hspace="10px"><img alt="gradebtn" src="<%=request.getContextPath()%>/imgs/viewgradebtn.png" align="right"></td>
+					<td style="width: 340px; height: 50px;"><img id="teacher" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/gradebtn.png" align="right" hspace="10px"><img id="gradebtn" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/viewgradebtn.png" align="right"></td>
 				</tr>
 				<tr>
 
@@ -626,7 +734,7 @@
 								<%=bbs3bean.getTitle() %>
 							</td>
 							<td>
-								<%=bbs3bean.getStatus() %>
+								<%=bbs3bean.getId() %>
 							</td>
 							<td>
 								<%=bbs3bean.getNalja() %>
@@ -657,7 +765,7 @@
 								<%=bbs2bean.getTitle() %>
 							</td>
 							<td>
-								<%=bbs2bean.getStatus() %>
+								<%=bbs2bean.getId() %>
 							</td>
 							<td>
 								<%=bbs2bean.getNalja() %>
@@ -688,7 +796,7 @@
 								<%=bbs1bean.getTitle() %>
 							</td>
 							<td>
-								<%=bbs1bean.getStatus() %>
+								<%=bbs1bean.getId() %>
 							</td>
 							<td>
 								<%=bbs1bean.getNalja() %>
@@ -702,7 +810,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="box8" style="text-align: center;">캘린더 위치</div>
+		<div class="box8" style="text-align: center;"><div id='calendar'></div></div>
 	</div>
 </div>
 
@@ -711,7 +819,7 @@
     <br/>
     <!-- *****content end***** -->
     <!--    바닥글     -->
-    <div id="footer">
+    <div id="footer"> 
         <table>
             <tr>
                 <td height="126" align="right">

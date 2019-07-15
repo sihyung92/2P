@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
- <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css"/>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <script type="text/javascript">
@@ -102,10 +102,20 @@
                 <%if(userKind==0){%>
                 <ul>
                     <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
-                    <li><a href="<%=request.getContextPath()%>/lms/questlist.bit">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
+                </ul>
+                <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+				<ul>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="attendance.bit?lecNum=<%=session.getAttribute("lecNum")%>">출석 관리</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
@@ -115,8 +125,8 @@
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="attendance.bit?lecNum=1">출결관리</a></li>
+                    <li><a href="schedule.jsp">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
                  <%}else{
@@ -134,26 +144,26 @@
                  <!-- 학생일 때  -->
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
                     <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
-                    <li><a href="#">회원관리</a></li>
+                    <li><a href="useredit.bit">회원관리</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="attendance.bit?lecNum=1">출결관리</a></li>
+                    <li><a href="schedule.jsp">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
@@ -176,7 +186,7 @@
         <!--    공지사항     -->
         <div id="notic">
             <h3>공지사항</h3>
-            <a href="notice.bbs">전체보기</a>
+            <a href="<%=request.getContextPath() %>/lms/bbsnotice.bbs">전체보기</a>
             <div>
                 <table>
             <%ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");

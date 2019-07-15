@@ -1,14 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <style type="text/css">
-    	#topmargin{
+       	#topmargin{
     		height:100px;
     	}
         .bbs{
@@ -60,14 +61,6 @@
         #ca{
         text-align:center;
         }
-        #btn{
-       	 text-align:right;
-       	 
-        }
-        button{
-        	background-color:lightblue;
-        	font-size:10
-        }
         select{
         	text-align:left;
         }
@@ -87,6 +80,21 @@
         }
         #bbs2 tr>td+td{
         	text-align:right;
+        }
+       
+       	#btn{
+       	
+        	text-align:right;
+       	}
+        #btn button{
+        	background-color:lightblue;
+        	font-size:10;
+        	border-radius:6px;
+        }
+        button[name="delebtn"]{
+        	font-size:6px;
+        	background-color:lightblue;
+        	border-radius:6px;
         }
     </style>
     <script type="text/javascript">
@@ -127,9 +135,6 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            	$('button').click(function(){
-            		window.location.href='bbsQuAdd.jsp';
-            	});
             
         });
     </script>
@@ -137,8 +142,7 @@
 </head>
 <body>
 
-<!-- 공지사항 -->
-
+<!-- 공지사항게시판 -->
 
      <!--    헤더     -->
     <div id="header">
@@ -156,7 +160,7 @@
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>관리자
+                <p>강사1
                     <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
                 <!--   상단메뉴   -->
                 <ul id="topmenu">
@@ -168,24 +172,19 @@
             </div>
         </div>
     </div>
-
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
-    <div id="topmargin">
-    
-    </div>
-	        <h1>공지사항</h1><br/>
-	        <table id="bbs2">
+    <div id="topmargin"></div>
+	        <h1>공지사항 게시판</h1>
+	        <br/>
+	      <table id="bbs2">
 		       		<tr>
 		       			<td>
 					        <select>
 					        	<option value="">전체보기</option>
 					        </select>
-				        </td>
-				     
-				   
-				        <td>
+				        </td> <td>
 				                <input type="text" id="search" name="search" />
 				                <button>검색</button>
 				        </td>
@@ -197,67 +196,23 @@
                 <th>제목</th>
                 <th>등록일</th>
                 <th>조회수</th>
+                <th>삭제</th>
             </tr>
+            <%
+            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
+            	for(int i=0;i<list.size();i++){
+            		BbsDto bean=list.get(i);
+            %>
             <tr>
-                <td>10</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
+                <td><%=bean.getListNum() %></td>
+              	<td><a href="bbsnoticedetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
+                <td><%=bean.getNalja() %></td>
                 <td>0</td>
+	            <td><a href="<%=request.getContextPath()%>/lms/bbsnoticedelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
             </tr>
-            <tr>
-                <td>9</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>8</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>7</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>6</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>5</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>4</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-             <tr>
-                <td>2</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>sub</td>
-                <td>2019.3.27</td>
-                <td>0</td>
-            </tr>
+            <%
+            }
+            %>
         </table>
 	        <div id="ca">
 	            <a href="#">이전</a>
@@ -266,8 +221,8 @@
 	            <a href="#">3</a>
 	            <a href="#">다음</a>
 	        </div>
-	        <div id="btn">
-	            <button type="button">작성</button>
+	         <div id="btn">
+	          <a href="<%=request.getContextPath()%>/lms/bbsnoticeadd.jsp"><button type="button">등록하기</button></a>
 	        </div>
     </div>
 	</section>

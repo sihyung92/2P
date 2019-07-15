@@ -50,6 +50,11 @@
         	width:800px;
         		
         }
+        
+        #content table a{
+        	color: black;
+        	text-decoration: none;
+        }
         #content #bbs2 select{
             display: inline-block;
             width: 250px;
@@ -84,6 +89,8 @@
        	 text-align:right;
        	 
         }
+        #content input[type="button"],
+        #content input[type="submit"],
         #content button{
         	background-color:white;
         	border: 1px solid black;
@@ -123,7 +130,6 @@
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-        var big;
         $(document).ready(function() {
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
@@ -156,9 +162,59 @@
            		location.href="<%=request.getContextPath()%>/lms/lectureadd.bit";
            	});
             	
-            	
-            
+           	$('#delete').click(function(){
+                if(confirm("삭제하시겠습니까?")){
+            		var deletelist = rowChk();
+            		$.ajax({
+            			url:"<%=request.getContextPath()%>/lms/lecturedelete.bit",
+            			data:{"deletelist" : deletelist},
+            			type: "post",
+            			dataType: "json"          			
+            		}).done(function success() {
+						alert("삭제되었습니다");
+					}).fail(function fail() {
+						alert("삭제 실패하였습니다");
+					})
+                }else{
+                    return false;
+                }
+            });
+           	
+           	
         });
+        
+        function rowChk() {
+            var chkObj = document.getElementsByName("chk10");
+            var rowCnt = chkObj.length - 1;
+            var deletelist = "";
+			for (var i=0; i<rowCnt; i++){
+				if(chkObj[i].checked==true){
+					deletelist += chkObj[i].val() + "_";
+				}
+			}        	
+			return deletelist;
+		}
+        
+        function allChk(obj){
+            var chkObj = document.getElementsByName("chk10");
+            var rowCnt = chkObj.length - 1;
+            var check = obj.checked;
+            if (check) {
+                for (var i=0; i<=rowCnt; i++){
+                	if(chkObj[i].type == "checkbox"){
+                     	chkObj[i].checked = true; 
+                	}
+                }
+            } else {
+                for (var i=0; i<=rowCnt; i++) {
+                 if(chkObj[i].type == "checkbox"){
+                     chkObj[i].checked = false; 
+                 }
+                }
+            }
+        }
+
+        
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -188,21 +244,21 @@
                 <!-- 학생일 때  -->
                 <%if(userKind==0){%>
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
 				<ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="attendance.bit?lecNum=<%=session.getAttribute("lecNum")%>">출석 관리</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
@@ -212,11 +268,13 @@
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="attendance.bit?lecNum=1">출결관리</a></li>
+                    <li><a href="schedule.jsp">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
-                 <%}else{}%>
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
@@ -229,30 +287,32 @@
                  <!-- 학생일 때  -->
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
-                    <li><a href="#">회원관리</a></li>
+                    <li><a href="useredit.bit">회원관리</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="attendance.bit?lecNum=1">출결관리</a></li>
+                    <li><a href="schedule.jsp">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
-                <%}else if(userKind==3){}%>
+                <%}else if(userKind==3){
+                	
+                }%>
             </div>
         </div>
     </div>
@@ -277,7 +337,7 @@
 	        </table>
         <table class="bbs">
             <tr>
-            	<th><input type="checkbox" name="chk"></th>
+            	<th><input type="checkbox" name="chk" id="chk" onclick="allChk(this);" /></th>
                 <th >NO.</th>
                 <th>강의명</th>
                 <th>강사명</th>
@@ -286,14 +346,14 @@
                 <th>상태</th>
                 <th>강의실</th>
             </tr>
-            <%
-           
+            <% 
             ArrayList<ClassDto> list =null;
             list=(ArrayList<ClassDto>)request.getAttribute("list"); 
+            int i=0;
             	for(ClassDto bean:list){
             %>
             <tr>
-            	<td><input type="checkbox" name="chk10" value="<%=bean.getNum() %>"></td>
+            	<td><input type="checkbox" name="chk10" id="rowchk<%=i++ %>" value="<%=bean.getNum() %>"/></td>
                 <td><%=bean.getNum() %></td>
                 <td><a href="lecturedetail.bit?num=<%=bean.getNum() %>"><%=bean.getName() %></a></td>
                 <td><%=bean.getTeacherName() %></td>
@@ -312,8 +372,8 @@
 	            <a href="#"><button class="movebtn">〉</button></a>
 	        </div>
 	        <div id="btn">
-	            <button type="button" id="addbtn">등록</button>
-	            <button type="button">삭제</button>
+	            <input type="button" id="addbtn" value="입력"/>
+	            <input type="submit" id="delete" value="삭제"/>
 	        </div>
     </div>
 	</section>
