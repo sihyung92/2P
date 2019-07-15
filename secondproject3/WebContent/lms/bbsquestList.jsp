@@ -97,8 +97,11 @@
         	border-radius:6px;
         }
     </style>
+ 
     <script type="text/javascript">
         var big;
+        var userkind = <%=session.getAttribute("userKind")%>; 
+        console.log(userkind);
         $(document).ready(function() {
             //이미지 슬라이드
             big = $('#imgcontent').bxSlider({
@@ -168,7 +171,7 @@
 </head>
 <body>
 
-<!-- 질문게시판 강사 -->
+<!-- 질문게시판 -->
 <%
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
@@ -192,9 +195,9 @@
                 <%if(userKind==0){%>
                 <ul>
                     <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
-                    <li><a href="<%=request.getContextPath()%>/lms/questlist.bit">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->

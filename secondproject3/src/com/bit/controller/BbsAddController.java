@@ -32,11 +32,10 @@ public class BbsAddController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		String param3=(String)session.getAttribute("userkind");
+		String param3=(String)session.getAttribute("userKind");
 		int userkind=Integer.parseInt(param3);
-		//////////////test
 		
-		/////////////
+		
 		String param1=req.getParameter("title");
 		String param2=req.getParameter("content");
 		System.out.print(param1);
@@ -46,7 +45,7 @@ public class BbsAddController extends HttpServlet {
 			int lecNum=0;
 			String id=null;
 		
-			lecNum = (Integer)session.getAttribute("lecNum");
+			lecNum = Integer.parseInt((String)session.getAttribute("lecNum"));
 			title=param1.trim();
 			content=param2.trim();
 			id = (String)session.getAttribute("id");

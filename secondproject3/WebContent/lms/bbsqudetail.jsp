@@ -67,7 +67,16 @@
         	margin:0px auto;
         	margin-left:15px;
         }
-        button{
+        .button1{
+       		background-color:lightblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
+        }
+        .button2{
        		background-color:lightblue;
         	font-size:10;
         	float:right;
@@ -79,6 +88,7 @@
     </style>
     <script type="text/javascript">
         var big;
+        var userkind=session.getAttribute("userKind");
         $(document).ready(function() {
             //이미지 슬라이드
             big = $('#imgcontent').bxSlider({
@@ -115,11 +125,14 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            	
-           	$('button[name="goback"]').click(function(){
-           		window.location.href='question.bbs';
-           	})
+            $('.button1').click(function(){
+            	window.location.href='question.bbs';
+            })	
+
         });
+        function goback(){
+        	window.location.href='question.bbs';
+        }
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -127,35 +140,88 @@
 
 <!-- 질문게시판 상세페이지 -->
 
+<%
+     		if (request.getAttribute("loginWrong") != null) {
+    			out.println(request.getAttribute("loginWrong"));
+    		}
+		
+			int userKind=3;//접속하지 않았을 때 
+			if(session.getAttribute("userKind")!=null){
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
+				//0학생 1강사 2관리자
+			}
+%>
      <!--    헤더     -->
-    <div id="header">
+ <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
             <div id="menuleft">
+                <a href="intro.bit">
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+                </a>
+                <!-- 학생일 때  -->
+                <%if(userKind==0){%>
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
                     <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
+                <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="userKind2">
+                    <li><a>내 강의실</a></li>
+                    <li><a href="#">강사</a></li>
+                    <li><a href="#">학생</a></li>
+                    <li><a href="#">관리자</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                 </ul>
+                 <!-- 비 로그인  -->
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>학생1
-                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
+                <p><%if(session.getAttribute("isLogin")!=null) {
+                	out.println(session.getAttribute("id")+" 님");
+                }else{%>환영합니다<%}%>
+                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" />
+                </p>
                 <!--   상단메뉴   -->
+                 <!-- 학생일 때  -->
+                <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
+                 <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+                <ul id="topmenu">
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="#">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="topmenu">
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="#">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 비 로그인  -->
+                <%}else if(userKind==3){}%>
             </div>
         </div>
     </div>
-
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
@@ -175,10 +241,10 @@
       			<td align="center"><label>내용</label></td><td align="left">&nbsp&nbsp<%=bean.getContent() %></td>
       		</tr>
       		<tr>
-      			<td align="center"><label>파일첨부</label></td><td align="left"><button>..</button></td>
+      			<td align="center"><label>파일첨부</label></td><td align="left"><button class="button2">..</button></td>
       		</tr>
       		<tr>
-      			<td colspan="2"><button name="goback">뒤로</button></td>
+      			<td colspan="2"><input type="reset" class="button1" value="뒤로" onclick="goback()"/></td>
       		</tr> 
         </table>
 	</form>       

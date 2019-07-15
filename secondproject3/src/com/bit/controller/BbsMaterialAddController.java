@@ -30,14 +30,14 @@ public class BbsMaterialAddController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();
+		String param3=(String)session.getAttribute("userKind");
+		int userkind=Integer.parseInt(param3);
 		//////////////test
-		session.setAttribute("lecNum", 1);
-		session.setAttribute("id", "stu01");
-		session.setAttribute("userkind", 2);
+		
 		/////////////
 		String param1=req.getParameter("title");
 		String param2=req.getParameter("content");
-		int lecNum = (Integer)session.getAttribute("lecNum");
+		int lecNum = Integer.parseInt((String)session.getAttribute("lecNum"));
 		String title=param1.trim();
 		String content=param2.trim();
 		String id = (String)session.getAttribute("id");
