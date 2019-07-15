@@ -1,16 +1,17 @@
-<%@page import="com.bit.model.ClassDto"%>
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.nio.channels.SeekableByteChannel"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.bit.model.BbsDto"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+<meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <style type="text/css">
-    	#topmargin{
+       	#topmargin{
     		height:100px;
     	}
-        #content .bbs{
+        .bbs{
             width: 800px;
             height:490px;
             background-color: white;
@@ -18,112 +19,107 @@
             border-bottom:1px solid black;
             z-index:1;
         }
-       	#content .bbs th{
+       	.bbs th{
        		border-bottom: 1px solid #ccc;
        	}
-       	#content .bbs td{
+       	.bbs td{
        		border-bottom: 1px solid #ccc;
        	}
         
         #content>div{
             width: 800px;
             margin: 0px auto;
-        }
             
+        }
+        #content div>select{
+            display: inline-block;
+        }
         #content div>div{
             display: inline-block;
             margin: 0px 0px 10px 450px;
         }
-        #content .bbs tr>td{
+        .bbs tr>td{
         	text-align:center;
         }
-        #content .bbs{
+        .bbs{
         	margin: 0px auto;
         	width:100%
         	z-index:3;
         }
-        #content .bbs th:nth-child(3){
-        	width:40%;
-        }
-       #content #bbs2{
+        #bbs2{
         	margin:0px auto; 
         	width:800px;
         		
         }
-        #content #bbs2 select{
-            display: inline-block;
-            width: 250px;
-            height: 28px;
+        .bbs th:nth-child(2){
+        	width:40%;
         }
-        
-        #content #bbs2 input[type="text"]{
-        	height: 26px;
-        }
-        #content input[name="serch"]{
+        input[name="serch"]{
         	text-align:right;
         }
-        #content #ca{
-        	position: relative;
-        	top: 10px;
-        	width:150px;
+        #ca{
+        text-align:center;
         }
-        #content #ca .movebtn{
-        	position: relative;
-        	top: 2px;
-        	
-        }
-        #content #ca button{
-        	text-decoration:none;
-        	text-align:center;
-        	color:black;
-        	width: 25px;
-        	height: 25px;
-        	border: 1px solid black;
-        }
-        #content #btn{
-       	 text-align:right;
-       	 
-        }
-        #content button{
-        	background-color:white;
-        	border: 1px solid black;
-        	width: 80px;
-          	height: 35px;
-        	
-        }
-        
-        #content #searchbtn{
-         	width: 50px;
-       		height: 28px;
-         }
-        #content select{
+        select{
         	text-align:left;
         }
-       #content  .section{
-        	claer:both;
+        .section{
+        	clear:both;
         	height:800px;
         	margin:0px auto;
         }
-        #content #bbs2>tr>td{
+        #bbs2>tr>td{
         	background:pink;
         }
-       #content  select{
+        select{
         	text-align:center;
         }
-        #content #bbs2 tr>td{
+        #bbs2 tr>td{
         	text-align:left;
         }
-        #content #bbs2 tr>td+td{
+        #bbs2 tr>td+td{
         	text-align:right;
         }
-        
-        #footer{
-        	top: 100px;
+       
+       	#btn{
+       	
+        	text-align:right;
+       	}
+        #btn button{
+        	background-color:lightblue;
+        	font-size:10;
+        	border-radius:6px;
         }
+        button[name="delebtn"]{
+        	font-size:6px;
+        	background-color:lightblue;
+        	border-radius:6px;
+        }
+        
+        .ing{
+	        margin:0px auto;
+	        float: center;
+       		width: 800px;
+       		padding:50px;
+        	
+        	height:250px;
+        	background-color: #e4e4e4;
+        }
+        
+        .ing tr:FIRST-CHILD{
+	       
+        }
+        
+        .ing tr:FIRST-CHILD>td:nth-child(2){
+	        width:200px;
+        }
+        
+        .ing tr:FIRST-CHILD>td:nth-child(3){
+	        width:100px;
+        }
+        
     </style>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-        var big;
         $(document).ready(function() {
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
@@ -143,29 +139,24 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-
             //왼쪽 메뉴 마우스오버
             $("#menuleft>ul").hover(function() {
                 $("#menuleft>ul").stop().fadeIn();
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-            
-            //등록버튼 경로
-           	$("#addbtn").click(function(){
-           		location.href="<%=request.getContextPath()%>/lms/lectureadd.bit";
-           	});
-            	
-            	
-            
-        });
+
+            //로그아웃버튼 클릭
+            $("#logoutbtn").click(function() {
+               location.href="<%=request.getContextPath()%>/lms/logout.bit";
+            });
+
+          });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
-
-<!-- 강의관리게시판 관리자 -->
- <%
+<%
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
     		}
@@ -189,9 +180,9 @@
                 <%if(userKind==0){%>
                 <ul>
                     <li><a href="#">내 강의실</a></li>
-                    <li><a href="quesion.bbs">질문게시판</a></li>
+                    <li><a href="#">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
@@ -199,9 +190,9 @@
 				<ul>
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">출석 관리</a></li>
-                    <li><a href="quesion.bbs">질문게시판</a></li>
+                    <li><a href="#">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
@@ -216,7 +207,9 @@
                     <li><a href="#">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
-                 <%}else{}%>
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
@@ -257,63 +250,82 @@
         </div>
     </div>
     <!-- *****content start*****    -->
-   <section class="section">
+     <section class="section">
     <div id="content">
     <div id="topmargin"></div>
-	        <h1>강의관리</h1>
+	        <h1>질문 게시판</h1>
 	        <br/>
-	        <table id="bbs2">
-	       		<tr>
-	       			<td>
-				        <select>
-				        	<option value="">전체보기</option>
-				        </select>
-			        </td>
-			        <td>
-		                <input type="text" id="search" name="search" />
-		                <button id="searchbtn">검색</button>
-			        </td>
-	            </tr>
+	        <div >
+	        <h3>진행중 과제</h3>
+	        <%
+		        BbsDto last=(BbsDto)request.getAttribute("last");
+	        %>
+	        <table style="margin: 0px auto;" class="ing">
+	        	
+		        	<tr>
+		        		<td>
+		        		<h2><%=last.getTitle() %></h2></td>
+		        		<td>제출기한:<%=last.getNalja() %></td>
+		        		<td>진행중</td>
+					</tr>	   
+					<tr>
+		        		<td colspan="3"> <%=last.getContent() %></td>
+		        		
+					</tr>	     	
+	        	
+	        	</table>
+	        <br/>
+	        <h3>과제목록</h3>
+	       </div>
+	      <table id="bbs2">
+		       		<tr>
+		       			<td>
+					        <select>
+					        	<option value="">전체보기</option>
+					        </select>
+				        </td> <td>
+				                <input type="text" id="search" name="search" />
+				                <button>검색</button>
+				        </td>
+		            </tr>
 	        </table>
         <table class="bbs">
             <tr>
-            	<th><input type="checkbox" name="chk"></th>
                 <th >NO.</th>
-                <th>강의명</th>
-                <th>강사명</th>
-                <th>기간</th>
-                <th>인원</th>
+                <th>제목</th>
                 <th>상태</th>
-                <th>강의실</th>
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>조회수</th>
+                <th>삭제</th>
             </tr>
             <%
-           
-            ArrayList<ClassDto> list =null;
-            list=(ArrayList<ClassDto>)request.getAttribute("list"); 
-            	for(ClassDto bean:list){
+            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
+            	for(int i=0;i<list.size();i++){
+            		BbsDto bean=list.get(i);
             %>
             <tr>
-            	<td><input type="checkbox" name="chk10" value="<%=bean.getNum() %>"></td>
-                <td><%=bean.getNum() %></td>
-                <td><a href="lecturedetail.bit?num=<%=bean.getNum() %>"><%=bean.getName() %></a></td>
-                <td><%=bean.getTeacherName() %></td>
-                <td><%=bean.getStartdate() %></td>
-                <td><%=bean.getPersonal() %>/30</td>
-                <td>모집중</td>
-                <td><%=bean.getNum() %></td>
+                <td><%=bean.getListNum() %></td>
+              	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
+                <td>진행중</td>
+                <td><%=bean.getId() %></td>
+                <td><%=bean.getNalja() %></td>
+                <td>0</td>
+	            <td><a href="<%=request.getContextPath()%>/lms/qudelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
             </tr>
-           <%} %>
+            <%
+            }
+            %>
         </table>
 	        <div id="ca">
-	            <a href="#"><button class="movebtn">〈</button></a>
-	            <a href="#"><button>1</button></a>
-	            <a href="#"><button>2</button></a>
-	            <a href="#"><button>3</button></a>
-	            <a href="#"><button class="movebtn">〉</button></a>
+	            <a href="#">이전</a>
+	            <a href="#">1</a>
+	            <a href="#">2</a>
+	            <a href="#">3</a>
+	            <a href="#">다음</a>
 	        </div>
-	        <div id="btn">
-	            <button type="button" id="addbtn">등록</button>
-	            <button type="button">삭제</button>
+	         <div id="btn">
+	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
 	        </div>
     </div>
 	</section>
@@ -335,4 +347,3 @@
         </table>
     </div>
 </body>
-</html>

@@ -1,3 +1,4 @@
+<%@page import="com.bit.model.AttendanceDto"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.bit.model.UserDto"%>
 <%@page import="com.bit.model.ClassDto"%>
@@ -27,6 +28,7 @@
         }
 
         #content select {
+        	position : absolute;
             display: inline-block;
             margin: 0px auto 0px 443px;
             height: 28px;
@@ -51,6 +53,7 @@
 
         #content #studiv {
             display: block;
+            text-align : center;
             width: 800px;
             overflow-x: scroll;
             position: absolute;
@@ -70,7 +73,6 @@
         }
 
         #content #dailydiv {
-            /*display: none;*/
             position: absolute;
             top: 800px;
             width: 1000px;
@@ -88,7 +90,7 @@
             width: 800px;
             overflow-x: scroll;
             position: relative;
-            top: -126px;
+            top: -73px;
             left: 79px;
 
         }
@@ -97,7 +99,7 @@
         }
         #content #dailydiv p {
             position: relative;
-            top: -110px;
+            top: -90px;
         }
         #footer {
             top: 1300px;
@@ -149,7 +151,61 @@
 	            
 	            $("#footer").css("top","950px");
 	         }
-
+            
+            var y = $('#fronttable tr').length-2;
+        	var tds=$('#studiv table td');
+        	tds.each(function(idx,item){
+        		$(item).click(function(){
+        			var cls = $(item).attr('class')
+        			var txt = $.trim($(item).text());
+        			if(txt==""){
+        				$(item).text("O").css("color","green");
+        				$('input.'+cls).val(cls+"and0");
+        			}else if(txt=="O"){
+        				$(item).text("△").css("color","blue");
+        				$('input.'+cls).val(cls+"and1");
+        			}else if(txt=="△"){
+	        			$(item).text("X").css("color","red");
+        				$('input.'+cls).val(cls+"and2");
+        			}else if(txt=="X"){
+	        			$(item).text(" ").css("color","black");
+        				$('input.'+cls).val("");
+        			}
+        		});
+        	});
+        	
+            $.ajax({
+            	type:"POST",
+            	url:"../data/attendance.jsp",
+            	data: {"lecNum":"<%=request.getParameter("lecNum")%>"},
+            	dataType:"JSON",
+            	cache : false,
+            	success: function(data){
+            		console.log('성공해따');
+            		console.log(data);
+            		$.each(data,function(i,v){
+            			var name=v.data;
+            			var values = name.split('and');
+            			var cls= values[0]+'and'+values[1];
+            			var status = values[2];
+            			if(status==0){
+            				$('td.'+cls).text("O").css({"background-color":"rgb(230,230,230)","color":"green"}).off();
+            				$('input.'+cls).removeAttr("name");
+            			}else if(status==1){
+            				$('td.'+cls).text("△").css({"background-color":"rgb(230,230,230)","color":"blue"}).off();
+            				$('input.'+cls).removeAttr("name");
+            			}else if(status==2){
+            				$('td.'+cls).text("X").css({"background-color":"rgb(230,230,230)","color":"red"}).off();
+            				$('input.'+cls).removeAttr("name");
+            			}
+            			//데이터 들어오는 애들 jq로 잡아서 값넣어주기 0이면 O 1이면 세모 2면 x
+            			//cls가 클래스 이름이고 status가 상태 넣은 td는 이벤트 제거해줄것
+            		});
+            	},
+				error:function(){
+					console.log("실패해따..");
+				}
+            });
         });
         
         function className() {
@@ -255,7 +311,23 @@
     <div id="content">
         <h3>해당 강좌명 받아오기</h3>
         <div class="adminsession">
-       		<span>startdate~enddate</span>
+            <%
+           	ClassDto classBean = (ClassDto)request.getAttribute("bean");
+            ///시간 얻어오기
+           	String startDay = classBean.getStartdate(); 
+           	String endDay = classBean.getEnddate(); 
+           	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+           	Date day = df.parse(startDay);
+           	Date end = df.parse(endDay);
+           	Calendar cal = Calendar.getInstance();
+           	String tableNalja = "";
+           	String sendNalja = "";
+           	cal.setTime(day);
+           	///유저리스트 얻어오기
+            ArrayList<UserDto> userList = (ArrayList<UserDto>)request.getAttribute("userList");
+            ArrayList<AttendanceDto> atteList = (ArrayList<AttendanceDto>)request.getAttribute("atteList");
+     		%>
+       		<span><%=df.format(day)%>~<%=df.format(end)%></span>
        		<input type="hidden" value="<%=userKind %>" id="userKind"/>
         	<select id="className">
             	<option value="응용SW 엔지니어링 양성과정 1회차">응용SW 엔지니어링 양성과정 1회차</option>
@@ -266,19 +338,6 @@
 	            <option value="응용SW 엔지니어링 양성과정 6회차">응용SW 엔지니어링 양성과정 6회차</option>
 	        </select>
         </div>
-            <%
-           	ClassDto classBean = (ClassDto)request.getAttribute("bean");
-            ///시간 얻어오기
-           	String startDay = classBean.getStartdate(); // MM-dd
-           	Date day = new SimpleDateFormat("YYYY-MM-dd").parse(startDay);
-           	Calendar cal = Calendar.getInstance();
-           	String nalja = "";
-           	cal.setTime(day);
-           	///유저리스트 얻어오기
-            ArrayList<UserDto> userList = (ArrayList<UserDto>)request.getAttribute("list");
-           	int size = userList.size()+1;
-            for(int i=0; i<userList.size(); i++){ 
-            UserDto userBean = userList.get(i);%>
         <table id="fronttable">
             <tr>
                 <th>일차</th>
@@ -286,12 +345,15 @@
             <tr>
                 <th>일자</th>
             </tr>
+            <%for(int i=0; i<userList.size(); i++){ 
+            UserDto userBean = userList.get(i);%>
             <tr>
                 <th><%=userBean.getName() %></th>
             </tr>
        		<%} %>
         </table>
         <div id="studiv">
+        <form method="POST">
             <table>
                 <tr>
             	<%for(int i=1; i<=90; i++){ %>
@@ -301,21 +363,30 @@
                 <tr>
                    <%for(int i=1; i<=90; i++){
                 	   cal.add(Calendar.DAY_OF_YEAR,1);
-                	   nalja = cal.get(Calendar.MONTH)+1+"/"+cal.get(Calendar.DAY_OF_MONTH);
+                	   tableNalja = cal.get(Calendar.MONTH)+1+"/"+cal.get(Calendar.DAY_OF_MONTH);
                 	   %>
                     <th>
-                    	<%=nalja%>
+                    	<%=tableNalja%>
                     </th>
                 <%} %>
                 </tr>
-                <%for(int i=1; i<userList.size()+1; i++){ %>
+                <%for(int i=0; i<userList.size(); i++){ 
+                	UserDto userBean = userList.get(i);
+                %>
                 <tr>
-                   <%for(int j=1; j<=90; j++){ %>
-                    <td class="td<%=i+"x"+j%>">ㅇ<input class="td<%=j%>" type=hidden name="<%=nalja%>"></td>
+                <%cal.setTime(day);
+ 	              for(int j=0; j<90; j++){
+                	 cal.add(Calendar.DAY_OF_YEAR,1);
+                	sendNalja = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+                %>
+                    <td class="<%=userBean.getUserNum()+"and"+sendNalja%>">&nbsp;</td>
+                    <input class="<%=userBean.getUserNum()+"and"+sendNalja%>" type=hidden name="data">
                 <%} %>
                 </tr>
-                <%}%>             
+                <%}%>           
             </table>
+            <input type="submit" value="입력" id="subBtn"/>
+        </form>
         </div>
         <table id="percenttable">
             <tr>
@@ -324,16 +395,19 @@
             <tr>
                 <th>출석률</th>
             </tr>
-            <%for(int i=0; i<userList.size(); i++){ %>
+            <%for(int i=0; i<atteList.size(); i++){
+            	AttendanceDto atteBean = atteList.get(i);
+            	%>
             <tr>
-                <th>100%</th>
+                <th><%=(int)(atteBean.getRate()*100.0)%>%</th>
             </tr>
             <%} %>
         </table>
         <div class="teachersession" id="dailydiv">
 <%
 	SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy년 MM월 dd일  ");
-	String day2 = format1.format(day);
+	String day2 = format1.format(new Date());
+	ArrayList<ArrayList<String>> daliyList = (ArrayList<ArrayList<String>>)request.getAttribute("daliy");
 %>
             <span><%=day2%> 출결상황</span>
             <table id="thtable">
@@ -341,13 +415,7 @@
                     <th>출석</th>
                 </tr>
                 <tr>
-                    <th>지각</th>
-                </tr>
-                <tr>
-                    <th>조퇴</th>
-                </tr>
-                <tr>
-                    <th>외출</th>
+                    <th>이상</th>
                 </tr>
                 <tr>
                     <th>결석</th>
@@ -356,29 +424,27 @@
             <div>
                 <table>
                     <tr>
-                        <td>출석한 학생이름 출력</td>
+                        <td>&nbsp;<%for(String name : daliyList.get(0))
+                        		out.print(name + " ");%>
+                        </td>
                     </tr>
                     <tr>
-                        <td>지각한 학생이름 출력</td>
+                        <td>&nbsp;<%for(String name : daliyList.get(1))
+                        		out.print(name + " ");%>
+                        </td>
                     </tr>
                     <tr>
-                        <td>조퇴한 학생이름 출력</td>
-                    </tr>
-                    <tr>
-                        <td>외출한 학생이름 출력</td>
-                    </tr>
-                    <tr>
-                        <td>결석한 학생이름 출력</td>
+                        <td>&nbsp;<%for(String name : daliyList.get(2))
+                        		out.print(name + " ");%>
+                        </td>
                     </tr>
                 </table>
             </div>
             <br />
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                출석: 0명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                |지각: 0명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                |조퇴: 0명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                |외출: 0명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                |결석: 0명</p>
+                출석: <%=daliyList.get(0).size() %>명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                |지각 조퇴 외출: <%=daliyList.get(1).size()%>명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                |결석: <%=daliyList.get(2).size()%>명</p>
         </div>
     </div>
     <!-- *****content end***** -->
