@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.bit.model.BbsDao;
 import com.bit.model.BbsDto;
 
-@WebServlet("/lms/bbsqudetail.bit")
-public class BbsQuStuDetailController extends HttpServlet{
+@WebServlet("/lms/bbsmaterialdetail.bit")
+public class BbsMaDetailController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -21,9 +21,9 @@ public class BbsQuStuDetailController extends HttpServlet{
 		int listNum=Integer.parseInt(req.getParameter("listNum"));
 		int lecNum=Integer.parseInt(req.getParameter("lecNum"));
 		BbsDao dao=new BbsDao();
-		req.setAttribute("detail", dao.questiondetail(listNum, lecNum));
+		req.setAttribute("detail", dao.materialdetail(listNum, lecNum));
 		
-		RequestDispatcher rd=req.getRequestDispatcher("bbsqudetail.jsp");
+		RequestDispatcher rd=req.getRequestDispatcher("bbsmaterialdetail.jsp");
 		rd.forward(req,resp);
 		
 	}

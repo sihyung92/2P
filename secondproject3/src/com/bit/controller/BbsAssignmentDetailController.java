@@ -9,22 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bit.model.BbsDao;
-import com.bit.model.BbsDto;
 
-@WebServlet("/lms/bbsqudetail.bit")
-public class BbsQuStuDetailController extends HttpServlet{
+import com.bit.model.BbsDao;
+
+@WebServlet("/lms/bbsassignmentdetail.bit")
+public class BbsAssignmentDetailController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+	
 		int listNum=Integer.parseInt(req.getParameter("listNum"));
 		int lecNum=Integer.parseInt(req.getParameter("lecNum"));
 		BbsDao dao=new BbsDao();
-		req.setAttribute("detail", dao.questiondetail(listNum, lecNum));
+		req.setAttribute("detail", dao.assignmentdetail(listNum, lecNum));
 		
-		RequestDispatcher rd=req.getRequestDispatcher("bbsqudetail.jsp");
-		rd.forward(req,resp);
-		
+		RequestDispatcher rd=req.getRequestDispatcher("bbsassignmentdetail.jsp");
+		rd.forward(req, resp);
 	}
 }

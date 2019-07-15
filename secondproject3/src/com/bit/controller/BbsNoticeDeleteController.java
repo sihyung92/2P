@@ -2,7 +2,6 @@ package com.bit.controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,21 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bit.model.BbsDao;
-import com.bit.model.BbsDto;
 
-@WebServlet("/lms/bbsqudetail.bit")
-public class BbsQuStuDetailController extends HttpServlet{
-
+@WebServlet("/lms/bbsnoticedelete.bit")
+public class BbsNoticeDeleteController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		int listNum=Integer.parseInt(req.getParameter("listNum"));
-		int lecNum=Integer.parseInt(req.getParameter("lecNum"));
+				
+		int lecnum=Integer.parseInt(req.getParameter("lecNum"));
+		int listnum=Integer.parseInt(req.getParameter("listNum"));
 		BbsDao dao=new BbsDao();
-		req.setAttribute("detail", dao.questiondetail(listNum, lecNum));
-		
-		RequestDispatcher rd=req.getRequestDispatcher("bbsqudetail.jsp");
-		rd.forward(req,resp);
-		
+		dao.noticeDelete(lecnum,listnum);
+		resp.sendRedirect("notice.bbs");
 	}
 }

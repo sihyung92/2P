@@ -1,3 +1,4 @@
+<%@page import="com.bit.model.BbsDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
 <!DOCTYPE html>
@@ -6,7 +7,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
     <style type="text/css">
        	#topmargin{
@@ -66,8 +67,10 @@
        	 
         }
         button{
-        	background-color:lightblue;
-        	font-size:10
+        	background-color:darkblue;
+        	border-radius:5px;
+        	font-size:10;
+        	color: white;
         }
         select{
         	text-align:left;
@@ -89,9 +92,14 @@
         #bbs2 tr>td+td{
         	text-align:right;
         }
+        #under{
+        	text-align:center;
+        	font-size:5;
+        }
     </style>
     <script type="text/javascript">
         var big;
+        var userkind = <%=session.getAttribute("userKind")%>; 
         $(document).ready(function() {
             //이미지 슬라이드
             big = $('#imgcontent').bxSlider({
@@ -128,9 +136,26 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            	$('button').click(function(){
-            		window.location.href='Bbsadd.jsp';
-            	});
+           
+            if(userkind==0){
+            	$('button[name="enroll"]').hide();
+            }else if(userkind==1){
+            	$('button[name="enroll"]').show(); //강사보이게
+            }else{
+            	$('button[name="enroll"]').show(); //관리자 보이게
+            }
+            
+        
+            if(userkind==0){
+            	console.log(userkind);
+            	$('button[name="delebtn"]').hide(); 
+            }else if(userkind==1){
+            	console.log(userkind);
+            	$('button[name="delebtn"]').hide();
+            }else{
+            	$('button[name="delebtn"]').show(); //관리자 보이게
+            }
+            
             
         });
     </script>
@@ -138,42 +163,94 @@
 </head>
 <body>
 
-<!-- 질문게시판 강사 -->
-
+<!-- 수업자료 게시판 -->
+<%
+     		if (request.getAttribute("loginWrong") != null) {
+    			out.println(request.getAttribute("loginWrong"));
+    		}
+		
+			int userKind=3;//접속하지 않았을 때 
+			if(session.getAttribute("userKind")!=null){
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
+				//0학생 1강사 2관리자
+			}
+%>
      <!--    헤더     -->
-    <div id="header">
+ <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
             <div id="menuleft">
+                <a href="intro.bit">
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+                </a>
+                <!-- 학생일 때  -->
+                <%if(userKind==0){%>
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
+                <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="userKind2">
+                    <li><a>내 강의실</a></li>
+                    <li><a href="#">강사</a></li>
+                    <li><a href="#">학생</a></li>
+                    <li><a href="#">관리자</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
+                 </ul>
+                 <!-- 비 로그인  -->
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>강사1
-                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
+                <p><%if(session.getAttribute("isLogin")!=null) {
+                	out.println(session.getAttribute("id")+" 님");
+                }else{%>환영합니다<%}%>
+                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" />
+                </p>
                 <!--   상단메뉴   -->
+                 <!-- 학생일 때  -->
+                <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="useredit.bit">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
+                 <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+                <ul id="topmenu">
+                    <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="intro.bit">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="topmenu">
+                    <li><a href="useredit.bit">회원관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 비 로그인  -->
+                <%}else if(userKind==3){}%>
             </div>
         </div>
     </div>
-
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
     <div id="topmargin"></div>
-	        <h1>질문 게시판</h1>
+	        <h1>수업자료 게시판</h1>
 	        <br/>
 	      <table id="bbs2">
 		       		<tr>
@@ -183,7 +260,7 @@
 					        </select>
 				        </td> <td>
 				                <input type="text" id="search" name="search" />
-				                <button>검색</button>
+				                <button class="serchbtn">검색</button>
 				        </td>
 		            </tr>
 	        </table>
@@ -191,38 +268,83 @@
             <tr>
                 <th >NO.</th>
                 <th>제목</th>
-                <th>상태</th>
                 <th>작성자</th>
                 <th>등록일</th>
                 <th>조회수</th>
+                <th>삭제</th>
             </tr>
             <%
+            int lecnum=Integer.parseInt((String)session.getAttribute("lecNum"));
             	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
+            	BbsDao dao=new BbsDao();
+            	int total=0;
+        		total=dao.getPage(lecnum,3);
+        		//System.out.println(total);
+        		String param=request.getParameter("idx");
+        		if(param==null)param="1";
+        		int pageNum=Integer.parseInt(param);
+        		//System.out.println(pageNum);
+        		//pageNum 1= 1~10
+        		//pageNum 2= 11~20
+        		int start=(pageNum-1)*10;
+        		//1 = 0
+        		//2 = 10
+        		//3 = 20
+        		int end1=(pageNum*10);
+        		//1=10
+        		//2=20
+        		//3=30 
+        		int fin=(total/10)+1;
+        		if(fin==pageNum){
+        			end1=list.size();
+        		}
             	for(int i=0;i<list.size();i++){
             		BbsDto bean=list.get(i);
             %>
             <tr>
                 <td><%=bean.getListNum() %></td>
-              	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
-                <td>미답변</td>
+              	<td><a href="bbsmaterialdetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
                 <td><%=bean.getId() %></td>
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
+                <td><a href="<%=request.getContextPath()%>/lms/materialdelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
             </tr>
             <%
             }
             %>
         </table>
-	        <div id="ca">
-	            <a href="#">이전</a>
-	            <a href="#">1</a>
-	            <a href="#">2</a>
-	            <a href="#">3</a>
-	            <a href="#">다음</a>
-	        </div>
+	       
 	        <div id="btn">
-	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
+	          <a href="<%=request.getContextPath()%>/lms/bbsmaterialadd.jsp"><button type="button"  name="enroll">등록하기</button></a>
 	        </div>
+	        <%
+			int pStart=0;
+			pStart=((pageNum-1)/5)*5;
+			int end2=0;
+			end2=total/10;
+			if(total%10!=0){
+				end2++;
+			}
+			int end3=end2;
+			if(pStart+5<end2){
+				end2=pStart+5;
+			}
+			int endPage=pageNum+1;
+		%>
+		<div id="under">
+		<%
+		if(pStart>0){
+		%><a href="question.bbs?idx=<%=pageNum-1%>"> ◀ </a><%
+		}
+		%>
+		<%for(int i=pStart; i<end2; i++){ %>
+		<a href="question.bbs?idx=<%=i+1%>">[&nbsp;<%=i+1 %>&nbsp;]</a>
+		<%}%>
+		<%if(endPage==fin+1){
+			
+		}else if(end2<=end3){ %>
+		<a href="question.bbs?idx=<%=endPage%>"> ▶ </a><%} %>
+		</div>
     </div>
 	</section>
     <!-- *****content end***** -->

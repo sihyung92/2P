@@ -1,6 +1,4 @@
-<%@page import="com.bit.model.*"%>
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,101 +13,89 @@
     	}
         .bbs{
             width: 800px;
-            height:490px;
-            background-color: white;
-            border-top:1px solid black;
-            border-bottom:1px solid black;
-            z-index:1;
-        }
-       	.bbs th{
-       		border-bottom: 1px solid #ccc;
-       	}
-       	.bbs td{
-       		border-bottom: 1px solid #ccc;
-       	}
-        
-        #content>div{
-            width: 800px;
+            height:450px;
             margin: 0px auto;
-            
+        	z-index:1;
+        	background:lightgray;
         }
-        #content div>select{
-            display: inline-block;
+        .bbs tr:nth-child(1){
+        	height:15%;
         }
-        #content div>div{
-            display: inline-block;
-            margin: 0px 0px 10px 450px;
+        .bbs tr:nth-child(2){
+        	height:60%;
         }
-        .bbs tr>td{
-        	text-align:center;
+        .bbs tr:nth-child(3){
+        	height:15%;
         }
-        .bbs{
-        	margin: 0px auto;
-        	width:100%
-        	z-index:3;
-        }
-        #bbs2{
-        	margin:0px auto; 
-        	width:800px;
-        		
-        }
-        .bbs th:nth-child(2){
-        	width:40%;
-        }
-        input[name="serch"]{
+        .bbs tr:nth-child(4){
         	text-align:right;
+        	right:50px;
+        	height:10%;
         }
-        #ca{
-        text-align:center;
-        }
-        select{
-        	text-align:left;
+        #content{
+        	margin:0px auto;
         }
         .section{
         	claer:both;
         	height:800px;
         	margin:0px auto;
         }
-        #bbs2>tr>td{
-        	background:pink;
-        }
+       
         select{
         	text-align:center;
         }
-        #bbs2 tr>td{
-        	text-align:left;
+        .context{
+        	width:95%;
+        	height:95%;
+        	margin:0px auto;
+        	padding-left:10px;
         }
-        #bbs2 tr>td+td{
-        	text-align:right;
+        #sub{
+        	width:75%;
+        	height:60%;
+        	margin:0px auto;
+        	margin-left:15px;
         }
-       
-       	#btn{
-       	
-        	text-align:right;
-       	}
-        #btn button{
-        	background-color:darkblue;
+        #sub1{
+        	width:85%;
+        	height:65%;
+        	margin:0px auto;
+        	margin-left:15px;
+        }
+        .button{
+       		background-color:darkblue;
         	font-size:10;
-        	border-radius:6px;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
         	color: white;
         }
-        button[name="delebtn"]{
-        	font-size:8;
-        	background-color:darkblue;
-        	border-radius:6px;
+        .button2{
+       		background-color:darkblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
         	color: white;
         }
-        
-        #under{
-        	text-align:center;
-        	font-size:5;
+        .button1{
+       		background-color:darkblue;
+        	font-size:10;
+        	float:right;
+        	margin-right:20px;
+        	padding-bottom:5px;
+        	border-radius:5px;
+        	padding:10px;
+        	color: white;
         }
     </style>
- 
     <script type="text/javascript">
         var big;
-        var userkind = <%=session.getAttribute("userKind")%>; 
-        console.log(userkind);
+        var userkind=<%=session.getAttribute("userKind")%>
         $(document).ready(function() {
             //이미지 슬라이드
             big = $('#imgcontent').bxSlider({
@@ -145,41 +131,16 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-            
-			
-           
-            console.log(userkind);
-            if(userkind==0){
-            	console.log(userkind);
-            	$('button[name="enroll"]').show(); //학생에게만
-            }else if(userkind==1){
-            	console.log(userkind);
-            	$('button[name="enroll"]').hide();
-            }else{
-            	console.log(userkind);
-            	$('button[name="enroll"]').hide(); 
-            }
-            
-            if(userkind==0){
-            	console.log(userkind);
-            	$('button[name="delebtn"]').hide(); 
-            }else if(userkind==1){
-            	console.log(userkind);
-            	$('button[name="delebtn"]').hide();
-            }else{
-            	console.log(userkind);
-            	$('button[name="delebtn"]').show(); //관리자
-            }
-           
-            
-            
+            $('.button1').click(function(){
+            	window.location.href='material.bbs';
+            })	
         });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
 
-<!-- 질문게시판 -->
+<!-- 자료게시판 등록 -->
 <%
      		if (request.getAttribute("loginWrong") != null) {
     			out.println(request.getAttribute("loginWrong"));
@@ -237,7 +198,7 @@
                 <ul id="topmenu">
                     <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
-                    <li><a href="intro.bit">메인</a></li>
+                    <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 강사일 때  -->
@@ -245,16 +206,16 @@
                 <ul id="topmenu">
                     <li><a href="<%=request.getContextPath()%>/lms/myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
-                    <li><a href="intro.bit">메인</a></li>
+                    <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
-                    <li><a href="useredit.bit">회원관리</a></li>
-                    <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="attendance.bit">출결관리</a></li>
-                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="#">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
@@ -266,115 +227,25 @@
    <section class="section">
     <div id="content">
     <div id="topmargin"></div>
-	        <h1>질문 게시판</h1>
+    
+	        <h1>작성하기</h1>
 	        <br/>
-	      <table id="bbs2">
-		       		<tr>
-		       			<td>
-					        <select>
-					        	<option value="">전체보기</option>
-					        </select>
-				        </td> <td>
-				                <input type="text" id="search" name="search" />
-				                <button>검색</button>
-				        </td>
-		            </tr>
-	        </table>
+	<form action="bbsmaterialadd.bit" method="post">
         <table class="bbs">
-            <tr>
-                <th >NO.</th>
-                <th>제목</th>
-                <th>상태</th>
-                <th>작성자</th>
-                <th>등록일</th>
-                <th>조회수</th>
-                <th>삭제</th>
-            </tr>
-            <%
-            	int lecnum=Integer.parseInt((String)session.getAttribute("lecNum"));
-            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
-            	BbsDao dao=new BbsDao();
-            	
-            	int total=0;
-        		total=dao.getPage(lecnum,3);
-        		//System.out.println(total);
-        		String param=request.getParameter("idx");
-        		if(param==null)param="1";
-        		int pageNum=Integer.parseInt(param);
-        		//System.out.println(pageNum);
-        		//pageNum 1= 1~10
-        		//pageNum 2= 11~20
-        		int start=(pageNum-1)*10;
-        		//1 = 0
-        		//2 = 10
-        		//3 = 20
-        		int end1=(pageNum*10);
-        		//1=10
-        		//2=20
-        		//3=30 
-        		int fin=(total/10)+1;
-        		if(fin==pageNum){
-        			end1=list.size();
-        		}
-            	for(int i=start;i<end1;i++){
-            		BbsDto bean=list.get(i);
-            %>
-            <tr>
-                <td><%=bean.getListNum() %></td>
-              	<td><a href="bbsqudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
-                <td>미답변</td>
-                <td><%=bean.getId() %></td>
-                <td><%=bean.getNalja() %></td>
-                <td>0</td>
-	            <td><a href="<%=request.getContextPath()%>/lms/qudelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
-            </tr>
-            <%
-           		 }
-            %>
+      		<tr>
+      			<td align="center"><label for="sub">제목</label></td><td align="left"><input type="text" id="sub" name="title"/></td>
+      		</tr> 
+      		<tr>
+      			<td align="center"><label>내용</label></td><td align="center">&nbsp&nbsp<textarea class="context" name="content"></textarea></td>
+      		</tr>
+      		<tr>
+      			<td align="center"><label>파일첨부</label></td><td align="left"><input type="text" id="sub1" readonly="readonly"/><input type="button" value=".." class="button2"></td>
+      		</tr>
+      		<tr>
+      			<td colspan="2"><input type="reset" value="취소" class="button1"><button type="submit" class="button1">입력</button></td>
+      		</tr> 
         </table>
-	       <!--  
-	        <div id="ca">
-	            <a href="#">이전</a>
-	            <a href="#">1</a>
-	            <a href="#">2</a>
-	            <a href="#">3</a>
-	            <a href="#">다음</a>
-	        </div>
-	       -->
-	       
-	        <div id="btn">
-	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button" name="enroll">등록하기</button></a>
-	        </div>
-	    <%
-			int pStart=0;
-			pStart=((pageNum-1)/5)*5;
-			int end2=0;
-			end2=total/10;
-			if(total%10!=0){
-				end2++;
-			}
-			int end3=end2;
-			if(pStart+5<end2){
-				end2=pStart+5;
-			}
-			int endPage=pageNum+1;
-		%>
-		<div id="under">
-		<%
-		if(pStart>0){
-		%><a href="question.bbs?idx=<%=pageNum-1%>"> ◀ </a><%
-		}
-		%>
-		<%for(int i=pStart; i<end2; i++){ %>
-		<a href="question.bbs?idx=<%=i+1%>">[&nbsp;<%=i+1 %>&nbsp;]</a>
-		<%}%>
-		<%if(endPage==fin+1){
-			
-		}else if(end2<=end3){ %>
-		<a href="question.bbs?idx=<%=endPage%>"> ▶ </a><%} %>
-		</div>
-			        
-	        
+	</form>       
     </div>
 	</section>
     <!-- *****content end***** -->

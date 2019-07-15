@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 
 
-import com.bit.util.Connector;
 import com.bit.util.*;
 
 public class BbsDao {
@@ -19,7 +18,7 @@ public class BbsDao {
 	//공지사항게시판
 	public ArrayList<BbsDto> getNoticeList(){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs where bbsNum=0 order by listnum desc";
+		String sql="select * from lmsBbs where lecnum=1 and bbsNum=0 order by listnum desc";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -320,11 +319,11 @@ public class BbsDao {
 	
 	//공지등록
 	public int noticeInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_0_seq.nextval,0,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
-		System.out.println("questionInsert-lecNum : "+lecNum);
+		System.out.println("noticeInsert-lecNum : "+lecNum);
 		try {
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, lecNum);
@@ -332,6 +331,7 @@ public class BbsDao {
 				pstmt.setString(3, content);
 				pstmt.setString(4, id);
 				result=pstmt.executeUpdate();
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -342,11 +342,11 @@ public class BbsDao {
 	}
 	//자료등록
 	public int materialInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_1_seq.nextval,1,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
-		System.out.println("questionInsert-lecNum : "+lecNum);
+		System.out.println("marterialInsert-lecNum : "+lecNum);
 		try {
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, lecNum);
@@ -365,11 +365,11 @@ public class BbsDao {
 	
 	//과제등록
 	public int assignmentInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,2,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
-		System.out.println("questionInsert-lecNum : "+lecNum);
+		System.out.println("assignmentInsert-lecNum : "+lecNum);
 		try {
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, lecNum);
@@ -388,7 +388,7 @@ public class BbsDao {
 	
 	//질문등록
 	public int questionInsert(int lecNum,String title, String content,String id){
-		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
+		String sql="insert into lmsBbs values(lmsBbs_3_seq.nextval,3,?,?,?,?,sysdate,0,null)";
 		//lecNum,title,content,id
 		int result=0;
 		conn=Connector.getConnection();
@@ -429,21 +429,7 @@ public class BbsDao {
 			return result;
 		}
 		
-		public int getPage() throws SQLException{
-			String sql="select count(*) as cnt from lmsbbs where lecNum=1 and bbsNum=3";
-			conn=Connector.getConnection();
-			int total=0;
-			try{
-				pstmt=conn.prepareStatement(sql);
-				rs=pstmt.executeQuery();
-				if(rs.next())total=rs.getInt("cnt");
-			}finally{
-				Connector.close(rs);
-				Connector.close(pstmt);
-				Connector.close(conn);
-			}
-			return total;
-		}
+		
 
 		//상위 5개 글 가져오기
 	public ArrayList<BbsDto> precedenceList(int num,int bbsNum){
@@ -483,6 +469,27 @@ public class BbsDao {
 		return list;
 	}
 	
+	public int getPage(int lecnum, int bbsnum) throws SQLException{
+		String sql="select count(*) as cnt from lmsbbs where lecnum=? and bbsnum=?";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int total=0;
+		conn=Connector.getConnection();
+		try{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, lecnum);
+			pstmt.setInt(2, bbsnum);
+			rs=pstmt.executeQuery();
+			if(rs.next())total=rs.getInt("cnt");
+		}finally{
+			if(rs!=null)rs.close();
+			if(pstmt!=null)pstmt.close();
+			if(conn!=null)conn.close();
+		}
+		return total;
+	}
+		
 	//과제게시판 가장 최신 글 가져오기
 	public BbsDto getLastAsm(){
 		BbsDto bean=new BbsDto();
