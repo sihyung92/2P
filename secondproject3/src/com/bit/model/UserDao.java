@@ -41,14 +41,13 @@ public class UserDao {
 
 	public ArrayList<UserDto> getAttendanceList(int lecNum) {
 		ArrayList<UserDto> list = new ArrayList<UserDto>();
-		String sql = "SELECT name, userKind, userNum FROM userData where lecNum=? AND userKind=0";
+		String sql = "SELECT name, userKind, userNum FROM userData where lecNum=? AND userKind=0 ORDER BY userNum";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, lecNum);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-
 				bean = new UserDto();
 				bean.setName(rs.getString("name"));
 				bean.setUserKind(rs.getInt("UserKind"));

@@ -1,7 +1,9 @@
 package com.bit.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -51,6 +53,8 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("userNum", "" + bean.getUserNum());
 			session.setAttribute("userKind", "" + bean.getUserKind());
 			session.setAttribute("lecNum", "" + bean.getLecNum());
+			String day =  new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			session.setAttribute("day", day);
 		}
 		doGet(req, resp);
 	}

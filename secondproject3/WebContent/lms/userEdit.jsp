@@ -291,7 +291,7 @@
 			<div id="basicinfo">
 				<div>
 					<label for="ctg">분류</label> <select name="ctg" id="ctg">
-						<option value="">분류</option>
+						<option value="" disabled>분류</option>
 						<option value="0">학생</option>
 						<option value="1">강사</option>
 						<option value="2">직원</option>

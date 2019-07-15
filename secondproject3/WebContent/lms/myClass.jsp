@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList,com.bit.model.ClassDto, com.bit.model.BbsDto"%>
@@ -253,7 +255,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
     var userKind = <%=session.getAttribute("userKind")%>;  
-    var lecPage= <%=request.getParameter("lecNum")%>;
+    var lecPage= <%=request.getAttribute("lecNum")%>;
     var lecNum;
     		$('#browsers option[value='+ lecPage +']').attr('selected', true);
     	
@@ -321,7 +323,9 @@
     			//alert(lecPage);
 
 			});
-    		
+			$('#writebtn').click(function(){
+				location.href="attendance.bit?lecNum="+lecPage;
+			});
 			
           });
     
@@ -432,6 +436,29 @@
 	bbs3List = (ArrayList<BbsDto>)request.getAttribute("bbs3List");
 	bbs2List = (ArrayList<BbsDto>)request.getAttribute("bbs2List");
 	bbs1List = (ArrayList<BbsDto>)request.getAttribute("bbs1List");
+	
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	String day = (String)session.getAttribute("day");
+	Date startDate = format.parse(bean.getStartdate());
+	Date sysdate = format.parse(day);
+	long calDate = sysdate.getTime()-startDate.getTime();
+	long calDateDays = calDate/(24*60*60*1000);
+	calDateDays = Math.abs(calDateDays);
+	double progress = (100*calDateDays/90)/1.0;
+	
+	int[] myRate = (int[])request.getAttribute("myRate");
+	double rate = 0;
+	int total=0;
+	int roll=0;
+	int late=0;
+	int absent=0;
+	if(myRate!=null){
+		roll=myRate[0];
+		total=myRate[1];
+		late=myRate[2];
+		absent=myRate[3];
+		rate=100.0*(roll+late)/total;
+	}
 	%>
 
 	<div class="wrapper">
@@ -458,11 +485,9 @@
 					<td colspan="5">나의 출석</td>
 				</tr>
 				<tr>
-					<td style="padding-bottom: 25px">출석: 10회</td>
-					<td style="padding-bottom: 25px">지각: 3회</td>
-					<td style="padding-bottom: 25px">조퇴: 1회</td>
-					<td style="padding-bottom: 25px">외출: 0회</td>
-					<td style="padding-bottom: 25px">결석: 1회</td>
+					<td style="padding-bottom: 50px">출석: <%=roll %>회</td>
+					<td style="padding-bottom: 50px">지각/조퇴/외출: <%=late %>회</td>
+					<td style="padding-bottom: 50px">결석: <%=absent %>회</td>
 				</tr>
 				<tr>
 					<td colspan="5">오늘의 출석</td>
@@ -477,7 +502,7 @@
 					<td >나의 출석률</td>
 					<td colspan="4">
 						<div class="graph1">
-							<strong class="bar" style="width: 56.4%;">56.4% (56/100일)</strong>
+							<strong class="bar" style="width: <%=rate%>%;"><%=rate%>%(<%=roll+late %>/<%=total %>일)</strong>
 						</div>
 					</td>
 				</tr>
@@ -485,7 +510,7 @@
 					<td>과정 진행률</td>
 					<td colspan="4">
 						<div class="graph2">
-							<strong class="bar" style="width: 58.7%;">58.7% (57/100일)</strong>
+							<strong class="bar" style="width: <%=progress%>%;"><%=progress %>% (<%=calDateDays%>/90일)</strong>
 						</div>
 					</td>
 				</tr>
@@ -493,11 +518,12 @@
 		</div>
 		<!-- student attendance end-->
 		<!-- teacher attendance start-->
+	<%ArrayList<ArrayList<String>> daliyList=(ArrayList<ArrayList<String>>)request.getAttribute("daliyList");%>
 		<div class="box3" id="atdTea">
 			<table class="table" style="margin: auto;">
 				<tr>
 					<td style="width: 150px; height: 30px;">오늘의 출석 현황</td>
-					<td style="text-align: right"><b>2019년 7월 8일</b></td>
+					<td style="text-align: right"><b><%=session.getAttribute("day") %></b></td>
 				</tr>
 				<tr>
 					<td style="width: 50px"></td>
@@ -506,7 +532,7 @@
 					<td style="width: 90px; height: 35px;">과정진행률</td>
 					<td>
 						<div class="graph">
-							<strong class="bar" style="width: 58.7%;">58.7% (57/100일)</strong>
+							<strong class="bar" style="width: <%=progress%>%;"><%=progress%>% (<%=calDateDays%>/90일)</strong>
 						</div>
 					</td>
 				</tr>
@@ -515,29 +541,24 @@
 						<table class="table2" style="margin: auto;">
 							<tr>
 								<td>출석</td>
-								<td style="width: 450px"></td>
+								<td style="width: 450px"><%for(String name : daliyList.get(0))
+                        		out.print(name + " ");%></td>
 							</tr>
 							<tr>
-								<td>지각</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>조퇴</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>외출</td>
-								<td></td>
+								<td>지각<br/>조퇴<br/>외출</td>
+								<td><%for(String name : daliyList.get(1))
+                        		out.print(name + " ");%></td>
 							</tr>
 							<tr>
 								<td>결석</td>
-								<td></td>
+								<td><%for(String name : daliyList.get(2))
+                        		out.print(name + " ");%></td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">출석: 5명 ｜지각: 0명｜외출: 0명｜결석: 20명 <img alt="writebtn" src="<%=request.getContextPath()%>/imgs/writebtn.png" style="float: right;"></td>
+					<td colspan="2">출석: <%=daliyList.get(0).size() %>명 ｜지각 조퇴 외출: <%=daliyList.get(1).size() %>명｜결석: <%=daliyList.get(2).size() %>명 <img id="writebtn" alt="writebtn" src="<%=request.getContextPath()%>/imgs/writebtn.png" style="float: right;"></td>
 				</tr>
 
 			</table>
