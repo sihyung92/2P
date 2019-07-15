@@ -28,10 +28,7 @@
 	        top: 300px;
 	      }
 	      
-	      #calendar {
-	      	width: 400px;
-	      	height: 450px;
-	      }
+	      
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
