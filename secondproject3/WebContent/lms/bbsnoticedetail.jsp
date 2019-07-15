@@ -1,121 +1,74 @@
 <%@page import="com.bit.model.BbsDto"%>
-<%@page import="com.bit.model.BbsDao"%>
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.nio.channels.SeekableByteChannel"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
-    <style type="text/css">
-       	#topmargin{
-    		height:100px;
-    	}
-        .bbs{
-            width: 800px;
-            height:490px;
-            background-color: lightgray;
-            z-index:1;
-            border-collapse:collapse;
+<meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+     <style type="text/css">
+        #content{
+            position: relative;
+            top: 150px;
         }
-       
         
-        #content>div{
+        #content>div{ 
             width: 800px;
+            height: 500px;
             margin: 0px auto;
+            border: 1px solid gray;
             
         }
-        #content div>select{
-            display: inline-block;
+        #content>div>div{
+            width: 700px;
+            margin: 50px auto;
+            height: 400px;
         }
-        #content div>div{
-            display: inline-block;
-            margin: 0px 0px 10px 450px;
-        }
+        #content>div>div>div{
+            border-bottom:  1px solid gray;
+        } 
         
-        .bbs{
-        	border:1px solid;
-        	margin: 0px auto;
-        	width:100%
-        	z-index:3;
+        #content>div>div>div p{
+            font-size: 14px;
+            margin: 10px 0px;
+            
         }
-        .bbs tr:nth-child(1){
-        	height:20%;
-        	border:1px solid;
+        #content>div>div>div #writer,
+        #content>div>div>div #nalja{
+            position: relative;
+            top: 10px;
+            width: 150px;
+            
         }
-        .bbs tr:nth-child(1)>td{
-        	padding-left:20px;
+        #content>div>div>div #nalja{
+            position: relative;
+            top: -10px;
+            left: 600px;
         }
-        .bbs tr:nth-child(2){
-        	height:10%;
+        #content>div>div>div:nth-child(3){
+            border: 0px;
         }
-         .bbs tr:nth-child(2)>td{
-        	padding-left:20px;
+        #content button{
+            position: relative;
+            top: 10px;
+            left: 650px;
+            border: 0px;
+            background-color: darkblue;
+            color: white;
+            border-radius: 3px;
+            width: 60px;
+            height: 30px;
+            
         }
-        .bbs tr:nth-child(3){
-        	height:50%;
+
+        #footer{
+            top: 300px;
         }
-        .bbs tr:nth-child(4){
-        	height:20%;
-        	border:1px solid;
-        }
-        .bbs tr:nth-child(4)>td+td{
-        	position:relative;
-        	left:-20px;
-        }
-       
-        .span1{
-        	float:right;
-        	text-align:right;
-        	margin-right:20px;
-        	
-        }
-        button{
-        	background-color:lightblue;
-        	font-size:10
-        }
-        select{
-        	text-align:left;
-        }
-        .section{
-        	claer:both;
-        	height:800px;
-        	margin:0px auto;
-        }
-       
-        select{
-        	text-align:center;
-        }
-       	#span3{
-       		float:left;
-       		margin-left:30px;
-       	}
-       	textarea{
-       		margin-left:50px;
-       		height:50px;
-       	}
-       	input[name='goback']{
-       		clear:both;
-       		float:right;
-       		right:100px;
-       		margin-top:20px;
-       	}
     </style>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-        var big;
         $(document).ready(function() {
-            //이미지 슬라이드
-            big = $('#imgcontent').bxSlider({
-                minSlides: 1,
-                maxSlides: 1,
-                slideWidth: 800,
-                pager: true,
-                auto: true,
-                pause: 5000
-            });
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -134,34 +87,59 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-
             //왼쪽 메뉴 마우스오버
             $("#menuleft>ul").hover(function() {
                 $("#menuleft>ul").stop().fadeIn();
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-        });
-        
-        function goback(){
-        		window.history.back();
-        }
-        function godelete(){
-        	window.location.href='qudelete.bit';
-        }
+
+            //로그아웃버튼 클릭
+            $("#logoutbtn").click(function() {
+               location.href="<%=request.getContextPath()%>/lms/logout.bit";
+            });
+            
+			//이전버튼 클릭
+			$("#beforebtn").click(function(){
+				location.href="<%=request.getContextPath()%>/lms/bbsnotice.bbs";
+			});
+			//수정버튼 클릭
+			$("#editbtn").click(function(){
+				location.href="<%=request.getContextPath()%>/lms/bbsnoticeedit.bit?listnum=<%=request.getAttribute("listNum")%>";
+			});
+			//삭제버튼 클릭
+			$("#deletebtn").click(function(){
+				if(confirm("삭제하시겠습니까?")){
+					location.href="<%=request.getContextPath()%>/lms/bbsnoticedelete.bit?listnum=<%=request.getAttribute("listNum")%>";
+				}
+			});
+          });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
-
-<!-- 질문게시판 강사 -->
-
-     <!--    헤더     -->
+<%
+     		if (request.getAttribute("loginWrong") != null) {
+    			out.println(request.getAttribute("loginWrong"));
+    		}
+		
+			int userKind=3;//접속하지 않았을 때 
+			
+			if(session.getAttribute("userKind")!=null){
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
+				//0학생 1강사 2관리자
+			}
+%>
+  <!--    헤더     -->
     <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
             <div id="menuleft">
+                <a href="intro.bit">
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+                </a>
+                <!-- 학생일 때  -->
+                <%if(userKind==0){%>
                 <ul>
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">질문게시판</a></li>
@@ -169,54 +147,94 @@
                     <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
+                <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+				<ul>
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">출석 관리</a></li>
+                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="#">스케줄</a></li>
+                </ul>
+                <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="userKind2">
+                    <li><a>내 강의실</a></li>
+                    <li><a href="#">강사</a></li>
+                    <li><a href="#">학생</a></li>
+                    <li><a href="#">관리자</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                 </ul>
+                 <!-- 비 로그인  -->
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>강사1
-                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
+                <p><%if(session.getAttribute("isLogin")!=null) {
+                	out.println(session.getAttribute("id")+" 님");
+                }else{%>환영합니다<%}%>
+                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" />
+                </p>
                 <!--   상단메뉴   -->
+                 <!-- 학생일 때  -->
+                <%if(userKind==0){ %>
                 <ul id="topmenu">
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
+                 <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+                <ul id="topmenu">
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="#">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="topmenu">
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 비 로그인  -->
+                <%}else if(userKind==3){}%>
             </div>
         </div>
     </div>
-
     <!-- *****content start*****    -->
-   <section class="section">
+    <%
+    	BbsDto bean=(BbsDto)request.getAttribute("bean");
+    %>
     <div id="content">
-    <div id="topmargin"></div>
-    
-	        <h1>상세페이지</h1>
-	        <br/>
-	      <%
-	      	BbsDto bean=(BbsDto)request.getAttribute("detail"); 
-	      %>
-        <table class="bbs">
-          <tr>
-          	<td colspan="2">
-          		<div></div>제목 &nbsp&nbsp<%=bean.getTitle() %><div><span>작성자&nbsp&nbsp<%=bean.getId() %></span> <span class="span1">등록일&nbsp&nbsp<%=bean.getNalja() %></span></div>
-          	</td>
-          </tr>
-          <tr>
-          	<td colspan="2"></td>
-          </tr>
-          <tr>
-          	<td colspan="2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%=bean.getContent() %></td>
-          </tr>
-          <tr>
-          	<td rowspan="3"><textarea cols="80" readonly="readonly">준비중입니다.</textarea></td><td border="0" rowspan="3"><button>입력</button></td>
-          </tr>
-        </table>
-        <div>
-           <input type="button" value="뒤로" onclick=goback() name="goback"/>
+		<div>
+            <div>
+                <div>
+                    <h5><%=bean.getTitle() %></h5>
+                    <p id="writer"><%=bean.getId() %></p>
+                    <p id="nalja"><%=bean.getNalja() %></p>
+                </div>
+                <div>
+                    <p>첨부파일 : <a href="#"><%=bean.getAttach() %></a></p>
+                </div>
+                <div>
+                    <p><%=bean.getContent() %></p>
+                </div>
+            </div>
         </div>
-        
+        <button id="beforebtn">이전</button>
+        <button id="editbtn">수정</button>
+        <button id="deletebtn">삭제</button>
     </div>
-	</section>
     <!-- *****content end***** -->
     <!--    바닥글     -->
     <div id="footer">
@@ -235,4 +253,3 @@
         </table>
     </div>
 </body>
-</html>

@@ -1,155 +1,141 @@
-<%@page import="com.bit.model.BbsDao"%>
+<%@page import="java.sql.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.bit.model.BbsDto"%>
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.bit.model.BbsDao"%>
+<%@page import="java.nio.channels.SeekableByteChannel"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
+<meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
     <style type="text/css">
-       	#topmargin{
-    		height:100px;
-    	}
-        .bbs{
-            width: 800px;
-
-/*             height:490px; */
-            background-color: white;
-            border-top:1px solid black;
-            border-bottom:1px solid black;
-            z-index:1;
+        #content {
+            position: relative;
+            top: 150px;
         }
-       	.bbs th{
-       		border-bottom: 1px solid #ccc;
-       	}
-       	.bbs td{
-       		border-bottom: 1px solid #ccc;
-       	}
-        
-        #content>div{
+
+        #content>form>div {
             width: 800px;
+            height: 500px;
             margin: 0px auto;
-        	z-index:1;
-        	background:lightgray;
-        }
-        .bbs tr:nth-child(1){
-        	height:15%;
-        }
-        .bbs tr:nth-child(2){
-        	height:60%;
-        }
-        .bbs tr:nth-child(3){
-        	height:15%;
-        }
-        .bbs tr:nth-child(4){
-        	text-align:right;
-        	right:50px;
-        	height:10%;
-        }
-        
-         #content #bbs2 select{
-            display: inline-block;
-            width: 250px;
-            height: 28px;
-        }
-        #content #ca{
-        	align-content: center;
-        	position: relative;
-        	top: 10px;
-        	width:210px;
-        	
-        }
-        #content #ca .movebtn{
-        	position: relative;
-        	top: 2px;
-        	
-        }
-        #content #ca button{
-        	text-decoration:none;
-        	text-align:center;
-        	color:black;
-        	width: 25px;
-        	height: 25px;
-        	border: 1px solid black;
-        }
-        #btn{
-       	 text-align:right;
-       	 
-        }
-        
-        #content input[type="button"],
-        #content input[type="submit"],
-        #content button{
-        	background-color:white;
-        	border: 1px solid black;
-        	width: 80px;
-          	height: 35px;
-          	margin: 2px;
-        	
-        }
-                
-        #content table a{
-        	color: black;
-        	text-decoration: none;
-        }
-        
-         #content #bbs2 input[type="text"]{
-        	height: 26px;
-        }
-        select{
-        	text-align:left;
+            border: 1px solid gray;
 
         }
-        .section{
-        	claer:both;
-        	height:800px;
-        	margin:0px auto;
+
+        #content>form>div>div {
+            width: 700px;
+            margin: 50px auto;
+            height: 400px;
         }
-       
-        select{
-        	text-align:center;
+
+        #content>form>div>div>div {
+            border-bottom: 1px solid gray;
+            width: 700px;
         }
-        .context{
-        	width:95%;
-        	height:95%;
-        	margin:0px auto;
-        	padding-left:10px;
+
+        #content>form>div>div>div p {
+            font-size: 14px;
+            margin: 10px 0px;
+
         }
-        #sub{
-        	width:75%;
-        	height:60%;
-        	margin:0px auto;
-        	margin-left:15px;
+
+        #content>form>div>div>div #writer,
+        #content>form>div>div>div #nalja {
+            position: relative;
+            top: 10px;
+            width: 150px;
+
         }
-        #sub1{
-        	width:85%;
-        	height:65%;
-        	margin:0px auto;
-        	margin-left:15px;
+
+        #content>form>div>div>div #nalja {
+            position: relative;
+            top: -10px;
+            left: 600px;
         }
-        button{
-       		background-color:lightblue;
-        	font-size:10;
-        	float:right;
-        	margin-right:20px;
-        	padding-bottom:5px;
-        	border-radius:5px;
-        	padding:10px;
+
+        #content>form>div>div>div:nth-child(3) {
+            border: 0px;
         }
-        
-        #content .bbs th,
-        #content .bbs td{
-        	height: 42px;
+
+        #content input[type="button"],
+        #content input[type="submit"] {
+            position: relative;
+            top: 10px;
+            left: 700px;
+            border: 0px;
+            background-color: darkblue;
+            color: white;
+            border-radius: 3px;
+            width: 60px;
+            height: 30px;
         }
-        
-       #footer{
-       	top: 100px;
-       }
+
+        #content #title {
+            font-weight: bold;
+            border: 0px;
+            width: 400px;
+            height: 30px;
+            border-bottom: 2px solid gray;
+            display: block;
+
+        }
+
+        #content #attachp {
+            display: inline-block;
+        }
+
+        #content #attach {
+            position: absolute;
+            width: 400px;
+            height: 30px;
+            top: -30px;
+            left: 30px;
+            border: 0px;
+
+        }
+
+        #content #addbtn {
+            display: inline-block;
+            position: absolute;
+            left: 750px;
+            top: 138px;
+        }
+
+        #content #topdiv {
+            height: 82px;
+        }
+
+        #content #id {
+            border: 0px;
+            width: 150px;
+            height: 30px;
+            display: inline-block;
+            margin: 10px;
+            position: absolute;
+        }
+
+        #content span{
+            font-size: 14px;
+            position: absolute;
+            left: 750px;
+            top: 100px;
+        }
+
+        #content textarea {
+            resize: none;
+            width: 700px;
+            height: 280px;
+            border-top: 0px;
+        }
+
+        #footer {
+            top: 300px;
+        }
+
     </style>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             //위쪽 메뉴아이콘 마우스오버
@@ -170,20 +156,29 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-
             //왼쪽 메뉴 마우스오버
             $("#menuleft>ul").hover(function() {
                 $("#menuleft>ul").stop().fadeIn();
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
+
+            //로그아웃버튼 클릭
+            $("#logoutbtn").click(function() {
+               location.href="<%=request.getContextPath()%>/lms/logout.bit";
+            });
             
-            secondproject3/WebContent/lms/bbsNotice.jsp
-            //입력버튼
-           	$('#addbtn').click(function(){
-           		window.location.href="<%=request.getContextPath()%>/lms/bbsnoticeadd.bit";
-           	});      
-        });
+            //readonly
+            $("#attach").attr("readonly",true);
+            $("#id").attr("readonly",true);
+            $("#nalja").attr("readonly",true);
+            
+            //이전버튼 클릭
+            $("#beforebtn").click(function(){
+            	location.href="<%=request.getContextPath()%>/lms/bbsnotice.bbs";
+            });
+
+          });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -282,79 +277,33 @@
         </div>
     </div>
     <!-- *****content start*****    -->
-   <section class="section">
+    <%
+   		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");	
+		String date = format1.format (System.currentTimeMillis());
+    %>
     <div id="content">
-    <div id="topmargin">    
+	    <form method="post" action="<%=request.getContextPath()%>/lms/bbsnoticeadd.bit">
+            <div>
+                <div>
+                    <div id="topdiv">
+                        <input type="text" name="title" id="title" />
+                        <input type="hidden" name="lecNum" value="<%=session.getAttribute("lecNum")%>"/>
+                        <input type="text" name="id" id="id" value="<%=session.getAttribute("id") %>" />
+                        <span><%=date %></span>
+                    </div>
+                    <div>
+                        <p id="attachp">첨부파일 : </p><input type="text" id="attach" name="attach" />
+                    </div>
+                    <div>
+                        <textarea name="content"></textarea>
+                    </div>
+                </div>
+            </div>
+            <input type="button" id="addbtn" value="첨부" />
+            <input type="button" id="beforebtn" value="이전" />
+            <input type="submit" id="editbtn" value="입력" />
+        </form>
     </div>
-	        <h1>공지사항</h1><br/>
-	        <table id="bbs2">
-		       		<tr>
-		       			<td>
-					        <select>
-					        	<option value="">전체보기</option>
-					        </select>
-				        </td>		   
-				        <td>
-			                <input type="text" id="search" name="search" />
-			                <button>검색</button>
-				        </td>
-		            </tr>
-	        </table>
-        <table class="bbs">
-            <tr>
-                <th >NO.</th>
-                <th>제목</th>
-                <th>등록일</th>
-                <th>조회수</th>
-            </tr>
-            <%  ArrayList<BbsDto> list = null;
-           	 	list = (ArrayList<BbsDto>)request.getAttribute("list"); 
-				for(BbsDto bean : list)  {          
-            %>
-            <tr>
-                <td><%=bean.getListNum() %></td>
-                <td><a href="bbsnoticedetail.bit?listnum=<%=bean.getListNum()%>"><%=bean.getTitle() %></a></td>
-                <td><%=bean.getNalja() %></td>
-                <td>0</td>
-            </tr>
-            <%} %>
-        </table>
-	        <div id="ca">
-        <%
-        String param=request.getParameter("page");
-		String param2=request.getParameter("limit");
-		if(param==null){param="1";}
-		int p=Integer.parseInt(param);
-		if(param2==null){param2="10";}
-		int limit=Integer.parseInt(param2);	
-		
-        BbsDao dao=new BbsDao(); 
-        int total=dao.getTotlaCount();
-    	int start=((p-1)/5)*5;
-    	int end=total/limit;
-    	if(total%limit!=0){
-    		end++;
-    	}
-    	int end2=end;
-    	if(start+5<end){
-    		end=start+5;
-    	}
-    	
-    	if(start>0){
-    		%><a href="<%=request.getContextPath() %>/lms/bbsnotice.bbs?page=<%=start-1%>&limit=<%=limit%>"><button class="movebtn">〈</button></a><%
-    		}
-    		for(int i=start; i<end; i++){
-    		%><a href="<%=request.getContextPath() %>/lms/bbsnotice.bbs?page=<%=i+1%>&limit=<%=limit%>"	><button><%=i+1%></button></a><%
-    		}
-    		if(end+1<=end2){
-    		%><a href="<%=request.getContextPath() %>/lms/bbsnotice.bbs?page=<%=end+1 %>&limit=<%=limit%>"><button class="movebtn">〉</button></a>
-    		<%} %>
-	        </div>
-	        <div id="btn">
-	            <button id="addbtn">작성</button>
-	        </div>
-    </div>
-	</section>
     <!-- *****content end***** -->
     <!--    바닥글     -->
     <div id="footer">
@@ -373,4 +322,3 @@
         </table>
     </div>
 </body>
-</html>
