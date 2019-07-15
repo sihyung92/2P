@@ -51,6 +51,7 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("userNum", "" + bean.getUserNum());
 			session.setAttribute("userKind", "" + bean.getUserKind());
 			session.setAttribute("lecNum", "" + bean.getLecNum());
+			System.out.println("lecNum :  " + bean.getLecNum());
 		}
 		doGet(req, resp);
 	}

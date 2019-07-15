@@ -50,6 +50,11 @@
         	width:800px;
         		
         }
+        
+        #content table a{
+        	color: black;
+        	text-decoration: none;
+        }
         #content #bbs2 select{
             display: inline-block;
             width: 250px;

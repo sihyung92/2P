@@ -1,3 +1,4 @@
+<%@page import="com.bit.model.BbsDao"%>
 <%@page import="com.bit.model.BbsDto"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -13,7 +14,7 @@
     	}
         .bbs{
             width: 800px;
-            height:490px;
+/*             height:490px; */
             background-color: white;
             border-top:1px solid black;
             border-bottom:1px solid black;
@@ -64,9 +65,11 @@
             height: 28px;
         }
         #content #ca{
+        	align-content: center;
         	position: relative;
         	top: 10px;
-        	width:150px;
+        	width:210px;
+        	
         }
         #content #ca .movebtn{
         	position: relative;
@@ -93,7 +96,13 @@
         	border: 1px solid black;
         	width: 80px;
           	height: 35px;
+          	margin: 2px;
         	
+        }
+                
+        #content table a{
+        	color: black;
+        	text-decoration: none;
         }
         
          #content #bbs2 input[type="text"]{
@@ -120,22 +129,17 @@
         	text-align:right;
         }
         
+        #content .bbs th,
+        #content .bbs td{
+        	height: 42px;
+        }
+        
        #footer{
        	top: 100px;
        }
     </style>
     <script type="text/javascript">
-        var big;
         $(document).ready(function() {
-            //이미지 슬라이드
-            big = $('#imgcontent').bxSlider({
-                minSlides: 1,
-                maxSlides: 1,
-                slideWidth: 800,
-                pager: true,
-                auto: true,
-                pause: 5000
-            });
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -162,9 +166,10 @@
                 $("#menuleft>ul").stop().fadeOut();
             });
             
-            	$('button').click(function(){
-            		window.location.href='bbsQuAdd.jsp';
-            	});
+            //입력버튼
+           	$('#addbtn').click(function(){
+           		window.location.href="<%=request.getContextPath()%>/lms/bbsnoticeadd.bit";
+           	});
             
         });
     </script>
@@ -267,8 +272,7 @@
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
-    <div id="topmargin">
-    
+    <div id="topmargin">    
     </div>
 	        <h1>공지사항</h1><br/>
 	        <table id="bbs2">
@@ -277,12 +281,10 @@
 					        <select>
 					        	<option value="">전체보기</option>
 					        </select>
-				        </td>
-				     
-				   
+				        </td>		   
 				        <td>
-				                <input type="text" id="search" name="search" />
-				                <button>검색</button>
+			                <input type="text" id="search" name="search" />
+			                <button>검색</button>
 				        </td>
 		            </tr>
 	        </table>
@@ -293,26 +295,51 @@
                 <th>등록일</th>
                 <th>조회수</th>
             </tr>
-            <%  ArrayList<BbsDto> list = (ArrayList<BbsDto>)request.getAttribute("list"); 
-				for(BbsDto bean:list)  {          
+            <%  ArrayList<BbsDto> list = null;
+           	 	list = (ArrayList<BbsDto>)request.getAttribute("list"); 
+				for(BbsDto bean : list)  {          
             %>
             <tr>
                 <td><%=bean.getListNum() %></td>
-                <td><%=bean.getTitle() %></td>
+                <td><a href="bbsnoticedetail.bit?listnum=<%=bean.getListNum()%>"><%=bean.getTitle() %></a></td>
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
             </tr>
             <%} %>
         </table>
 	        <div id="ca">
-	            <a href="#"><button class="movebtn">〈</button></a>
-	            <a href="#"><button>1</button></a>
-	            <a href="#"><button>2</button></a>
-	            <a href="#"><button>3</button></a>
-	            <a href="#"><button class="movebtn">〉</button></a>
+        <%
+        String param=request.getParameter("page");
+		String param2=request.getParameter("limit");
+		if(param==null){param="1";}
+		int p=Integer.parseInt(param);
+		if(param2==null){param2="10";}
+		int limit=Integer.parseInt(param2);	
+		
+        BbsDao dao=new BbsDao(); 
+        int total=dao.getTotlaCount();
+    	int start=((p-1)/5)*5;
+    	int end=total/limit;
+    	if(total%limit!=0){
+    		end++;
+    	}
+    	int end2=end;
+    	if(start+5<end){
+    		end=start+5;
+    	}
+    	
+    	if(start>0){
+    		%><a href="<%=request.getContextPath() %>/lms/bbsnotice.bbs?page=<%=start-1%>&limit=<%=limit%>"><button class="movebtn">〈</button></a><%
+    		}
+    		for(int i=start; i<end; i++){
+    		%><a href="<%=request.getContextPath() %>/lms/bbsnotice.bbs?page=<%=i+1%>&limit=<%=limit%>"	><button><%=i+1%></button></a><%
+    		}
+    		if(end+1<=end2){
+    		%><a href="<%=request.getContextPath() %>/lms/bbsnotice.bbs?page=<%=end+1 %>&limit=<%=limit%>"><button class="movebtn">〉</button></a>
+    		<%} %>
 	        </div>
 	        <div id="btn">
-	            <button type="button">작성</button>
+	            <button id="addbtn">작성</button>
 	        </div>
     </div>
 	</section>

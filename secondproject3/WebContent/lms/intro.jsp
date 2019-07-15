@@ -176,7 +176,7 @@
         <!--    공지사항     -->
         <div id="notic">
             <h3>공지사항</h3>
-            <a href="notice.bbs">전체보기</a>
+            <a href="<%=request.getContextPath() %>/lms/bbsnotice.bbs">전체보기</a>
             <div>
                 <table>
             <%ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");

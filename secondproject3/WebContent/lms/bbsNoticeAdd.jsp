@@ -1,7 +1,7 @@
-<%@page import="com.bit.model.UserDto"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.bit.model.UserDao"%>
-<%@page import="com.bit.model.ClassDto"%>
+<%@page import="java.sql.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.bit.model.BbsDto"%>
+<%@page import="com.bit.model.BbsDao"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,105 +10,130 @@
 <head>
 <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-  <style type="text/css">
+    <style type="text/css">
         #content {
             position: relative;
             top: 150px;
         }
 
-        #content h3 {
+        #content>form>div {
+            width: 800px;
+            height: 500px;
+            margin: 0px auto;
+            border: 1px solid gray;
+
+        }
+
+        #content>form>div>div {
+            width: 700px;
+            margin: 50px auto;
+            height: 400px;
+        }
+
+        #content>form>div>div>div {
+            border-bottom: 1px solid gray;
+            width: 700px;
+        }
+
+        #content>form>div>div>div p {
+            font-size: 14px;
+            margin: 10px 0px;
+
+        }
+
+        #content>form>div>div>div #writer,
+        #content>form>div>div>div #nalja {
+            position: relative;
+            top: 10px;
+            width: 150px;
+
+        }
+
+        #content>form>div>div>div #nalja {
             position: relative;
             top: -10px;
-            left: 100px;
-
+            left: 600px;
         }
 
-        #content h3+div {
-            width: 800px;
-            height: 700px;
-            margin: 0px auto;
-            background-color: rgba(0, 0, 0, 0.1);
-        }
-		
-        #content h3+div>div {
-            width: 700px;
-            margin: 0px auto;
-            position: relative;
-            top: 30px;
-            border-bottom: 2px solid gray;
-        }
-		
-		#content #editbtn,
-		#content #deletebtn{
-			color:black;
-			background-color: white;
-			border: 1px solid black;
-			width: 70px;
-			height: 40px;
-			position: relative;
-			top: 20px;
-			left: 600px;
-		}
-		
-        #content label {
-            font-weight: bold;
-            display: inline-block;
-            width: 100px;
-            margin: 10px;
-        }
-
-        #content p {
-            display: inline-block;
-
-        }
-
-        #content button {
-            background-color: darkblue;
+        #content>form>div>div>div:nth-child(3) {
             border: 0px;
+        }
+
+        #content input[type="button"],
+        #content input[type="submit"] {
+            position: relative;
+            top: 10px;
+            left: 700px;
+            border: 0px;
+            background-color: darkblue;
             color: white;
             border-radius: 3px;
-            height: 40px;
-            width: 160px;
-            position: relative;
-            top: -30px;
-            left: 500px; 
+            width: 60px;
+            height: 30px;
         }
 
-        #content #lecturecontent {
-            display: block;
-            width: 660px;
-            height: 150px;
-            margin: 0px auto;
-            overflow-y: scroll;
-            ;
-        }
-
-        #content #studiv {
+        #content #title {
+            font-weight: bold;
             border: 0px;
+            width: 400px;
+            height: 30px;
+            border-bottom: 2px solid gray;
+            display: block;
+
         }
 
-        #content #studiv div {
-            display: block;
-            width: 660px;
-            height: 80px;
-            margin: 0px auto;
+        #content #attachp {
+            display: inline-block;
         }
-        #content #studiv div p{
+
+        #content #attach {
+            position: absolute;
+            width: 400px;
+            height: 30px;
+            top: -30px;
+            left: 30px;
+            border: 0px;
+
+        }
+
+        #content #addbtn {
+            display: inline-block;
+            position: absolute;
+            left: 750px;
+            top: 138px;
+        }
+
+        #content #topdiv {
+            height: 82px;
+        }
+
+        #content #id {
+            border: 0px;
+            width: 150px;
+            height: 30px;
+            display: inline-block;
+            margin: 10px;
+            position: absolute;
+        }
+
+        #content span{
             font-size: 14px;
-        } 
-		#content #status{
-			font-size: 18px;
-			font-weight: bold;
-			color:blue;
-		}
+            position: absolute;
+            left: 750px;
+            top: 100px;
+        }
+
+        #content textarea {
+            resize: none;
+            width: 700px;
+            height: 280px;
+            border-top: 0px;
+        }
+
         #footer {
             top: 300px;
         }
-        
-        button >a {
-        	text-decoration:none;
-       		 color:white;
-        }
+
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
@@ -143,38 +168,16 @@
                location.href="<%=request.getContextPath()%>/lms/logout.bit";
             });
             
-            //모집중, 마감 글자색 변경
-            var statusval=$("#status").html();
-            if(statusval=="마감"){
-            	$("#status").css("color","red");
-            };
+            //readonly
+            $("#attach").attr("readonly",true);
+            $("#id").attr("readonly",true);
+            $("#nalja").attr("readonly",true);
             
-            //수정 이동경로
-            $("#editbtn").click(function(){
-           		location.href="<%=request.getContextPath()%>/lms/lectureedit.bit?num=<%=request.getParameter("num")%>";
-           	});
-            
-            //삭제 경로이동
-            $("#deletebtn").click(function(){
-        <%-- 		var result=confirm('삭제하시겠습니까?');
-        		if(result){
-        			$.ajax({
-        				url:'<%=request.getContextPath()%>/lms/lecturedelete.bit',
-        				method: 'post',
-        				data: 'num='+<%=request.getParameter("num") %>,
-        				error: function() {
-        					alert('삭제실패');
-        				},
-        				success: function(){
-        					window.location.href='<%=request.getContextPath()%>/lms/lecturemanage.bit';
-        				}
-        			});		
-        		} --%>
-        		if(confirm("삭제하시겠습니까?")){
-        			location.href="<%=request.getContextPath()%>/lms/lecturedelete.bit?num=<%=request.getParameter("num")%>";
-        		}
+            //이전버튼 클릭
+            $("#beforebtn").click(function(){
+            	location.href="<%=request.getContextPath()%>/lms/bbsnotice.bbs";
             });
-            
+
           });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -191,7 +194,6 @@
 				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
 				//0학생 1강사 2관리자
 			}
-
 %>
   <!--    헤더     -->
     <div id="header">
@@ -232,7 +234,9 @@
                     <li><a href="#">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
-                 <%}else{}%>
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
@@ -245,7 +249,7 @@
                  <!-- 학생일 때  -->
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="#">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -253,7 +257,7 @@
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
-                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="#">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
@@ -273,68 +277,32 @@
         </div>
     </div>
     <!-- *****content start*****    -->
-    <div id="content">
     <%
-    	ClassDto bean=(ClassDto)request.getAttribute("bean");
-    ArrayList<String> list =null;
-    list=(ArrayList<String>)request.getAttribute("stulist"); 
-    
-    String status="모집중";
-    if(list.size()==30){
-    	status="마감";
-    }
+   		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");	
+		String date = format1.format (System.currentTimeMillis());
     %>
-  <h3>강의정보</h3>
-        <div>
-        	<button id="editbtn">수정</button>
-        	<button id="deletebtn">삭제</button>
+    <div id="content">
+	    <form method="post" action="<%=request.getContextPath()%>/lms/bbsnoticeadd.bit">
             <div>
                 <div>
-                    <label>강의명</label>
-                    <p><%=bean.getName() %></p>
-                </div>
-                <div>
-                    <label>강사명</label>
-                    <p><%=bean.getTeacherName() %></p>
-                </div>
-                <div>
-                    <label>수강기간</label>
-                    <p><%=bean.getStartdate() %> ~ <%=bean.getEnddate() %></p>
-                </div>
-                <div>
-                    <label>강의일정</label>
-                    <p>월 - 금 (09:30~18:10) / 점심시간 (13:30~14:10)</p>
-                </div>
-                <div>
-                    <label>모집현황 </label>
-                    <p><%=list.size() %>/30</p>
-                    <p id="status"><%=status %></p>
-                </div>
-                <div>
-                    <label>강의실</label>
-                    <p><%=bean.getClassroom() %></p>
-                </div>
-                <button><a href="myClass.bit?lecNum=<%=bean.getNum()%>">강의실로 바로가기</a></button>
-            </div>
-            <div>
-                <label for="content">강의과정</label>
-                <p id="lecturecontent"><%=bean.getContent() %></p>
-            </div>
-            <div>
-                <label for="curriculum">첨부파일</label>
-                <a href="#"><%=bean.getAttach() %></a>
-            </div>
-            <div id="studiv">
-                <label for="stucnt">학생목록</label>
-                <div>
-            <%
-            	for(String name :list){
-            %>
-                    <p><%=name %></p>
-           <%} %>
+                    <div id="topdiv">
+                        <input type="text" name="title" id="title" />
+                        <input type="hidden" name="lecNum" value="<%=session.getAttribute("lecNum")%>"/>
+                        <input type="text" name="id" id="id" value="<%=session.getAttribute("id") %>" />
+                        <span><%=date %></span>
+                    </div>
+                    <div>
+                        <p id="attachp">첨부파일 : </p><input type="text" id="attach" name="attach" />
+                    </div>
+                    <div>
+                        <textarea name="content"></textarea>
+                    </div>
                 </div>
             </div>
-        </div>
+            <input type="button" id="addbtn" value="첨부" />
+            <input type="button" id="beforebtn" value="이전" />
+            <input type="submit" id="editbtn" value="입력" />
+        </form>
     </div>
     <!-- *****content end***** -->
     <!--    바닥글     -->
