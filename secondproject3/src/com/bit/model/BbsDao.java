@@ -42,66 +42,7 @@ public class BbsDao {
 		}
 		return list;
 	}
-	//자료게시판
-		public ArrayList<BbsDto> getmaterialList(){
-			ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-			String sql="select * from lmsBbs where lecNum=1 AND bbsNum=1 order by listnum desc";
-			conn=Connector.getConnection();
-			try {
-				pstmt=conn.prepareStatement(sql);
-				rs=pstmt.executeQuery();
-				while(rs.next()){
-					BbsDto bean=new BbsDto();
-					bean.setListNum(rs.getInt("listNum"));
-					bean.setBbsNum(rs.getInt("bbsNum"));
-					bean.setLecNum(rs.getInt("lecnum"));
-					bean.setTitle(rs.getString("title"));
-					bean.setContent(rs.getString("content"));
-					bean.setId(rs.getString("id"));
-					bean.setNalja(rs.getDate("nalja"));
-					bean.setAttach(rs.getString("attach"));
-					list.add(bean);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally{
-				Connector.close(rs);
-				Connector.close(pstmt);
-				Connector.close(conn);
-			}
-			return list;
-		}
 
-	//과제게시판
-	public ArrayList<BbsDto> getAssignmentList(){
-		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs where lecNum=1 AND bbsNum=2 order by listnum desc";
-		conn=Connector.getConnection();
-		try {
-			pstmt=conn.prepareStatement(sql);
-			rs=pstmt.executeQuery();
-			while(rs.next()){
-				BbsDto bean=new BbsDto();
-				bean.setListNum(rs.getInt("listNum"));
-				bean.setBbsNum(rs.getInt("bbsNum"));
-				bean.setLecNum(rs.getInt("lecnum"));
-				bean.setTitle(rs.getString("title"));
-				bean.setContent(rs.getString("content"));
-				bean.setId(rs.getString("id"));
-				bean.setNalja(rs.getDate("nalja"));
-				bean.setAttach(rs.getString("attach"));
-				list.add(bean);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-				Connector.close(rs);
-				Connector.close(pstmt);
-				Connector.close(conn);
-		}
-		return list;
-	}
-	
 	public ArrayList<BbsDto> getNoticeList2(int p, int limit) {
 		ArrayList<BbsDto> list = new ArrayList<BbsDto>();
 		String sql = "select * from (select rowNum as rn,listNum,title,content,id,nalja,attach from"
@@ -587,10 +528,6 @@ public class BbsDao {
 		}
 		return result;
 	}
-
-
-
-	
 	//과제등록
 	public int assignmentInsert(int lecNum,String title, String content,String id){
 		String sql="insert into lmsBbs values(lmsBbs_2_seq.nextval,2,?,?,?,?,sysdate,0,null)";
@@ -633,6 +570,33 @@ public class BbsDao {
 			if(conn!=null)conn.close();
 		}
 		return total;
+	}
+
+	public BbsDto getLastAsm() {
+		BbsDto bean=new BbsDto();
+		String sql="select * from (select * from lmsBbs where lecNum=1 AND bbsNum=2 order by listnum desc) where rownum=1";
+		conn=Connector.getConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()){
+				bean.setListNum(rs.getInt("listNum"));
+				bean.setBbsNum(rs.getInt("bbsNum"));
+				bean.setLecNum(rs.getInt("lecnum"));
+				bean.setTitle(rs.getString("title"));
+				bean.setContent(rs.getString("content"));
+				bean.setId(rs.getString("id"));
+				bean.setNalja(rs.getDate("nalja"));
+				bean.setAttach(rs.getString("attach"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			Connector.close(rs);
+			Connector.close(pstmt);
+			Connector.close(conn);
+		}
+		return bean;
 	}
 	
 }

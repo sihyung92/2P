@@ -22,6 +22,7 @@ public class BbsListController extends HttpServlet {
 		RequestDispatcher rd = null;
 		String path = req.getRequestURI().replaceAll(req.getContextPath(), "");
 		System.out.println(path);
+		BbsDao dao = new BbsDao();
 		if (path.equals("/lms/bbsnotice.bbs")) {
 			// ArrayList<BbsDto> list = dao.getNoticeList();
 			int total = dao.getTotlaCount();
