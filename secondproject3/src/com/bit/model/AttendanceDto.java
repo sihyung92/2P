@@ -2,23 +2,30 @@ package com.bit.model;
 
 public class AttendanceDto {
 	private int attendanceNum;
-	private String date;
+	private String day;
 	private int type;
 	private int lecNum;
 	private int userNum;
 	private int userKind;
+	private double rate;
 	
+	public double getRate() {
+		return rate;
+	}
+	public void setRate(double rate) {
+		this.rate = rate;
+	}
 	public int getAttendanceNum() {
 		return attendanceNum;
 	}
 	public void setAttendanceNum(int attendanceNum) {
 		this.attendanceNum = attendanceNum;
 	}
-	public String getDate() {
-		return date;
+	public String getDay() {
+		return day;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setDay(String day) {
+		this.day = day;
 	}
 	public int getType() {
 		return type;
@@ -44,6 +51,4 @@ public class AttendanceDto {
 	public void setUserKind(int userKind) {
 		this.userKind = userKind;
 	}
-	
-	
 }

@@ -76,8 +76,6 @@ public class ClassDao {
 		}
 		return list;
 	}
-	
-
 
 	public ClassDto getAttendanceBean(int lecNum) {
 		ClassDto bean=null;
@@ -93,18 +91,6 @@ public class ClassDao {
 				bean.setName(rs.getString("name"));
 				bean.setStartdate(rs.getString("startDate"));
 				bean.setEnddate(rs.getString("enddate"));
-				String totalDate = rs.getString("startdate")+"~"+rs.getString("enddate");
-				bean.setTotalDate(totalDate);
-				bean.setTeacherName(rs.getString("teacherName"));
-				bean.setContent(rs.getString("content"));
-				boolean isRecruiting = true;
-//				if(0>new Date().compareTo(java.sql.Date.valueOf(rs.getString("startdate")))){
-//					isRecruiting = true;
-//				};
-				
-				bean.setRecruitng(isRecruiting);
-				list.add(bean);
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -291,7 +291,6 @@ if(session.getAttribute("userKind")==null){%>
                     Copyright &copy; 비트캠프 All rights reserved.
                 </td>
             </tr>
-            <a href="<%=request.getContextPath() %>/lms/attendance.bit?lecNum=1">aaaaaaaaaaaaaaaaaa</a>
         </table>
     </div>
 </body>
