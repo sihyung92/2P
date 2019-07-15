@@ -326,6 +326,9 @@
 			$('#writebtn').click(function(){
 				location.href="attendance.bit?lecNum="+lecPage;
 			});
+			$('#gradebtn').click(function(){
+				location.href="grade.bit";
+			});
 			
           });
     
@@ -482,7 +485,7 @@
 		<div class="box3" id="atdStu">
 			<table class="table2">
 				<tr>
-					<td colspan="5">나의 출석</td>
+					<td colspan="5"><h2>나의 출석</h2></td>
 				</tr>
 				<tr>
 					<td style="padding-bottom: 50px">출석: <%=roll %>회</td>
@@ -490,13 +493,7 @@
 					<td style="padding-bottom: 50px">결석: <%=absent %>회</td>
 				</tr>
 				<tr>
-					<td colspan="5">오늘의 출석</td>
-				</tr>
-				<tr>
-					<td style="padding-bottom: 30px">입실: 09:25</td>
-					<td style="padding-bottom: 30px">복귀:</td>
-					<td style="padding-bottom: 30px">외출:</td>
-					<td  style="padding-bottom: 30px" colspan="2">퇴실:</td>
+					<td colspan="5"><h2>오늘의 출석</h2></td>
 				</tr>
 				<tr>
 					<td >나의 출석률</td>
@@ -578,7 +575,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width: 340px; height: 50px;"><img id="teacher" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/gradebtn.png" align="right" hspace="10px"><img alt="gradebtn" src="<%=request.getContextPath()%>/imgs/viewgradebtn.png" align="right"></td>
+					<td style="width: 340px; height: 50px;"><img id="teacher" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/gradebtn.png" align="right" hspace="10px"><img id="gradebtn" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/viewgradebtn.png" align="right"></td>
 				</tr>
 				<tr>
 
