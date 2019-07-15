@@ -250,8 +250,29 @@
 				1.5em 1.5em;
 			background-repeat: no-repeat;
 		}
+		
+		/*캘린더*/
+		
+		#calendar {
+	      	width: 400px;
+	      	height: 450px;
+		    margin: 0 auto;
+		    padding-top: 130px;
+		  }
+		  
+		  
 	</style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
+    <link href='../fullcalendar/packages/core/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/list/main.css' rel='stylesheet' />
+	<script src='../fullcalendar/packages/core/main.js'></script>
+	<script src='../fullcalendar/packages/interaction/main.js'></script>
+	<script src='../fullcalendar/packages/daygrid/main.js'></script>
+	<script src='../fullcalendar/packages/timegrid/main.js'></script>
+	<script src='../fullcalendar/packages/list/main.js'></script>
+	<script src='../fullcalender/packages/core/locales/ko.js'></script>
     <script type="text/javascript">
     $(document).ready(function() {
     var userKind = <%=session.getAttribute("userKind")%>;  
@@ -331,7 +352,96 @@
 			});
 			
           });
-    
+
+    	//캘린더
+       
+	    document.addEventListener('DOMContentLoaded', function() {
+	    var calendarEl = document.getElementById('calendar');
+	
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	      plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+	      header: {
+	        left: 'prev,next today',
+	        center: 'title',
+	        right: 'dayGridMonth,timeGridDay'
+	      },
+	
+	      navLinks: true, 
+	      selectable: true,
+	      selectMirror: true,
+	      selectHelper: true,
+	      editable: true,
+	      eventLimit: true,
+	      events: '/events.json',
+	      
+	      select: function(arg) {
+	        var title = prompt('일정 등록:');
+	        if (title) {
+	          calendar.addEvent({
+	            title: title,
+	            start: arg.start,
+	            end: arg.end,
+	            allDay: arg.allDay
+	          })
+	        }
+	        calendar.unselect()
+	      },
+	      
+	      eventDrop: function(event, delta, revertFunc) {
+	          event_data = { 
+	            event: {
+	              id: event.id,
+	              start: event.start.format(),
+	              end: event.end.format()
+	            }
+	          };
+	          $.ajax({
+	              url: event.update_url,
+	              data: event_data,
+	              type: 'PATCH'
+	          });
+	        },
+	      
+	      eventClick: function(event, jsEvent, view) {
+	    	  $.getScript(event.eidt_url, function() {});
+	      },
+	        
+	        events: [
+	                 {
+	                   title: '발표일',
+	                   start: '2019-07-16',
+	                 },
+	                 {
+	                   title: 'React 특강',
+	                   start: '2019-07-20',
+	                   end: '2019-07-21'
+	                 },
+	                 {
+	                     title: '과제 제출일',
+	                     start: '2019-07-03'
+	                   },
+	                 {
+	                   title: 'git 스터디',
+	                   start: '2019-07-02',
+	                   end: '2019-07-05'
+	                 },
+	                 {
+	                   title: '개인 미니 프로젝트',
+	                   start: '2019-07-19',
+	                   end: '2019-07-26'
+	                 },
+	                 {
+	                     title: '2차 프로젝트',
+	                     start: '2019-07-09',
+	                     end: '2019-07-16'
+	                   },
+	               ] 
+	      
+	    });
+	    
+	    calendar.render();
+	  });
+
     
     
     </script>
@@ -699,7 +809,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="box8" style="text-align: center;">캘린더 위치</div>
+		<div class="box8" style="text-align: center;"><div id='calendar'></div></div>
 	</div>
 </div>
 
