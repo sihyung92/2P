@@ -118,9 +118,16 @@
 	        width:100px;
         }
         
+        #footer {
+        	top:300px;
+        }
+        
     </style>
     <script type="text/javascript">
         $(document).ready(function() {
+        	var userKind = <%=session.getAttribute("userKind")%>;
+        	
+        	
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -150,6 +157,19 @@
             $("#logoutbtn").click(function() {
                location.href="<%=request.getContextPath()%>/lms/logout.bit";
             });
+            
+            //강사접속시만 글쓰기 버튼보임
+            $("#teacher").css('display','none');
+            if(userKind==1){
+            	$("#teacher").show();
+            }
+            
+            //학생 접속시 삭제열 안보임
+            
+            if(userKind==0){
+            	$('table tr>th:nth-child(7)').hide();
+            	$('table td:nth-child(7)').hide();
+            }
 
           });
     </script>
@@ -254,7 +274,7 @@
      <section class="section">
     <div id="content">
     <div id="topmargin"></div>
-	        <h1>질문 게시판</h1>
+	        <h1>과제 게시판</h1>
 	        <br/>
 	        <div >
 	        <h3>진행중 과제</h3>
@@ -307,12 +327,12 @@
             %>
             <tr>
                 <td><%=bean.getListNum() %></td>
-              	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
+              	<td><a href="bbsasmdetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
                 <td>진행중</td>
                 <td><%=bean.getId() %></td>
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
-	            <td><a href="<%=request.getContextPath()%>/lms/qudelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
+	            <td><a href="<%=request.getContextPath()%>/lms/asmdelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
             </tr>
             <%
             }
@@ -326,7 +346,7 @@
 	            <a href="#">다음</a>
 	        </div>
 	         <div id="btn">
-	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
+	          <a href="<%=request.getContextPath()%>/lms/bbsasmadd.bit"><button type="button" id="teacher">등록하기</button></a>
 	        </div>
     </div>
 	</section>

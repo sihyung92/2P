@@ -29,16 +29,20 @@ public class AttendanceController extends HttpServlet {
 		String day = (String)session.getAttribute("day");
 		ClassDao classDao = new ClassDao();
 		ClassDto classBean = classDao.getAttendanceBean(lecNum);
+		ClassDto classBean2= classDao.LecDetail(lecNum);
 		AttendanceDao atteDao = new AttendanceDao();
 		UserDao userDao = new UserDao();
 		ArrayList<UserDto> userList = userDao.getAttendanceList(lecNum);
 		ArrayList<AttendanceDto> atteList = atteDao.getAttendanceRate(lecNum);
 		ArrayList<ArrayList<String>> daliyList = atteDao.getTecherDaliyList(day);
+		ArrayList<ClassDto> beanAsc = classDao.getListAsc();
 		req.setAttribute("bean", classBean);
 		req.setAttribute("userList", userList);
 		req.setAttribute("atteList", atteList);
 		req.setAttribute("lecNum", lecNum);
 		req.setAttribute("daliy", daliyList);
+		req.setAttribute("beanAsc",beanAsc);
+		req.setAttribute("bean2", classBean2);
 		RequestDispatcher rd = req.getRequestDispatcher("/lms/attendance.jsp");
 		rd.forward(req, resp);
 	}

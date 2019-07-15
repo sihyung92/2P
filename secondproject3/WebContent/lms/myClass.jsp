@@ -499,7 +499,6 @@
                  </ul>
                  <!-- 비 로그인  -->
                  <%}else{
-                	 
                  }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
@@ -710,7 +709,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width: 340px; height: 50px;"><img alt="gradebtn" src="imgs/viewgradebtn.png" align="right"></td>
+					<td style="width: 340px; height: 50px;"><img alt="gradebtn" src="<%=request.getContextPath()%>/imgs/viewgradebtn.png" align="right"></td>
 				</tr>
 			</table>
 		</div>

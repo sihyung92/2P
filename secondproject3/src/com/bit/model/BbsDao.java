@@ -288,11 +288,11 @@ public class BbsDao {
 		}
 		return list;
 	}
-
-	public BbsDto questiondetail(int listNum, int lecNum) {
+    public BbsDto questiondetail(int listNum, int lecNum) {
 		BbsDto bean = new BbsDto();
 		String sql = "select * from lmsBbs where listNum=? and bbsNum=3 and lecNum=?";
 		conn = Connector.getConnection();
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, listNum);
@@ -333,7 +333,6 @@ public class BbsDao {
 		}
 		return result;
 	}
-
 	public int questionInsert(int lecNum, String title, String content,
 			String id) {
 		String sql = "insert into lmsBbs values(lmsBbs_2_seq.nextval,3,?,?,?,?,sysdate,0,null)";
