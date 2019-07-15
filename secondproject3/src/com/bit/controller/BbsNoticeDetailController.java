@@ -14,17 +14,19 @@ import com.bit.model.BbsDto;
 
 @WebServlet("/lms/bbsnoticedetail.bit")
 public class BbsNoticeDetailController extends HttpServlet{
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		int listNum=Integer.parseInt(req.getParameter("listNum"));
-		int lecNum=Integer.parseInt(req.getParameter("lecNum"));
-		BbsDao dao=new BbsDao();
-		req.setAttribute("detail", dao.noticedetail(listNum, lecNum));
-		
-		RequestDispatcher rd=req.getRequestDispatcher("bbsnoticedetail.jsp");
-		rd.forward(req,resp);
-		
+		RequestDispatcher rd = req
+				.getRequestDispatcher("/lms/bbsNoticeDetail.jsp");
+
+		int listNum = Integer.parseInt(req.getParameter("listnum"));
+
+		BbsDao dao = new BbsDao();
+		BbsDto bean = dao.getNoticDetail(listNum);
+		req.setAttribute("bean", bean);
+		req.setAttribute("listNum", listNum);
+		rd.forward(req, resp);
 	}
 }
+

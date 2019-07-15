@@ -49,6 +49,7 @@
         	width:800px;
         		
         }
+        
         .bbs th:nth-child(3){
         	width:40%;
         }

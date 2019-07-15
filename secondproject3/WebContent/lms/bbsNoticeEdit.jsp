@@ -1,4 +1,5 @@
 <%@page import="com.bit.model.BbsDto"%>
+<%@page import="com.bit.model.BbsDao"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -7,61 +8,90 @@
 <head>
 <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-     <style type="text/css">
+  <style type="text/css">
         #content{
             position: relative;
             top: 150px;
         }
         
-        #content>div{ 
+        #content>form>div{ 
             width: 800px;
             height: 500px;
             margin: 0px auto;
             border: 1px solid gray;
             
         }
-        #content>div>div{
+        #content>form>div>div{
             width: 700px;
             margin: 50px auto;
             height: 400px;
         }
-        #content>div>div>div{
+        #content>form>div>div>div{
             border-bottom:  1px solid gray;
         } 
         
-        #content>div>div>div p{
+        #content>form>div>div>div p{
             font-size: 14px;
             margin: 10px 0px;
             
         }
-        #content>div>div>div #writer,
-        #content>div>div>div #nalja{
+        #content>form>div>div>div #writer,
+        #content>form>div>div>div #nalja{
             position: relative;
             top: 10px;
             width: 150px;
             
         }
-        #content>div>div>div #nalja{
+        #content>form>div>div>div #nalja{
             position: relative;
             top: -10px;
             left: 600px;
         }
-        #content>div>div>div:nth-child(3){
+        #content>form>div>div>div:nth-child(3){
             border: 0px;
         }
-        #content button{
+        #content input[type="button"],
+        #content input[type="submit"]{
             position: relative;
             top: 10px;
-            left: 650px;
+            left: 700px;
             border: 0px;
             background-color: darkblue;
             color: white;
             border-radius: 3px;
             width: 60px;
+            height: 30px;            
+        }
+        #content input[type="text"]{
+        	font-weight:bold;
+            border: 0px;
+            width: 400px;
             height: 30px;
+            border-bottom: 2px solid gray;
             
         }
-
+        #content #attachp{
+            display: inline-block;
+        }
+        #content #attach{
+        	postion: absolute;
+        	top: -30px;
+        	left: 30px;
+        	border: 0px;
+        	
+        }
+        #content #addbtn{
+            display: inline-block;
+            position: absolute;
+            left: 750px;
+            top: 155px;   
+        }
+        #content textarea{
+            resize: none;
+            width: 700px;
+            height: 280px;
+            border-top: 0px;
+        }
         #footer{
             top: 300px;
         }
@@ -99,20 +129,13 @@
                location.href="<%=request.getContextPath()%>/lms/logout.bit";
             });
             
-			//이전버튼 클릭
-			$("#beforebtn").click(function(){
-				location.href="<%=request.getContextPath()%>/lms/bbsnotice.bbs";
-			});
-			//수정버튼 클릭
-			$("#editbtn").click(function(){
-				location.href="<%=request.getContextPath()%>/lms/bbsnoticeedit.bit?listnum=<%=request.getAttribute("listNum")%>";
-			});
-			//삭제버튼 클릭
-			$("#deletebtn").click(function(){
-				if(confirm("삭제하시겠습니까?")){
-					location.href="<%=request.getContextPath()%>/lms/bbsnoticedelete.bit?listnum=<%=request.getAttribute("listNum")%>";
-				}
-			});
+            //첨부파일 readonly
+            $("#attach").attr("readonly",true);
+            
+            $("#beforebtn").click(function(){
+            	location.href="<%=request.getContextPath()%>/lms/bbsnoticedetail.bit?listnum=<%=request.getAttribute("listNum")%>";
+            });
+
           });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -216,24 +239,27 @@
     	BbsDto bean=(BbsDto)request.getAttribute("bean");
     %>
     <div id="content">
-		<div>
-            <div>
-                <div>
-                    <h5><%=bean.getTitle() %></h5>
-                    <p id="writer"><%=bean.getId() %></p>
-                    <p id="nalja"><%=bean.getNalja() %></p>
-                </div>
-                <div>
-                    <p>첨부파일 : <a href="#"><%=bean.getAttach() %></a></p>
-                </div>
-                <div>
-                    <p><%=bean.getContent() %></p>
-                </div>
-            </div>
-        </div>
-        <button id="beforebtn">이전</button>
-        <button id="editbtn">수정</button>
-        <button id="deletebtn">삭제</button>
+	    <form method="post" action="<%=request.getContextPath()%>/lms/bbsnoticeedit.bit">
+	   		<div>
+	            <div>
+	                <div>
+	                    <input type="text" name="title" id="title" value="<%=bean.getTitle() %>"/>
+	                    <input type="hidden" name="listNum" value="<%=bean.getListNum()%>"/>
+	                    <p id="writer"><%=bean.getId() %></p>
+	                    <p id="nalja"><%=bean.getNalja() %></p>
+	                </div>
+	                <div>
+	                    <p id="attachp">첨부파일 : </p><input type="text" id="attach" name="attach" value="<%=bean.getAttach() %>"/>
+	                </div>
+	                <div>
+	                    <textarea name="content"><%=bean.getContent() %></textarea>
+	                </div>
+	            </div>
+	        </div>
+            <input type="button" id="addbtn" value="첨부" />
+            <input type="button" id="beforebtn" value="이전" />
+	        <input type="submit" id="editbtn" value="수정" />
+        </form>
     </div>
     <!-- *****content end***** -->
     <!--    바닥글     -->

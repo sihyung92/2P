@@ -50,6 +50,11 @@
         	width:800px;
         		
         }
+        
+        #content table a{
+        	color: black;
+        	text-decoration: none;
+        }
         #content #bbs2 select{
             display: inline-block;
             width: 250px;
@@ -84,6 +89,8 @@
        	 text-align:right;
        	 
         }
+        #content input[type="button"],
+        #content input[type="submit"],
         #content button{
         	background-color:white;
         	border: 1px solid black;
@@ -123,7 +130,6 @@
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
-        var big;
         $(document).ready(function() {
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
@@ -156,9 +162,59 @@
            		location.href="<%=request.getContextPath()%>/lms/lectureadd.bit";
            	});
             	
-            	
-            
+           	$('#delete').click(function(){
+                if(confirm("삭제하시겠습니까?")){
+            		var deletelist = rowChk();
+            		$.ajax({
+            			url:"<%=request.getContextPath()%>/lms/lecturedelete.bit",
+            			data:{"deletelist" : deletelist},
+            			type: "post",
+            			dataType: "json"          			
+            		}).done(function success() {
+						alert("삭제되었습니다");
+					}).fail(function fail() {
+						alert("삭제 실패하였습니다");
+					})
+                }else{
+                    return false;
+                }
+            });
+           	
+           	
         });
+        
+        function rowChk() {
+            var chkObj = document.getElementsByName("chk10");
+            var rowCnt = chkObj.length - 1;
+            var deletelist = "";
+			for (var i=0; i<rowCnt; i++){
+				if(chkObj[i].checked==true){
+					deletelist += chkObj[i].val() + "_";
+				}
+			}        	
+			return deletelist;
+		}
+        
+        function allChk(obj){
+            var chkObj = document.getElementsByName("chk10");
+            var rowCnt = chkObj.length - 1;
+            var check = obj.checked;
+            if (check) {
+                for (var i=0; i<=rowCnt; i++){
+                	if(chkObj[i].type == "checkbox"){
+                     	chkObj[i].checked = true; 
+                	}
+                }
+            } else {
+                for (var i=0; i<=rowCnt; i++) {
+                 if(chkObj[i].type == "checkbox"){
+                     chkObj[i].checked = false; 
+                 }
+                }
+            }
+        }
+
+        
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -277,7 +333,7 @@
 	        </table>
         <table class="bbs">
             <tr>
-            	<th><input type="checkbox" name="chk"></th>
+            	<th><input type="checkbox" name="chk" id="chk" onclick="allChk(this);" /></th>
                 <th >NO.</th>
                 <th>강의명</th>
                 <th>강사명</th>
@@ -286,14 +342,14 @@
                 <th>상태</th>
                 <th>강의실</th>
             </tr>
-            <%
-           
+            <% 
             ArrayList<ClassDto> list =null;
             list=(ArrayList<ClassDto>)request.getAttribute("list"); 
+            int i=0;
             	for(ClassDto bean:list){
             %>
             <tr>
-            	<td><input type="checkbox" name="chk10" value="<%=bean.getNum() %>"></td>
+            	<td><input type="checkbox" name="chk10" id="rowchk<%=i++ %>" value="<%=bean.getNum() %>"/></td>
                 <td><%=bean.getNum() %></td>
                 <td><a href="lecturedetail.bit?num=<%=bean.getNum() %>"><%=bean.getName() %></a></td>
                 <td><%=bean.getTeacherName() %></td>
@@ -312,8 +368,8 @@
 	            <a href="#"><button class="movebtn">〉</button></a>
 	        </div>
 	        <div id="btn">
-	            <button type="button" id="addbtn">등록</button>
-	            <button type="button">삭제</button>
+	            <input type="button" id="addbtn" value="입력"/>
+	            <input type="submit" id="delete" value="삭제"/>
 	        </div>
     </div>
 	</section>

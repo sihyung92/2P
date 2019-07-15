@@ -11,15 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.bit.model.BbsDao;
 
 @WebServlet("/lms/bbsnoticedelete.bit")
-public class BbsNoticeDeleteController extends HttpServlet{
+public class BbsNoticeDeleteController extends HttpServlet {
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-				
-		int lecnum=Integer.parseInt(req.getParameter("lecNum"));
-		int listnum=Integer.parseInt(req.getParameter("listNum"));
-		BbsDao dao=new BbsDao();
-		dao.noticeDelete(lecnum,listnum);
-		resp.sendRedirect("notice.bbs");
+
+		int listNum = Integer.parseInt(req.getParameter("listnum"));
+		BbsDao dao = new BbsDao();
+		dao.getNoticeDelete(listNum);
+
+		resp.sendRedirect(req.getContextPath() + "/lms/bbsnotice.bbs");
 	}
+
 }
