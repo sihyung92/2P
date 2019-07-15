@@ -138,7 +138,7 @@
 		
 			int userKind=3;//접속하지 않았을 때 
 			if(session.getAttribute("userKind")!=null){
-				userKind=(Integer)session.getAttribute("userKind");
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
 				//0학생 1강사 2관리자
 			}
 %>
@@ -154,9 +154,9 @@
                 <%if(userKind==0){%>
                 <ul>
                     <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
@@ -164,9 +164,9 @@
 				<ul>
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->

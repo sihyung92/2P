@@ -1,7 +1,5 @@
-<%@page import="com.bit.model.BbsDao"%>
-<%@page import="com.bit.model.BbsDto"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,11 +15,17 @@
         .bbs{
             width: 800px;
             height:490px;
-            background-color: lightgray;
+            background-color: white;
+            border-top:1px solid black;
+            border-bottom:1px solid black;
             z-index:1;
-            border-collapse:collapse;
         }
-       
+       	.bbs th{
+       		border-bottom: 1px solid #ccc;
+       	}
+       	.bbs td{
+       		border-bottom: 1px solid #ccc;
+       	}
         
         #content>div{
             width: 800px;
@@ -35,47 +39,27 @@
             display: inline-block;
             margin: 0px 0px 10px 450px;
         }
-        
+        .bbs tr>td{
+        	text-align:center;
+        }
         .bbs{
-        	border:1px solid;
         	margin: 0px auto;
         	width:100%
         	z-index:3;
         }
-        .bbs tr:nth-child(1){
-        	height:20%;
-        	border:1px solid;
+        #bbs2{
+        	margin:0px auto; 
+        	width:800px;
+        		
         }
-        .bbs tr:nth-child(1)>td{
-        	padding-left:20px;
+        .bbs th:nth-child(2){
+        	width:40%;
         }
-        .bbs tr:nth-child(2){
-        	height:10%;
-        }
-         .bbs tr:nth-child(2)>td{
-        	padding-left:20px;
-        }
-        .bbs tr:nth-child(3){
-        	height:50%;
-        }
-        .bbs tr:nth-child(4){
-        	height:20%;
-        	border:1px solid;
-        }
-        .bbs tr:nth-child(4)>td+td{
-        	position:relative;
-        	left:-20px;
-        }
-       
-        .span1{
-        	float:right;
+        input[name="serch"]{
         	text-align:right;
-        	margin-right:20px;
-        	
         }
-        button{
-        	background-color:lightblue;
-        	font-size:10
+        #ca{
+        text-align:center;
         }
         select{
         	text-align:left;
@@ -85,24 +69,33 @@
         	height:800px;
         	margin:0px auto;
         }
-       
+        #bbs2>tr>td{
+        	background:pink;
+        }
         select{
         	text-align:center;
         }
-       	#span3{
-       		float:left;
-       		margin-left:30px;
+        #bbs2 tr>td{
+        	text-align:left;
+        }
+        #bbs2 tr>td+td{
+        	text-align:right;
+        }
+       
+       	#btn{
+       	
+        	text-align:right;
        	}
-       	textarea{
-       		margin-left:50px;
-       		height:50px;
-       	}
-       	input[name='goback']{
-       		clear:both;
-       		float:right;
-       		right:100px;
-       		margin-top:20px;
-       	}
+        #btn button{
+        	background-color:lightblue;
+        	font-size:10;
+        	border-radius:6px;
+        }
+        button[name="delebtn"]{
+        	font-size:6px;
+        	background-color:lightblue;
+        	border-radius:6px;
+        }
     </style>
     <script type="text/javascript">
         var big;
@@ -141,20 +134,15 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
+            
+            
         });
-        
-        function goback(){
-        		window.history.back();
-        }
-        function godelete(){
-        	
-        }
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
 
-<!-- 질문게시판 강사 -->
+<!-- 공지사항게시판 -->
 
      <!--    헤더     -->
     <div id="header">
@@ -184,36 +172,58 @@
             </div>
         </div>
     </div>
-
     <!-- *****content start*****    -->
    <section class="section">
     <div id="content">
     <div id="topmargin"></div>
-    
-	        <h1>상세페이지</h1>
+	        <h1>공지사항 게시판</h1>
 	        <br/>
-	      <%
-	      	BbsDto bean=(BbsDto)request.getAttribute("detail"); 
-	      %>
+	      <table id="bbs2">
+		       		<tr>
+		       			<td>
+					        <select>
+					        	<option value="">전체보기</option>
+					        </select>
+				        </td> <td>
+				                <input type="text" id="search" name="search" />
+				                <button>검색</button>
+				        </td>
+		            </tr>
+	        </table>
         <table class="bbs">
-          <tr>
-          	<td colspan="2">
-          		<div></div>제목 &nbsp&nbsp<%=bean.getTitle() %><div><span>작성자&nbsp&nbsp<%=bean.getId() %></span> <span class="span1">등록일&nbsp&nbsp<%=bean.getNalja() %></span></div>
-          	</td>
-          </tr>
-          <tr>
-          	<td colspan="2"></td>
-          </tr>
-          <tr>
-          	<td colspan="2"><%=bean.getContent() %></td>
-          </tr>
-          <tr>
-          	<td rowspan="3"><textarea cols="80" readonly="readonly">준비중입니다.</textarea></td><td border="0" rowspan="3"><button>입력</button></td>
-          </tr>
+            <tr>
+                <th >NO.</th>
+                <th>제목</th>
+                <th>등록일</th>
+                <th>조회수</th>
+                <th>삭제</th>
+            </tr>
+            <%
+            	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
+            	for(int i=0;i<list.size();i++){
+            		BbsDto bean=list.get(i);
+            %>
+            <tr>
+                <td><%=bean.getListNum() %></td>
+              	<td><a href="bbsnoticedetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
+                <td><%=bean.getNalja() %></td>
+                <td>0</td>
+	            <td><a href="<%=request.getContextPath()%>/lms/bbsnoticedelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
+            </tr>
+            <%
+            }
+            %>
         </table>
-        <div>
-           <input type="button" value="뒤로" onclick=goback() name="goback"/>
-        </div>
+	        <div id="ca">
+	            <a href="#">이전</a>
+	            <a href="#">1</a>
+	            <a href="#">2</a>
+	            <a href="#">3</a>
+	            <a href="#">다음</a>
+	        </div>
+	         <div id="btn">
+	          <a href="<%=request.getContextPath()%>/lms/bbsnoticeadd.jsp"><button type="button">등록하기</button></a>
+	        </div>
     </div>
 	</section>
     <!-- *****content end***** -->

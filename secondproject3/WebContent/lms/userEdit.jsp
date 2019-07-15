@@ -156,9 +156,11 @@
 				  isAlready=$.trim(data);
 				  console.log(isAlready);
 				if (isAlready==1) {
-					$('#idspan').show();
+					$('#idspan1').show();
+					$('#idspan2').hide();
 				} else {
-					$('#idspan').hide();
+					$('#idspan2').show();
+					$('#idspan1').hide();
 				}
 			  },
 			  error: function(request,status,error){
@@ -210,21 +212,21 @@
                 <!-- 학생일 때  -->
                 <%if(userKind==0){%>
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
 				<ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="attendance.bit">출석 관리</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
@@ -233,9 +235,9 @@
                     <li><a href="#">강사</a></li>
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
-                    <li><a href="#">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
                  <%}else{}%>
@@ -251,26 +253,26 @@
                  <!-- 학생일 때  -->
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
-                    <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="useredit.bit">회원관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
@@ -289,7 +291,7 @@
 			<div id="basicinfo">
 				<div>
 					<label for="ctg">분류</label> <select name="ctg" id="ctg">
-						<option value="">분류</option>
+						<option value="" disabled>분류</option>
 						<option value="0">학생</option>
 						<option value="1">강사</option>
 						<option value="2">직원</option>
@@ -298,7 +300,8 @@
 				<div>
 					<label for="id">아이디</label> <input type="text" name="id" id="id" />
 					<button id="idbtn">중복</button>
-					<span id="idspan">중복아이디입니다.</span>
+					<span id="idspan1">중복아이디입니다.</span>
+					<span id="idspan2">생성 가능한 아이디입니다.</span>
 				</div>
 				<div>
 					<label for="pw">비밀번호</label> <input type="password" name="pw"

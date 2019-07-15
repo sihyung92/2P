@@ -7,73 +7,41 @@
 <meta charset="UTF-8">
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
   <style type="text/css">
-        #content {
-            position: relative;
-            top: 150px;
-        }
+          body {
+		    margin: 40px 10px;
+		    padding: 0;
+		    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+		    font-size: 14px;
+		  }
+		
+		  #calendar {
+		    max-width: 900px;
+		    margin: 0 auto;
+		    padding-top: 130px;
+		  }
+		  
+		  #header {
+		  	margin: 0px;
+		  }
 
-        #content h2 {
-            position: relative;
-            left: 100px;
-        }
-
-        #content #btndiv {
-            width: 150px;
-            position: relative;
-            left: 730px;
-            top: -10px;
-        }
-
-        #content #btndiv button {
-            background-color: white;
-            border: 1px solid black;
-            height: 25px;
-            width: 25px;
-        }
-
-        #content #btndiv .movebtn {
-            position: relative;
-            top: 2px;
-        }
-
-        #content table {
-            width: 800px;
-            height: 500px;
-            margin: 0px auto;
-        }
-
-        #content th {
-            height: 40px;
-            background-color: rgba(0, 0, 0, 0.1);
-        }
-
-        #content table,
-        #content tr,
-        #content td,
-        #content th {
-            border: 1px solid gray;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-        #content input[type="button"] {
-            background-color: darkblue;
-            border: 0px;
-            border-radius: 3px;
-            width: 80px;
-            height: 40px;
-            color: white;
-            position: absolute;
-            top: 580px;
-            left: 450px;
-        }
-
-        #footer {
-            top: 300px;
-        }
+	      #footer {
+	        top: 300px;
+	      }
+	      
+	      
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
+    <link href='../fullcalendar/packages/core/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/list/main.css' rel='stylesheet' />
+	<script src='../fullcalendar/packages/core/main.js'></script>
+	<script src='../fullcalendar/packages/interaction/main.js'></script>
+	<script src='../fullcalendar/packages/daygrid/main.js'></script>
+	<script src='../fullcalendar/packages/timegrid/main.js'></script>
+	<script src='../fullcalendar/packages/list/main.js'></script>
+	<script src='../fullcalender/packages/core/locales/ko.js'></script>
     <script type="text/javascript">
         var big;
         $(document).ready(function() {
@@ -117,6 +85,98 @@
             });
 
           });
+ 
+        //캘린더
+       
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridDay'
+      },
+
+      navLinks: true, 
+      selectable: true,
+      selectMirror: true,
+      selectHelper: true,
+      editable: true,
+      eventLimit: true,
+      events: '/events.json',
+      
+      select: function(arg) {
+        var title = prompt('일정 등록:');
+        if (title) {
+          calendar.addEvent({
+            title: title,
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay
+          })
+        }
+        calendar.unselect()
+      },
+      
+      eventDrop: function(event, delta, revertFunc) {
+          event_data = { 
+            event: {
+              id: event.id,
+              start: event.start.format(),
+              end: event.end.format()
+            }
+          };
+          $.ajax({
+              url: event.update_url,
+              data: event_data,
+              type: 'PATCH'
+          });
+        },
+      
+      eventClick: function(event, jsEvent, view) {
+    	  $.getScript(event.eidt_url, function() {});
+      },
+        
+        events: [
+                 {
+                   title: '발표일',
+                   start: '2019-07-16',
+                 },
+                 {
+                   title: 'React 특강',
+                   start: '2019-07-20',
+                   end: '2019-07-21'
+                 },
+                 {
+                     title: '과제 제출일',
+                     start: '2019-07-03'
+                   },
+                 {
+                   title: 'git 스터디',
+                   start: '2019-07-02',
+                   end: '2019-07-05'
+                 },
+                 {
+                   title: '개인 미니 프로젝트',
+                   start: '2019-07-19',
+                   end: '2019-07-26'
+                 },
+                 {
+                     title: '2차 프로젝트',
+                     start: '2019-07-09',
+                     end: '2019-07-16'
+                   },
+               ] 
+      
+    });
+    
+    calendar.render();
+  });
+
+        
+        
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -143,21 +203,21 @@
                 <!-- 학생일 때  -->
                 <%if(userKind==0){%>
                 <ul>
-                    <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
 				<ul>
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
@@ -166,9 +226,9 @@
                     <li><a href="#">강사</a></li>
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
-                    <li><a href="#">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
                  <%}else{}%>
@@ -184,26 +244,26 @@
                  <!-- 학생일 때  -->
                 <%if(userKind==0){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
                 <ul id="topmenu">
-                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="myClass.bit">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
-                    <li><a href="#">메인</a></li>
+                    <li><a href="intro.bit">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
-                    <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="useredit.bit">회원관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
@@ -212,74 +272,9 @@
         </div>
     </div>
     <!-- *****content start*****    -->
-    <div id="content">
-        <h2>sysdate</h2>
-        <div id="btndiv">
-            <button class="movebtn">〈</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button class="movebtn">〉</button>
-        </div>
-        <table>
-            <tr>
-                <th>Sun</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wen</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-            </tr>
-        </table>
-        <input type="button" value="입력" />
-
-    </div>
+    
+    <div id='calendar'></div>
+    
     <!-- *****content end***** -->
     <!--    바닥글     -->
     <div id="footer">

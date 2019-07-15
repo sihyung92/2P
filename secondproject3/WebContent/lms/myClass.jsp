@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList,com.bit.model.ClassDto, com.bit.model.BbsDto"%>
@@ -248,13 +250,36 @@
 				1.5em 1.5em;
 			background-repeat: no-repeat;
 		}
+		
+		/*캘린더*/
+		
+		#calendar {
+	      	width: 400px;
+	      	height: 450px;
+		    margin: 0 auto;
+		    padding-top: 130px;
+		  }
+		  
+		  
 	</style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
+    <link href='../fullcalendar/packages/core/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
+	<link href='../fullcalendar/packages/list/main.css' rel='stylesheet' />
+	<script src='../fullcalendar/packages/core/main.js'></script>
+	<script src='../fullcalendar/packages/interaction/main.js'></script>
+	<script src='../fullcalendar/packages/daygrid/main.js'></script>
+	<script src='../fullcalendar/packages/timegrid/main.js'></script>
+	<script src='../fullcalendar/packages/list/main.js'></script>
+	<script src='../fullcalender/packages/core/locales/ko.js'></script>
     <script type="text/javascript">
-    var userKind = <%=session.getAttribute("userKind")%>;  
-    var lecPage;
-    var lecNum;
     $(document).ready(function() {
+    var userKind = <%=session.getAttribute("userKind")%>;  
+    var lecPage= <%=request.getAttribute("lecNum")%>;
+    var lecNum;
+    		$('#browsers option[value='+ lecPage +']').attr('selected', true);
+    	
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -311,13 +336,114 @@
     		//관리자 강의별 페이지 이동
 			$("select").change(function(){
     			lecPage=$("#browsers option:selected").val();
+    			
 				location.href="<%=request.getContextPath()%>/lms/myClass.bit?lecNum="+lecPage;
-				$("select").val(lacPage).prop("selected",true);
+
+				//$('#browsers option[value='+ lecPage +']').attr('selected', true);
+				//$("select").val(lacPage).prop("selected",true);
     			//alert(lecPage);
+
 			});
-    		
+			$('#writebtn').click(function(){
+				location.href="attendance.bit?lecNum="+lecPage;
+			});
+			$('#gradebtn').click(function(){
+				location.href="grade.bit";
+			});
 			
           });
+
+    	//캘린더
+       
+	    document.addEventListener('DOMContentLoaded', function() {
+	    var calendarEl = document.getElementById('calendar');
+	
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	      plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+	      header: {
+	        left: 'prev,next today',
+	        center: 'title',
+	        right: 'dayGridMonth,timeGridDay'
+	      },
+	
+	      navLinks: true, 
+	      selectable: true,
+	      selectMirror: true,
+	      selectHelper: true,
+	      editable: true,
+	      eventLimit: true,
+	      events: '/events.json',
+	      
+	      select: function(arg) {
+	        var title = prompt('일정 등록:');
+	        if (title) {
+	          calendar.addEvent({
+	            title: title,
+	            start: arg.start,
+	            end: arg.end,
+	            allDay: arg.allDay
+	          })
+	        }
+	        calendar.unselect()
+	      },
+	      
+	      eventDrop: function(event, delta, revertFunc) {
+	          event_data = { 
+	            event: {
+	              id: event.id,
+	              start: event.start.format(),
+	              end: event.end.format()
+	            }
+	          };
+	          $.ajax({
+	              url: event.update_url,
+	              data: event_data,
+	              type: 'PATCH'
+	          });
+	        },
+	      
+	      eventClick: function(event, jsEvent, view) {
+	    	  $.getScript(event.eidt_url, function() {});
+	      },
+	        
+	        events: [
+	                 {
+	                   title: '발표일',
+	                   start: '2019-07-16',
+	                 },
+	                 {
+	                   title: 'React 특강',
+	                   start: '2019-07-20',
+	                   end: '2019-07-21'
+	                 },
+	                 {
+	                     title: '과제 제출일',
+	                     start: '2019-07-03'
+	                   },
+	                 {
+	                   title: 'git 스터디',
+	                   start: '2019-07-02',
+	                   end: '2019-07-05'
+	                 },
+	                 {
+	                   title: '개인 미니 프로젝트',
+	                   start: '2019-07-19',
+	                   end: '2019-07-26'
+	                 },
+	                 {
+	                     title: '2차 프로젝트',
+	                     start: '2019-07-09',
+	                     end: '2019-07-16'
+	                   },
+	               ] 
+	      
+	    });
+	    
+	    calendar.render();
+	  });
+
+    
+    
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -345,20 +471,20 @@
                 <%if(userKind==0){%>
                 <ul>
                     <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
                 <%}else if(userKind==1){ %>
 				<ul>
                     <li><a href="myClass.bit">내 강의실</a></li>
-                    <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
-                    <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
-                    <li><a href="#">스케줄</a></li>
+                    <li><a href="attendance.bit">출석 관리</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
+                    <li><a href="assignment.bbs">과제게시판</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
+                    <li><a href="schedule.jsp">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
@@ -368,8 +494,8 @@
                     <li><a href="#">학생</a></li>
                     <li><a href="#">관리자</a></li>
                     <li><a href="lecturemanage.bit">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
                  </ul>
                  <!-- 비 로그인  -->
                  <%}else{
@@ -403,10 +529,10 @@
                  <!-- 관리자일 때  -->
                 <%}else if(userKind==2){ %>
                 <ul id="topmenu">
-                    <li><a href="#">회원관리</a></li>
-                    <li><a href="#">강의관리</a></li>
-                    <li><a href="#">출결관리</a></li>
-                    <li><a href="#">일정관리</a></li>
+                    <li><a href="useredit.bit">회원관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="attendance.bit">출결관리</a></li>
+                    <li><a href="scheduleDetail.jsp">일정관리</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
                  <!-- 비 로그인  -->
@@ -423,6 +549,29 @@
 	bbs3List = (ArrayList<BbsDto>)request.getAttribute("bbs3List");
 	bbs2List = (ArrayList<BbsDto>)request.getAttribute("bbs2List");
 	bbs1List = (ArrayList<BbsDto>)request.getAttribute("bbs1List");
+	
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	String day = (String)session.getAttribute("day");
+	Date startDate = format.parse(bean.getStartdate());
+	Date sysdate = format.parse(day);
+	long calDate = sysdate.getTime()-startDate.getTime();
+	long calDateDays = calDate/(24*60*60*1000);
+	calDateDays = Math.abs(calDateDays);
+	double progress = (100*calDateDays/90)/1.0;
+	
+	int[] myRate = (int[])request.getAttribute("myRate");
+	double rate = 0;
+	int total=0;
+	int roll=0;
+	int late=0;
+	int absent=0;
+	if(myRate!=null){
+		roll=myRate[0];
+		total=myRate[1];
+		late=myRate[2];
+		absent=myRate[3];
+		rate=100.0*(roll+late)/total;
+	}
 	%>
 
 	<div class="wrapper">
@@ -431,14 +580,14 @@
 		<div class="box1" style="background-color: white;"><b><%=bean.getName() %></b></div>
 		<div class="box2" style="background-color: white;">
 			<select id="browsers" name="browsers">
-			<option>강의선택</option>
+			
 			<%
 				for(int i=0; i<beanAsc.size(); i++) {
 				ClassDto bean2=beanAsc.get(i);
 				%>
 				<option value=<%=i+1 %>><%=bean2.getName() %></option>
 			<% }
-			System.out.println(request.getParameter("browsers"));
+			//System.out.println(request.getParameter("browsers"));
 			%>
 			</select>
 		</div>
@@ -446,29 +595,21 @@
 		<div class="box3" id="atdStu">
 			<table class="table2">
 				<tr>
-					<td colspan="5">나의 출석</td>
+					<td colspan="5"><h2>나의 출석</h2></td>
 				</tr>
 				<tr>
-					<td style="padding-bottom: 25px">출석: 10회</td>
-					<td style="padding-bottom: 25px">지각: 3회</td>
-					<td style="padding-bottom: 25px">조퇴: 1회</td>
-					<td style="padding-bottom: 25px">외출: 0회</td>
-					<td style="padding-bottom: 25px">결석: 1회</td>
+					<td style="padding-bottom: 50px">출석: <%=roll %>회</td>
+					<td style="padding-bottom: 50px">지각/조퇴/외출: <%=late %>회</td>
+					<td style="padding-bottom: 50px">결석: <%=absent %>회</td>
 				</tr>
 				<tr>
-					<td colspan="5">오늘의 출석</td>
-				</tr>
-				<tr>
-					<td style="padding-bottom: 30px">입실: 09:25</td>
-					<td style="padding-bottom: 30px">복귀:</td>
-					<td style="padding-bottom: 30px">외출:</td>
-					<td  style="padding-bottom: 30px" colspan="2">퇴실:</td>
+					<td colspan="5"><h2>오늘의 출석</h2></td>
 				</tr>
 				<tr>
 					<td >나의 출석률</td>
 					<td colspan="4">
 						<div class="graph1">
-							<strong class="bar" style="width: 56.4%;">56.4% (56/100일)</strong>
+							<strong class="bar" style="width: <%=rate%>%;"><%=rate%>%(<%=roll+late %>/<%=total %>일)</strong>
 						</div>
 					</td>
 				</tr>
@@ -476,7 +617,7 @@
 					<td>과정 진행률</td>
 					<td colspan="4">
 						<div class="graph2">
-							<strong class="bar" style="width: 58.7%;">58.7% (57/100일)</strong>
+							<strong class="bar" style="width: <%=progress%>%;"><%=progress %>% (<%=calDateDays%>/90일)</strong>
 						</div>
 					</td>
 				</tr>
@@ -484,11 +625,12 @@
 		</div>
 		<!-- student attendance end-->
 		<!-- teacher attendance start-->
+	<%ArrayList<ArrayList<String>> daliyList=(ArrayList<ArrayList<String>>)request.getAttribute("daliyList");%>
 		<div class="box3" id="atdTea">
 			<table class="table" style="margin: auto;">
 				<tr>
 					<td style="width: 150px; height: 30px;">오늘의 출석 현황</td>
-					<td style="text-align: right"><b>2019년 7월 8일</b></td>
+					<td style="text-align: right"><b><%=session.getAttribute("day") %></b></td>
 				</tr>
 				<tr>
 					<td style="width: 50px"></td>
@@ -497,7 +639,7 @@
 					<td style="width: 90px; height: 35px;">과정진행률</td>
 					<td>
 						<div class="graph">
-							<strong class="bar" style="width: 58.7%;">58.7% (57/100일)</strong>
+							<strong class="bar" style="width: <%=progress%>%;"><%=progress%>% (<%=calDateDays%>/90일)</strong>
 						</div>
 					</td>
 				</tr>
@@ -506,29 +648,24 @@
 						<table class="table2" style="margin: auto;">
 							<tr>
 								<td>출석</td>
-								<td style="width: 450px"></td>
+								<td style="width: 450px"><%for(String name : daliyList.get(0))
+                        		out.print(name + " ");%></td>
 							</tr>
 							<tr>
-								<td>지각</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>조퇴</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>외출</td>
-								<td></td>
+								<td>지각<br/>조퇴<br/>외출</td>
+								<td><%for(String name : daliyList.get(1))
+                        		out.print(name + " ");%></td>
 							</tr>
 							<tr>
 								<td>결석</td>
-								<td></td>
+								<td><%for(String name : daliyList.get(2))
+                        		out.print(name + " ");%></td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">출석: 5명 ｜지각: 0명｜외출: 0명｜결석: 20명 <img alt="writebtn" src="<%=request.getContextPath()%>/imgs/writebtn.png" style="float: right;"></td>
+					<td colspan="2">출석: <%=daliyList.get(0).size() %>명 ｜지각 조퇴 외출: <%=daliyList.get(1).size() %>명｜결석: <%=daliyList.get(2).size() %>명 <img id="writebtn" alt="writebtn" src="<%=request.getContextPath()%>/imgs/writebtn.png" style="float: right;"></td>
 				</tr>
 
 			</table>
@@ -548,7 +685,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width: 340px; height: 50px;"><img id="teacher" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/gradebtn.png" align="right" hspace="10px"><img alt="gradebtn" src="<%=request.getContextPath()%>/imgs/viewgradebtn.png" align="right"></td>
+					<td style="width: 340px; height: 50px;"><img id="teacher" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/gradebtn.png" align="right" hspace="10px"><img id="gradebtn" alt="gradebtn" src="<%=request.getContextPath()%>/imgs/viewgradebtn.png" align="right"></td>
 				</tr>
 				<tr>
 
@@ -672,7 +809,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="box8" style="text-align: center;">캘린더 위치</div>
+		<div class="box8" style="text-align: center;"><div id='calendar'></div></div>
 	</div>
 </div>
 

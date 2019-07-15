@@ -1,3 +1,4 @@
+<%@page import="com.bit.model.ScoreDto"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -131,7 +132,7 @@
 		
 			int userKind=3;//접속하지 않았을 때 
 			if(session.getAttribute("userKind")!=null){
-				userKind=(Integer)session.getAttribute("userKind");
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
 				//0학생 1강사 2관리자
 			}
 %>
@@ -157,9 +158,9 @@
 				<ul>
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="question.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
@@ -215,18 +216,33 @@
         </div>
     </div>
     <!-- *****content start*****    -->
+    <%ScoreDto bean = (ScoreDto)request.getAttribute("bean");
+    	String first = "";
+    	String second = "";
+    	String third = "";
+    	if(bean.getFirstTest()!=null){
+    		first=bean.getFirstTest();
+    	}
+    	if(bean.getSecondTest()!=null){
+    		second=bean.getSecondTest();
+    	}
+    	if(bean.getThirdTest()!=null){
+    		third=bean.getThirdTest();
+    	}
+    	System.out.println(bean.getName());
+    %>
     <div id="content">       
         <h3>성적조회</h3>
-        <span>응용SW 엔지니어링 양성과정 1회차</span>
-        <label>홍길동</label>
+        <span><%=bean.getLecName() %></span>
+        <label><%=bean.getName() %></label>
         <div id="pdiv">
             <p>1차</p>
             <p>2차</p>
             <p>3차</p>
             <br/>
-            <div>A</div>
-            <div>B</div>
-            <div>C</div>
+            <div><%=first%></div>
+            <div><%=second%></div>
+            <div><%=third%></div>
         </div>
     </div>
     <!-- *****content end***** -->

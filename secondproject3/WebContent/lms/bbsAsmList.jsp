@@ -1,13 +1,12 @@
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.bit.model.BbsDto"%>
+<%@page import="java.nio.channels.SeekableByteChannel"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.bit.model.BbsDto"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/jquery.bxslider.css" />
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.bxslider.js"></script>
+<meta charset="UTF-8">
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template.css" />
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <style type="text/css">
        	#topmargin{
     		height:100px;
@@ -61,19 +60,11 @@
         #ca{
         text-align:center;
         }
-        #btn{
-       	 text-align:right;
-       	 
-        }
-        button{
-        	background-color:lightblue;
-        	font-size:10
-        }
         select{
         	text-align:left;
         }
         .section{
-        	claer:both;
+        	clear:both;
         	height:800px;
         	margin:0px auto;
         }
@@ -89,19 +80,47 @@
         #bbs2 tr>td+td{
         	text-align:right;
         }
+       
+       	#btn{
+       	
+        	text-align:right;
+       	}
+        #btn button{
+        	background-color:lightblue;
+        	font-size:10;
+        	border-radius:6px;
+        }
+        button[name="delebtn"]{
+        	font-size:6px;
+        	background-color:lightblue;
+        	border-radius:6px;
+        }
+        
+        .ing{
+	        margin:0px auto;
+	        float: center;
+       		width: 800px;
+       		padding:50px;
+        	
+        	height:250px;
+        	background-color: #e4e4e4;
+        }
+        
+        .ing tr:FIRST-CHILD{
+	       
+        }
+        
+        .ing tr:FIRST-CHILD>td:nth-child(2){
+	        width:200px;
+        }
+        
+        .ing tr:FIRST-CHILD>td:nth-child(3){
+	        width:100px;
+        }
+        
     </style>
     <script type="text/javascript">
-        var big;
         $(document).ready(function() {
-            //이미지 슬라이드
-            big = $('#imgcontent').bxSlider({
-                minSlides: 1,
-                maxSlides: 1,
-                slideWidth: 800,
-                pager: true,
-                auto: true,
-                pause: 5000
-            });
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
                 $("#topmenu").stop().fadeIn();
@@ -120,32 +139,45 @@
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-
             //왼쪽 메뉴 마우스오버
             $("#menuleft>ul").hover(function() {
                 $("#menuleft>ul").stop().fadeIn();
             }, function() {
                 $("#menuleft>ul").stop().fadeOut();
             });
-            
-            	$('button').click(function(){
-            		window.location.href='Bbsadd.jsp';
-            	});
-            
-        });
+
+            //로그아웃버튼 클릭
+            $("#logoutbtn").click(function() {
+               location.href="<%=request.getContextPath()%>/lms/logout.bit";
+            });
+
+          });
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
 <body>
-
-<!-- 질문게시판 강사 -->
-
-     <!--    헤더     -->
+<%
+     		if (request.getAttribute("loginWrong") != null) {
+    			out.println(request.getAttribute("loginWrong"));
+    		}
+		
+			int userKind=3;//접속하지 않았을 때 
+			
+			if(session.getAttribute("userKind")!=null){
+				userKind=Integer.parseInt((String)session.getAttribute("userKind"));
+				//0학생 1강사 2관리자
+			}
+%>
+  <!--    헤더     -->
     <div id="header">
         <div>
             <!--    왼쪽 메뉴     -->
             <div id="menuleft">
+                <a href="intro.bit">
                 <img alt="menulefticon" src="<%=request.getContextPath()%>/imgs/leftmenu.PNG" id="lefticon" />
+                </a>
+                <!-- 학생일 때  -->
+                <%if(userKind==0){%>
                 <ul>
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">질문게시판</a></li>
@@ -153,28 +185,98 @@
                     <li><a href="#">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
+                <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+				<ul>
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">출석 관리</a></li>
+                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="#">과제게시판</a></li>
+                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="#">스케줄</a></li>
+                </ul>
+                <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="userKind2">
+                    <li><a>내 강의실</a></li>
+                    <li><a href="#">강사</a></li>
+                    <li><a href="#">학생</a></li>
+                    <li><a href="#">관리자</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                 </ul>
+                 <!-- 비 로그인  -->
+                 <%}else{
+                	 
+                 }%>
             </div>
             <img alt="logo" src="<%=request.getContextPath()%>/imgs/logo.jpg" id="logo" />
             <div id="top">
-                <p>강사1
-                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" /></p>
+                <p><%if(session.getAttribute("isLogin")!=null) {
+                	out.println(session.getAttribute("id")+" 님");
+                }else{%>환영합니다<%}%>
+                    <img alt="topmenuicon" src="<%=request.getContextPath()%>/imgs/topmenu.PNG" id="topicon" />
+                </p>
                 <!--   상단메뉴   -->
+                 <!-- 학생일 때  -->
+                <%if(userKind==0){ %>
                 <ul id="topmenu">
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">내 정보</a></li>
                     <li><a href="#">메인</a></li>
                     <li><a href="logout.bit">로그아웃</a></li>
                 </ul>
+                 <!-- 강사일 때  -->
+                <%}else if(userKind==1){ %>
+                <ul id="topmenu">
+                    <li><a href="#">내 강의실</a></li>
+                    <li><a href="#">내 정보</a></li>
+                    <li><a href="#">메인</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 관리자일 때  -->
+                <%}else if(userKind==2){ %>
+                <ul id="topmenu">
+                    <li><a href="#">회원관리</a></li>
+                    <li><a href="lecturemanage.bit">강의관리</a></li>
+                    <li><a href="#">출결관리</a></li>
+                    <li><a href="#">일정관리</a></li>
+                    <li><a href="logout.bit">로그아웃</a></li>
+                </ul>
+                 <!-- 비 로그인  -->
+                <%}else if(userKind==3){}%>
             </div>
         </div>
     </div>
-
     <!-- *****content start*****    -->
-   <section class="section">
+     <section class="section">
     <div id="content">
     <div id="topmargin"></div>
 	        <h1>질문 게시판</h1>
 	        <br/>
+	        <div >
+	        <h3>진행중 과제</h3>
+	        <%
+		        BbsDto last=(BbsDto)request.getAttribute("last");
+	        %>
+	        <table style="margin: 0px auto;" class="ing">
+	        	
+		        	<tr>
+		        		<td>
+		        		<h2><%=last.getTitle() %></h2></td>
+		        		<td>제출기한:<%=last.getNalja() %></td>
+		        		<td>진행중</td>
+					</tr>	   
+					<tr>
+		        		<td colspan="3"> <%=last.getContent() %></td>
+		        		
+					</tr>	     	
+	        	
+	        	</table>
+	        <br/>
+	        <h3>과제목록</h3>
+	       </div>
 	      <table id="bbs2">
 		       		<tr>
 		       			<td>
@@ -195,6 +297,7 @@
                 <th>작성자</th>
                 <th>등록일</th>
                 <th>조회수</th>
+                <th>삭제</th>
             </tr>
             <%
             	ArrayList<BbsDto> list=(ArrayList<BbsDto>)request.getAttribute("list");
@@ -204,10 +307,11 @@
             <tr>
                 <td><%=bean.getListNum() %></td>
               	<td><a href="bbsqustudetail.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><%=bean.getTitle() %></a></td>
-                <td>미답변</td>
+                <td>진행중</td>
                 <td><%=bean.getId() %></td>
                 <td><%=bean.getNalja() %></td>
                 <td>0</td>
+	            <td><a href="<%=request.getContextPath()%>/lms/qudelete.bit?listNum=<%=bean.getListNum()%>&lecNum=<%=bean.getLecNum()%>"><button type="button" name="delebtn">삭제</button></a></td>
             </tr>
             <%
             }
@@ -220,7 +324,7 @@
 	            <a href="#">3</a>
 	            <a href="#">다음</a>
 	        </div>
-	        <div id="btn">
+	         <div id="btn">
 	          <a href="<%=request.getContextPath()%>/lms/bbsQuAdd.jsp"><button type="button">등록하기</button></a>
 	        </div>
     </div>
@@ -243,4 +347,3 @@
         </table>
     </div>
 </body>
-</html>

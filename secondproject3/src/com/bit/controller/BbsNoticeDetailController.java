@@ -13,8 +13,7 @@ import com.bit.model.BbsDao;
 import com.bit.model.BbsDto;
 
 @WebServlet("/lms/bbsnoticedetail.bit")
-public class BbsNoticeDetailController extends HttpServlet {
-
+public class BbsNoticeDetailController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -27,7 +26,7 @@ public class BbsNoticeDetailController extends HttpServlet {
 		BbsDto bean = dao.getNoticDetail(listNum);
 		req.setAttribute("bean", bean);
 		req.setAttribute("listNum", listNum);
-
 		rd.forward(req, resp);
 	}
 }
+

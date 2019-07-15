@@ -19,8 +19,9 @@ public class LectureManageController extends HttpServlet {
 		RequestDispatcher rd = req
 				.getRequestDispatcher("/lms/lectureManage.jsp");
 		ClassDao dao = new ClassDao();
-
-		req.setAttribute("list", dao.getList());
+		
+		
+		req.setAttribute("list", dao.getLecList());
 		rd.forward(req, resp);
 	}
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.bit.model.BbsDao;
 import com.bit.model.BbsDto;
 
-@WebServlet("/lms/bbsqustudetail.bit")
+@WebServlet("/lms/bbsqudetail.bit")
 public class BbsQuStuDetailController extends HttpServlet{
 
 	@Override
@@ -23,7 +23,7 @@ public class BbsQuStuDetailController extends HttpServlet{
 		BbsDao dao=new BbsDao();
 		req.setAttribute("detail", dao.questiondetail(listNum, lecNum));
 		
-		RequestDispatcher rd=req.getRequestDispatcher("bbsqustudetail.jsp");
+		RequestDispatcher rd=req.getRequestDispatcher("bbsqudetail.jsp");
 		rd.forward(req,resp);
 		
 	}

@@ -199,7 +199,7 @@
             var chkObj = document.getElementsByName("chk10");
             var rowCnt = chkObj.length - 1;
             var check = obj.checked;
-            if (check) {﻿
+            if (check) {
                 for (var i=0; i<=rowCnt; i++){
                 	if(chkObj[i].type == "checkbox"){
                      	chkObj[i].checked = true; 
@@ -213,7 +213,7 @@
                 }
             }
         }
-﻿
+
         
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -245,9 +245,9 @@
                 <%if(userKind==0){%>
                 <ul>
                     <li><a href="#">내 강의실</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="quesion.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 강사일 때  -->
@@ -255,9 +255,9 @@
 				<ul>
                     <li><a href="#">내 강의실</a></li>
                     <li><a href="#">출석 관리</a></li>
-                    <li><a href="#">질문게시판</a></li>
+                    <li><a href="quesion.bbs">질문게시판</a></li>
                     <li><a href="#">과제게시판</a></li>
-                    <li><a href="#">수업자료실</a></li>
+                    <li><a href="material.bbs">수업자료실</a></li>
                     <li><a href="#">스케줄</a></li>
                 </ul>
                 <!-- 관리자일 때  -->
@@ -354,7 +354,7 @@
                 <td><a href="lecturedetail.bit?num=<%=bean.getNum() %>"><%=bean.getName() %></a></td>
                 <td><%=bean.getTeacherName() %></td>
                 <td><%=bean.getStartdate() %></td>
-                <td>27/30</td>
+                <td><%=bean.getPersonal() %>/30</td>
                 <td>모집중</td>
                 <td><%=bean.getNum() %></td>
             </tr>
