@@ -24,11 +24,11 @@ public class BbsListController extends HttpServlet{
 				if(path.equals("/lms/notice.bbs")) {
 					ArrayList<BbsDto> list = dao.getNoticeList();
 					req.setAttribute("list", list);
-					rd = req.getRequestDispatcher("bbsNotice.jsp");
+			rd = req.getRequestDispatcher("/lms/bbsNotice.jsp");
 				}else if(path.equals("/lms/question.bbs")) {
 					ArrayList<BbsDto> list = dao.getQuestionList();
 					req.setAttribute("list", list);
-					rd = req.getRequestDispatcher("bbsquestList.jsp");
+			rd = req.getRequestDispatcher("/lms/bbsquestList.jsp");
 				}
 				rd.forward(req, resp);
 	}

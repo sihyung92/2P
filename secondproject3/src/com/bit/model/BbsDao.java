@@ -1,15 +1,11 @@
 package com.bit.model;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
-
 import com.bit.util.Connector;
-import com.bit.util.*;
 
 public class BbsDao {
 	Connection conn;
