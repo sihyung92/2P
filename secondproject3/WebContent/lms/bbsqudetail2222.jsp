@@ -1,3 +1,4 @@
+<%@page import="com.bit.model.*"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -48,7 +49,7 @@
         #content>div>div>div:nth-child(3){
             border: 0px;
         }
-        #content button{
+        .button1, .button2{
             position: relative;
             top: 10px;
             left: 750px;
@@ -68,7 +69,7 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
     
-    	//var userkind=session.getAttribute("userKind");
+    	var userkind=<%=session.getAttribute("userKind")%>
         $(document).ready(function() {
             //위쪽 메뉴아이콘 마우스오버
             $("#topicon").hover(function() {
@@ -99,8 +100,26 @@
             $("#logoutbtn").click(function() {
                location.href="<%=request.getContextPath()%>/lms/logout.bit";
             });
+            
+            
+           	if(userkind==0){
+           		console.log(userkind);
+           		$('button[name="edit"]').show(); //학생만 보이게
+           	}else if(userkind==1){
+           		console.log(userkind);
+           		$('button[name="edit"]').hide();
+           	}else{
+           		console.log(userkind);
+           		$('#content [name="edit"]').hide()
+           	}
 
           });
+        
+        	function goback(){
+        		
+        			window.location.href='question.bbs';
+        		
+        	}
     </script>
     <title>비트캠프 학습관리시스템</title>
 </head>
@@ -199,24 +218,29 @@
         </div>
     </div>
     <!-- *****content start*****    -->
+    
+    
     <div id="content">
+	<%
+		BbsDto bean=(BbsDto)request.getAttribute("detail");
+	%>
 		<div>
             <div>
-                <div>
-                    <h5>제목출력</h5>
-                    <p id="writer">작성자</p>
-                    <p id="nalja">2019-07-15</p>
+                <div >
+                    <h2><%=bean.getTitle() %></h5>
+                    <p id="writer">작성자&nbsp&nbsp&nbsp<%=bean.getId() %></p>
+                    <p id="nalja"><%=bean.getNalja() %></p>
                 </div>
                 <div>
                     <p>첨부파일 : <a href="#">첨부파일.jpg</a></p>
                 </div>
                 <div>
-                    <p>내용</p>
+                    <p><%=bean.getContent() %></p>
                 </div>
             </div>
         </div>
-        <button>이전</button>
-        <button id="editbtn">수정</button>
+        <input type="button" value="수정" class="button2" name="edit"/>
+        <input type="reset" value="이전" class="button1" onclick="goback()"/>
     </div>
     <!-- *****content end***** -->
     <!--    바닥글     -->

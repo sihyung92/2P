@@ -23,7 +23,7 @@ public class BbsQuStuDetailController extends HttpServlet{
 		BbsDao dao=new BbsDao();
 		req.setAttribute("detail", dao.questiondetail(listNum, lecNum));
 		
-		RequestDispatcher rd=req.getRequestDispatcher("bbsqudetail.jsp");
+		RequestDispatcher rd=req.getRequestDispatcher("bbsqudetail2222.jsp");
 		rd.forward(req,resp);
 		
 	}

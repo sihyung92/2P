@@ -40,7 +40,7 @@ public class BbsAddController extends HttpServlet {
 		String param2=req.getParameter("content");
 		System.out.print(param1);
 			
-		String title=null;
+			String title=null;
 			String content=null;
 			int lecNum=0;
 			String id=null;

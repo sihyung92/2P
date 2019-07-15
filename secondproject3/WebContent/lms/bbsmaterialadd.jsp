@@ -92,7 +92,7 @@
     </style>
     <script type="text/javascript">
         var big;
-        var userkind=session.getAttribute("userKind");
+        var userkind=<%=session.getAttribute("userKind")%>
         $(document).ready(function() {
             //이미지 슬라이드
             big = $('#imgcontent').bxSlider({

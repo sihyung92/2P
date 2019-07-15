@@ -131,8 +131,6 @@
             });
             
            
-            console.log(userkind);
-            
             if(userkind==0){
             	$('button[name="enroll"]').hide();
             }else if(userkind==1){
@@ -146,10 +144,9 @@
             	console.log(userkind);
             	$('button[name="delebtn"]').hide(); 
             }else if(userkind==1){
-            	console.log(uuserkindser);
+            	console.log(userkind);
             	$('button[name="delebtn"]').hide();
             }else{
-            	console.log(user);
             	$('button[name="delebtn"]').show(); //관리자 보이게
             }
             
