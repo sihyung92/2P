@@ -93,11 +93,11 @@ public class AttendanceDao {
 	public ArrayList<ArrayList<String>> getTecherDaliyList(String day){
 		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		//출석 쿼리
-		String sql1 = "SELECT name FROM attendance A INNER JOIN userData B ON A.userNum=B.userNum WHERE day=? AND type=0 ORDER BY name";
+		String sql1 = "SELECT name FROM attendance A INNER JOIN (SELECT * FROM userData WHERE userkind=0) B ON A.userNum=B.userNum WHERE day=? AND type=0 ORDER BY name";
 		//지각외출조퇴 쿼리
-		String sql2 = "SELECT name FROM attendance A INNER JOIN userData B ON A.userNum=B.userNum WHERE day=? AND type=1 ORDER BY name";
+		String sql2 = "SELECT name FROM attendance A INNER JOIN (SELECT * FROM userData WHERE userkind=0) B ON A.userNum=B.userNum WHERE day=? AND type=1 ORDER BY name";
 		//결석 쿼리
-		String sql3 = "SELECT name FROM attendance A INNER JOIN userData B ON A.userNum=B.userNum WHERE day=? AND type=2 ORDER BY name";
+		String sql3 = "SELECT name FROM attendance A INNER JOIN (SELECT * FROM userData WHERE userkind=0) B ON A.userNum=B.userNum WHERE day=? AND type=2 ORDER BY name";
 		conn = Connector.getConnection();
 		try {
 				pstmt = conn.prepareStatement(sql1);

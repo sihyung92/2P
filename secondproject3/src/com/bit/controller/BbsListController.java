@@ -21,6 +21,7 @@ public class BbsListController extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String path = req.getRequestURI().replaceAll(req.getContextPath(), "");
+		HttpSession session = req.getSession();
 		System.out.println(path);
 		BbsDao dao = new BbsDao();
 		if (path.equals("/lms/bbsnotice.bbs")) {
@@ -60,9 +61,10 @@ public class BbsListController extends HttpServlet {
 			req.setAttribute("list", list);
 			rd = req.getRequestDispatcher("bbsmateriallist.jsp");//수업자료게시판 
 		}else if(path.equals("/lms/assignment.bbs")){
-			ArrayList<BbsDto> list = dao.getAssignmentList();
+			int lecNum = Integer.parseInt((String)session.getAttribute("lecNum"));
+			ArrayList<BbsDto> list = dao.getAssignmentList(lecNum);
 			req.setAttribute("list", list);
-			BbsDto last = dao.getLastAsm();
+			BbsDto last = dao.getLastAsm(lecNum);
 			req.setAttribute("last", last);
 			rd = req.getRequestDispatcher("bbsAsmList.jsp");
 		}

@@ -388,12 +388,13 @@ public class BbsDao {
 	
 
 	//과제게시판
-	public ArrayList<BbsDto> getAssignmentList(){
+	public ArrayList<BbsDto> getAssignmentList(int lecNum){
 		ArrayList<BbsDto> list=new ArrayList<BbsDto>();
-		String sql="select * from lmsBbs where lecNum=1 AND bbsNum=2 order by listnum desc";
+		String sql="select * from lmsBbs where lecNum=? AND bbsNum=2 order by listnum desc";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, lecNum);
 			rs=pstmt.executeQuery();
 			while(rs.next()){
 				BbsDto bean=new BbsDto();
@@ -572,12 +573,13 @@ public class BbsDao {
 		return total;
 	}
 
-	public BbsDto getLastAsm() {
+	public BbsDto getLastAsm(int lecNum) {
 		BbsDto bean=new BbsDto();
-		String sql="select * from (select * from lmsBbs where lecNum=1 AND bbsNum=2 order by listnum desc) where rownum=1";
+		String sql="select * from (select * from lmsBbs where lecNum=? AND bbsNum=2 order by listnum desc) where rownum=1";
 		conn=Connector.getConnection();
 		try {
 			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, lecNum);
 			rs=pstmt.executeQuery();
 			if(rs.next()){
 				bean.setListNum(rs.getInt("listNum"));
