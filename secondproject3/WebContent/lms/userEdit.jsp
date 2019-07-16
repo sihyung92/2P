@@ -70,7 +70,7 @@
 			$('#ctg').attr('disabled','disabled');
 		}
 		submit();
-		
+		ctgselect();
 		$("#certBtn").click(function(){
 			var certText='';
 			$('.cert').each(function(){

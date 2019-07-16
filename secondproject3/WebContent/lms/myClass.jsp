@@ -721,7 +721,7 @@
 			<table style="width: 370px; margin-left: auto; margin-right: auto;">
 				<tr>
 					<td style="height: 30px">질문 게시판</td>
-					<td colspan="2" style="text-align: right;"><a href="#"><b>전체보기</b></a></td>
+					<td colspan="2" style="text-align: right;"><a href="question.bbs"><b>전체보기</b></a></td>
 				</tr>
 				<tr>		
 					<!-- td colspan="3" style="height: 130px; background-color: white;"-->
@@ -752,7 +752,7 @@
 			<table style="width: 370px; margin-left: auto; margin-right: auto;">
 				<tr>
 					<td style="height: 30px">과제 게시판</td>
-					<td colspan="2" style="text-align: right;"><a href="#"><b>전체보기</b></a></td>
+					<td colspan="2" style="text-align: right;"><a href="assignment.bbs"><b>전체보기</b></a></td>
 				</tr>
 				<tr>
 					<!--td colspan="2" style="height: 110px; background-color: white;"-->
@@ -783,7 +783,7 @@
 			<table style="width: 370px; margin-left: auto; margin-right: auto;">
 				<tr>
 					<td style="height: 30px">수업자료 게시판</td>
-					<td colspan="2" style="text-align: right;"><a href="#"><b>전체보기</b></a></td>
+					<td colspan="2" style="text-align: right;"><a href="material.bbs"><b>전체보기</b></a></td>
 				</tr>
 				<tr>
 					<!--td colspan="2" style="height: 110px; background-color: white;"-->
