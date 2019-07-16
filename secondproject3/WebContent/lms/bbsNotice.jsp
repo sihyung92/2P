@@ -340,7 +340,9 @@
     		<%} %>
 	        </div>
 	        <div id="btn">
+	        <%if(userKind==2){ %>
 	            <button id="addbtn">작성</button>
+	        <%} %>
 	        </div>
     </div>
 	</section>

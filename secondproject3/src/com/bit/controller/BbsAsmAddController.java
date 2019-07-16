@@ -31,6 +31,7 @@ public class BbsAsmAddController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();
+		req.setCharacterEncoding("utf-8");
 		//////////////test
 		//session.setAttribute("lecNum", 1);
 		//session.setAttribute("id", "stu01");
