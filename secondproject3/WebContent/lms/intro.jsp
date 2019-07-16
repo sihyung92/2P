@@ -64,6 +64,18 @@
         	$(".lecture").click(function(){
            		location.href="<%=request.getContextPath()%>/lms/lecturemanage.bit";
            	});
+        	
+        	$("#taskbbs").click(function(){
+        		location.href="<%=request.getContextPath()%>/lms/assignment.bbs";
+        	});
+        	$(".attendance").click(function(){
+        		location.href="<%=request.getContextPath()%>/lms/attendance.bit?lecNum=1";
+        	});
+        	$(".scheduler").click(function(){
+        		location.href="<%=request.getContextPath()%>/lms/schedule.jsp";
+        	});
+        	
+        	
           });
     </script>
     <title>비트캠프 학습관리시스템</title>
@@ -227,7 +239,7 @@ if(session.getAttribute("userKind")==null){%>
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
                     <button id="myclassbtn">내 강의실</button>
-                    <button>출석관리</button>
+                    <button id="taskbbs">과 제</button>
                     <button id="logoutbtn">로그아웃</button>
                 </div>
             </div>
@@ -237,7 +249,7 @@ if(session.getAttribute("userKind")==null){%>
                 <p><%=session.getAttribute("id") %>님이 로그인하셨습니다.</p>
                 <div>
                     <button id="myclassbtn">내 강의실</button>
-                    <button>과 제</button>
+                    <button class="attendance">출석관리</button>
                     <button id="logoutbtn">로그아웃</button>
                 </div>
             </div>
@@ -262,17 +274,17 @@ if(session.getAttribute("userKind")==null){%>
                         <td rowspan="2">모집중</td>
                     </tr>
                     <tr>
-                        <td>19.03.27~19.09.25</td>
+                        <td>19.08.01~20.1.30</td>
                     </tr>
                     <tr>
                         <td>　</td>
                     </tr>
                     <tr>
-                        <td>응용SW 엔지니어링</td>
+                        <td>자바JAVA 개발자</td>
                         <td rowspan="2">모집중</td>
                     </tr>
                     <tr>
-                        <td>19.03.27~19.09.25</td>
+                        <td>19.09.01~20.2.28</td>
                     </tr>
                 </table>
             </div>
